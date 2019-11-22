@@ -16,14 +16,14 @@ def find_tbr(firstwall_coolant,
              ):
 
             blanket_material = MultiMaterial('blanket_material',
-                                            materials = [
-                                                        Material(blanket_multiplier_material, 
+                                             materials = [
+                                                         Material(blanket_multiplier_material, 
                                                                  enrichment_fraction=blanket_breeder_li6_enrichment_fraction),
-                                                        Material(blanket_multiplier_material),
-                                                        Material('eurofer')
-                                                        ],
-                                            volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
-                                            ).makeMaterial()
+                                                         Material(blanket_multiplier_material),
+                                                         Material('eurofer')
+                                                         ],
+                                             volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
+                                             ).makeMaterial()
 
             firstwall_material = MultiMaterial('firstwall_material',
                                                 materials = [
