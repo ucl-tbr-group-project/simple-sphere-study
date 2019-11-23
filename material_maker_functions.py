@@ -7,11 +7,23 @@ __author__      = "Jonathan Shimwell"
 import re
 import json
 import openmc
+from thermo.chemical import Chemical
 
 atomic_mass_unit_in_g = 1.660539040e-24
 
+helium = Chemical('He',
+                  T=773.15, # in Kelvin
+                  P=8e6) # in Pa
+He_density_in_g_per_cm3 = helium.rho / 1000
+
 
 material_dict = {
+    'He': {
+            'elements':{'He':1.0},
+            'density':He_density_in_g_per_cm3,
+            'density units': 'g/cm3',
+            'reference':'thermo python package'
+            },
 
     'DT_plasma':{'isotopes':{'H2' : 0.5,
                              'H3' : 0.5,

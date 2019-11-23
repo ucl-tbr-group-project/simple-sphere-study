@@ -103,8 +103,8 @@ def find_tbr(firstwall_coolant,
             tally_std_dev = df['std. dev.'].sum()
 
             result = {}
-            result['tbr'] = 1. #tally_result
-            result['tbr_std_dev'] = 0.1 #tally_std_dev
+            result['tbr'] = tally_result
+            result['tbr_std_dev'] = tally_std_dev
             result['firstwall_coolant'] = firstwall_coolant 
             result['blanket_steel_fraction'] = blanket_steel_fraction 
             result['blanket_multiplier_fraction'] = blanket_multiplier_fraction
