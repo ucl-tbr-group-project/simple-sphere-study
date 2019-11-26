@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
+from random import random
 
 def find_tbr(firstwall_coolant, 
              blanket_steel_fraction, 
