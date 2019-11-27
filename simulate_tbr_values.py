@@ -18,7 +18,7 @@ def find_tbr(firstwall_coolant,
 
             blanket_material = MultiMaterial('blanket_material',
                                              materials = [
-                                                         Material(blanket_multiplier_material, 
+                                                         Material(blanket_breeder_material, 
                                                                  enrichment_fraction=blanket_breeder_li6_enrichment_fraction),
                                                          Material(blanket_multiplier_material),
                                                          Material('eurofer')
@@ -82,11 +82,9 @@ def find_tbr(firstwall_coolant,
             # define filters
             cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
             particle_filter = openmc.ParticleFilter(['neutron']) #1 is neutron, 2 is photon
-            energy_bins = openmc.mgxs.GROUP_STRUCTURES['VITAMIN-J-175']
-            energy_filter = openmc.EnergyFilter(energy_bins)
             
             tally = openmc.Tally(name='TBR')
-            tally.filters = [cell_filter_breeder, particle_filter]
+            tally.filters = [cell_filter_breeder]
             tally.scores = ['205']
             tallies.append(tally)
 
@@ -143,8 +141,4 @@ for firstwall_material in firstwall_coolant_options:
                             with open('results.json', 'w') as fp:
                                 json.dump(results, fp, indent = 4)    
                             
-
-
- 
-
 
