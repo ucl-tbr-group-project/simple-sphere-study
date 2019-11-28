@@ -6,6 +6,13 @@ import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
 from random import random
+import itertools, math
+
+def drange(start, stop, step):
+    r = start
+    while r < stop:
+        yield r
+        r += step  
 
 def find_tbr(firstwall_coolant, 
              blanket_steel_fraction, 
@@ -111,34 +118,47 @@ def find_tbr(firstwall_coolant,
             result['blanket_breeder_fraction'] = blanket_breeder_fraction
             result['blanket_breeder_material'] = blanket_breeder_material
             result['blanket_breeder_li6_enrichment_fraction'] = blanket_breeder_li6_enrichment_fraction
+            result['fraction_of_breeder_in_breeder_plus_multiplier_volume'] = blanket_breeder_fraction / (blanket_breeder_fraction+blanket_multiplier_fraction)
             return result
 
 firstwall_coolant_options = ['H2O', 'He']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2SiO3']
 
-all_fractions  = np.random.dirichlet(np.ones(3),size=10) 
-blanket_steel_fractions = [row[0] for row in all_fractions]
-blanket_multiplier_fractions = [row[1] for row in all_fractions]
-blanket_breeder_fractions = [row[2] for row in all_fractions]
+blanket_steel_fractions = []
+blanket_multiplier_fractions = []
+blanket_breeder_fractions = []
+for blanket_steel_fraction in [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]: 
 
+    available_space = 1. - blanket_steel_fraction
+    # print('available_space',available_space)
+    for blanket_breeder_fraction, blanket_multiplier_fraction in zip(
+                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],
+                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0][::-1]
+                      ):
+            blanket_steel_fractions.append(blanket_steel_fraction)
+            blanket_multiplier_fractions.append(blanket_multiplier_fraction*available_space)
+            blanket_breeder_fractions.append(blanket_breeder_fraction*available_space)
+
+            print(blanket_steel_fraction, blanket_multiplier_fraction*available_space, blanket_breeder_fraction*available_space)
+            print(blanket_breeder_fraction*available_space / ((blanket_breeder_fraction*available_space)+(blanket_multiplier_fraction*available_space)))
+
+print(len(blanket_steel_fractions))
 results = []
-for firstwall_material in firstwall_coolant_options:
-    for blanket_steel_fraction in blanket_steel_fractions:
-        for blanket_multiplier_fraction in blanket_multiplier_fractions:
-            for blanket_multiplier_material in blanket_multiplier_material_options:
-                for blanket_breeder_fraction in blanket_breeder_fractions:
-                    for blanket_breeder_material in blanket_breeder_material_options:
-                        for blanket_breeder_li6_enrichment_fraction in np.linspace(start=0., stop=1., num=10, endpoint=True):
-                            results.append(find_tbr(firstwall_material, 
-                                                    blanket_steel_fraction, 
-                                                    blanket_multiplier_fraction,
-                                                    blanket_multiplier_material,
-                                                    blanket_breeder_fraction,
-                                                    blanket_breeder_material,
-                                                    blanket_breeder_li6_enrichment_fraction
-                                                    ))
-                            with open('results.json', 'w') as fp:
-                                json.dump(results, fp, indent = 4)    
+for firstwall_coolant in firstwall_coolant_options:
+    for blanket_breeder_material in blanket_breeder_material_options:
+        for blanket_multiplier_material in blanket_multiplier_material_options:
+            for blanket_breeder_li6_enrichment_fraction in np.linspace(start=0., stop=1., num=10, endpoint=True):
+                for blanket_multiplier_fraction, blanket_breeder_fraction, blanket_steel_fraction in zip(blanket_multiplier_fractions, blanket_breeder_fractions, blanket_steel_fractions):
+                    results.append(find_tbr(firstwall_coolant=firstwall_coolant, 
+                                            blanket_steel_fraction=blanket_steel_fraction, 
+                                            blanket_multiplier_fraction=blanket_multiplier_fraction,
+                                            blanket_multiplier_material=blanket_multiplier_material,
+                                            blanket_breeder_fraction=blanket_breeder_fraction,
+                                            blanket_breeder_material=blanket_breeder_material,
+                                            blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction
+                                            ))
+with open('results.json', 'w') as fp:
+    json.dump(results, fp, indent = 4)    
                             
 

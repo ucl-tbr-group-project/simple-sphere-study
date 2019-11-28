@@ -24,13 +24,13 @@ firstwall_coolant = st.selectbox('select a firstwall coolant', data['firstwall_c
 blanket_multiplier_material = st.selectbox('select a blanket multiplier material', data['blanket_multiplier_material'].unique())
 blanket_breeder_material = st.selectbox('select a blanket breeder material', data['blanket_breeder_material'].unique())
 
-blanket_steel_fraction = st.slider('Select a range of blanket steel fractions', min_value=0.0, max_value=1.0, value=(0.,1.))
+blanket_steel_fraction = st.slider('Select a range of blanket steel fractions', min_value=0.0, max_value=1.0, value=0.1, step=0.1)
 
 filtered_data = data[
                      (data.firstwall_coolant == firstwall_coolant) & 
                      (data.blanket_multiplier_material == blanket_multiplier_material) &
                      (data.blanket_breeder_material == blanket_breeder_material) &
-                     (data.blanket_steel_fraction >= blanket_steel_fraction[0]) & (data.blanket_steel_fraction <= blanket_steel_fraction[1])
+                     (data.blanket_steel_fraction >= blanket_steel_fraction-0.001) & (data.blanket_steel_fraction <= blanket_steel_fraction+0.001)
                     ]
 
 def make_2d_surface_trace(gp_mu_folded,x_gp,y_gp,z_axis_title):
@@ -111,7 +111,7 @@ def generate_2d_layout(title,x_axis_name,y_axis_name,x,y):
 
 try:
     x = list(filtered_data.blanket_breeder_li6_enrichment_fraction)
-    y = list(filtered_data.blanket_breeder_fraction)
+    y = list(filtered_data.fraction_of_breeder_in_breeder_plus_multiplier_volume)
     z = list(filtered_data.tbr)
     z_e = list(filtered_data.tbr_std_dev)
     labels = [str(i)+'+-'+str(j) for i,j in zip(z,z_e)]
@@ -132,11 +132,14 @@ try:
     traces.append(make_2d_surface_trace(gp_mu_folded,x_gp,y_gp,'Tritium Breeding Ratio (TBR)'))   # Makes the actual contours
     traces.append(make_2d_scatter_trace(x,y,z,labels))
 
-    layout = generate_2d_layout('TBR','Blanket Breeder Li6 Enrichment Fraction','Blanket Breeder Fraction',x,y)
+    layout = generate_2d_layout('TBR for '+ blanket_breeder_material +' and ' + blanket_multiplier_material + ' with ' + str(round(blanket_steel_fraction,2)) + ' steel fraction', 
+                                'Blanket Breeder Li6 Enrichment Fraction',
+                                'breeder / (breeder + multiplier)',x,y)
 
     fig = go.Figure({'data':traces,
                     'layout':layout})
     st.write(filtered_data)
+    st.write('number of data points', len(filtered_data))
     st.write('Plot of matching materials at given steel fraction')
     st.write(fig)
 
