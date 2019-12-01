@@ -15,7 +15,7 @@ def find_tbr(x):
         layer_breeder_fractions
     Output is Tritium breeding Ration (TBR)
     """
-    print('varibles',x)
+    print('varibles being used',x)
     number_of_layers = int(len(x)/3)
     print('number_of_layers',number_of_layers)
     layer_thickness_fractions = x[:number_of_layers]
@@ -32,7 +32,6 @@ def find_tbr(x):
     thickness = 200
     batches = 10
     
-
     thickness_fraction_scaler = thickness / sum(layer_thickness_fractions)
     print('thickness_fraction_scaler',thickness_fraction_scaler)
 
