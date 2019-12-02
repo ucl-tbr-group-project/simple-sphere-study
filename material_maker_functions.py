@@ -101,6 +101,13 @@ material_dict = {
                 'volume_of_unit_cell_cm3': 0.42259e-21,
                 'reference':'http://materials.springer.com/isp/crystallographic/docs'
                 },
+
+    'Li8PbO6': {
+                'elements':'Li8PbO6',
+                'atoms_per_unit_cell': None,
+                'volume_of_unit_cell_cm3': None,
+                'reference':'http://materials.springer.com/isp/crystallographic/docs'
+                },
     'Pb':      {
                 'elements':'Pb',
                 'density':'10.678 - 13.174e-4 * (temperature_in_K-600.6)',

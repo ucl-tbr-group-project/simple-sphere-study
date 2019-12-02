@@ -5,9 +5,9 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-from skopt import gp_minimize
+from skopt import gp_minimize, dump
 
-def find_tbr(x):
+def find_tbr_from_graded_blanket(x):
     """
     Inputs is a single list of: 
         layer_thickness_fractions, 
@@ -129,20 +129,22 @@ def find_tbr(x):
 
 
 
-               
-tbr = find_tbr([0.1, 0.2, 0.2, 0.3, 0.4, 0.4, 0.5, 0.6, 0.6])
+if __name__ == "__main__":
 
-print(tbr)          
+    tbr = find_tbr_from_graded_blanket([0.1, 0.2, 0.2, 0.3, 0.4, 0.4, 0.5, 0.6, 0.6])
 
-# res = gp_minimize(find_tbr, 
-#                   [
-#                    (0., 1.0),
-#                    (0., 1.0),
-#                    (0., 1.0),
-#                    (0., 1.0),
-#                    (0., 1.0),
-#                    (0., 1.0)
-#                   ],
-#                   n_calls = 11)
+    print(tbr)          
 
-# print(res)
+    res = gp_minimize(find_tbr_from_graded_blanket, 
+                    [
+                    (0., 1.0),
+                    (0., 1.0),
+                    (0., 1.0),
+                    (0., 1.0),
+                    (0., 1.0),
+                    (0., 1.0)
+                    ],
+                    n_calls = 15)
+
+    print(res)
+    dump(res, filename='optimisation_res')

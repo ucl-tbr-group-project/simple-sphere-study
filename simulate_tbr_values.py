@@ -27,7 +27,7 @@ def find_tbr(firstwall_coolant,
                                                             ],
                                                 volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
                                                 ).makeMaterial()
-            if firstwall_coolant != 'none':
+            if firstwall_coolant != 'no firstwall':
                 firstwall_material = MultiMaterial('firstwall_material',
                                     materials = [
                                                 Material('tungsten'),
@@ -46,7 +46,7 @@ def find_tbr(firstwall_coolant,
             batches = 10
             firstwall_thickness = 2
 
-            if firstwall_coolant == 'none':
+            if firstwall_coolant == 'no firstwall':
 
                 breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
                 inner_void_region = -breeder_blanket_inner_surface 
@@ -145,11 +145,12 @@ def find_tbr(firstwall_coolant,
             return result
 
 
-firstwall_coolant_options = ['none']#,'H2O', 'He']
+firstwall_coolant_options = ['no firstwall','H2O', 'He']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
 
 blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True)
+blanket_breeder_li6_enrichment_fractions.append(0.0759)
 
 blanket_steel_fractions = []
 blanket_multiplier_fractions = []
