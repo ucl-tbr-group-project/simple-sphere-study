@@ -73,7 +73,7 @@ def find_tbr(firstwall_coolant,
             # batches = 3 # this is parsed as an argument
             sett.batches = batches
             sett.inactive = 10
-            sett.particles = 500
+            sett.particles = 5000
             sett.run_mode = 'fixed source'
 
             source = openmc.Source()
@@ -158,7 +158,7 @@ for firstwall_coolant in firstwall_coolant_options:
                                             blanket_breeder_material=blanket_breeder_material,
                                             blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction
                                             ))
-with open('results.json', 'w') as fp:
-    json.dump(results, fp, indent = 4)    
+                    with open('results.json', 'w') as fp:
+                        json.dump(results, fp, indent = 4)    
                             
 
