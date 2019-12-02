@@ -5,14 +5,8 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-from random import random
-import itertools, math
 
-def drange(start, stop, step):
-    r = start
-    while r < stop:
-        yield r
-        r += step  
+
 
 def find_tbr(firstwall_coolant, 
              blanket_steel_fraction, 
@@ -24,46 +18,73 @@ def find_tbr(firstwall_coolant,
              ):
 
             blanket_material = MultiMaterial('blanket_material',
-                                             materials = [
-                                                         Material(blanket_breeder_material, 
-                                                                 enrichment_fraction=blanket_breeder_li6_enrichment_fraction),
-                                                         Material(blanket_multiplier_material),
-                                                         Material('eurofer')
-                                                         ],
-                                             volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
-                                             ).makeMaterial()
-
-            firstwall_material = MultiMaterial('firstwall_material',
                                                 materials = [
-                                                            Material('tungsten'),
-                                                            Material(firstwall_coolant),
+                                                            Material(blanket_breeder_material, 
+                                                                     enrichment_fraction=blanket_breeder_li6_enrichment_fraction),
+                                                            Material(blanket_multiplier_material),
                                                             Material('eurofer')
                                                             ],
-                                                volume_fractions = [0.2, 0.3, 0.7]
+                                                volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
                                                 ).makeMaterial()
+            if firstwall_coolant != 'none':
+                firstwall_material = MultiMaterial('firstwall_material',
+                                    materials = [
+                                                Material('tungsten'),
+                                                Material(firstwall_coolant),
+                                                Material('eurofer')
+                                                ],
+                                    volume_fractions = [0.2, 0.3, 0.7]
+                                    ).makeMaterial()
+                                
+                mats = openmc.Materials([blanket_material, firstwall_material]) 
+            else:
+                mats = openmc.Materials([blanket_material]) 
 
-
-            mats = openmc.Materials([blanket_material, firstwall_material])   
-
-            inner_radius = 1000
+            inner_radius = 1000  #10m
             thickness = 200
             batches = 10
-            breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
-            breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+thickness, boundary_type='vacuum')
 
-            breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
-            breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
-            breeder_blanket_cell.fill = blanket_material
-            breeder_blanket_cell.name = 'breeder_blanket'
+            if firstwall_coolant == 'none':
 
-            inner_void_region = -breeder_blanket_inner_surface 
+                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
+                inner_void_region = -breeder_blanket_inner_surface 
+                inner_void_cell = openmc.Cell(region=inner_void_region) 
+                inner_void_cell.name = 'inner_void'
+            
+                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+thickness, boundary_type='vacuum')
+                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
+                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+                breeder_blanket_cell.fill = blanket_material
+                breeder_blanket_cell.name = 'breeder_blanket'
 
-            inner_void_cell = openmc.Cell(region=inner_void_region) 
-            inner_void_cell.name = 'inner_void'
+                universe = openmc.Universe(cells=[inner_void_cell, 
+                                                  breeder_blanket_cell
+                                                 ])
+            else:
 
-            universe = openmc.Universe(cells=[inner_void_cell, 
-                                      breeder_blanket_cell
-                                      ])
+                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
+                inner_void_region = -breeder_blanket_inner_surface 
+                inner_void_cell = openmc.Cell(region=inner_void_region) 
+                inner_void_cell.name = 'inner_void'
+
+                firstwall_thickness= 3.
+                firstwall_outer_surface = openmc.Sphere(r=inner_radius)  
+                firstwall_region = +firstwall_outer_surface & -breeder_blanket_inner_surface 
+                firstwall_cell = openmc.Cell(region=firstwall_region)
+                firstwall_cell.fill = firstwall_material
+                firstwall_cell.name = 'firstwall'
+
+                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+firstwall_thickness+thickness, boundary_type='vacuum')
+                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
+                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+                breeder_blanket_cell.fill = blanket_material
+                breeder_blanket_cell.name = 'breeder_blanket'
+                
+                universe = openmc.Universe(cells=[inner_void_cell, 
+                                                  firstwall_cell,
+                                                  breeder_blanket_cell
+                                                 ])
+
 
             geom = openmc.Geometry(universe)
 
@@ -91,10 +112,9 @@ def find_tbr(firstwall_coolant,
             particle_filter = openmc.ParticleFilter(['neutron']) #1 is neutron, 2 is photon
             
             tally = openmc.Tally(name='TBR')
-            tally.filters = [cell_filter_breeder]
-            tally.scores = ['205']
+            tally.filters = [cell_filter_breeder, particle_filter]
+            tally.scores = ['205'] #could be (n,t)
             tallies.append(tally)
-
 
             model = openmc.model.Model(geom, mats, sett, tallies)
             model.run()
@@ -118,8 +138,8 @@ def find_tbr(firstwall_coolant,
             result['blanket_breeder_fraction'] = blanket_breeder_fraction
             result['blanket_breeder_material'] = blanket_breeder_material
             result['blanket_breeder_li6_enrichment_fraction'] = blanket_breeder_li6_enrichment_fraction
-            result['fraction_of_breeder_in_breeder_plus_multiplier_volume'] = blanket_breeder_fraction / (blanket_breeder_fraction+blanket_multiplier_fraction)
             return result
+
 
 firstwall_coolant_options = ['H2O', 'He']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
@@ -160,5 +180,4 @@ for firstwall_coolant in firstwall_coolant_options:
                                             ))
                     with open('results.json', 'w') as fp:
                         json.dump(results, fp, indent = 4)    
-                            
 
