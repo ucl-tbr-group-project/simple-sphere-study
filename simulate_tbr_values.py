@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-
+from tqdm import tqdm
 
 
 def find_tbr(firstwall_coolant, 
@@ -20,7 +20,8 @@ def find_tbr(firstwall_coolant,
             blanket_material = MultiMaterial('blanket_material',
                                                 materials = [
                                                             Material(blanket_breeder_material, 
-                                                                     enrichment_fraction=blanket_breeder_li6_enrichment_fraction),
+                                                                     enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                                                     temperature_in_C = 500),
                                                             Material(blanket_multiplier_material),
                                                             Material('eurofer')
                                                             ],
@@ -43,6 +44,7 @@ def find_tbr(firstwall_coolant,
             inner_radius = 1000  #10m
             thickness = 200
             batches = 10
+            firstwall_thickness = 2
 
             if firstwall_coolant == 'none':
 
@@ -91,16 +93,17 @@ def find_tbr(firstwall_coolant,
             #SIMULATION SETTINGS#
 
             sett = openmc.Settings()
-            # batches = 3 # this is parsed as an argument
+            # batches = 10 # this is parsed as an argument
             sett.batches = batches
-            sett.inactive = 10
-            sett.particles = 5000
+            sett.inactive = 0
+            sett.particles = 50000
             sett.run_mode = 'fixed source'
 
             source = openmc.Source()
             source.space = openmc.stats.Point((0,0,0))
             source.angle = openmc.stats.Isotropic()
             source.energy = openmc.stats.Muir(e0=14080000.0, m_rat=5.0, kt=20000.0) #neutron energy = 14.08MeV, AMU for D + T = 5, temperature is 20KeV
+            # source.energy = openmc.stats.Discrete([14e6], [1])
             sett.source = source
 
             #TALLIES#
@@ -113,10 +116,11 @@ def find_tbr(firstwall_coolant,
             
             tally = openmc.Tally(name='TBR')
             tally.filters = [cell_filter_breeder, particle_filter]
-            tally.scores = ['205'] #could be (n,t)
+            tally.scores = ['205'] # MT 205 is the (n,XT) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
             tallies.append(tally)
 
             model = openmc.model.Model(geom, mats, sett, tallies)
+            model.export_to_xml()
             model.run()
 
             sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
@@ -124,7 +128,7 @@ def find_tbr(firstwall_coolant,
             tally = sp.get_tally(name='TBR')
 
             df = tally.get_pandas_dataframe()
-        
+            print(df)
             tally_result = df['mean'].sum()
             tally_std_dev = df['std. dev.'].sum()
 
@@ -141,9 +145,11 @@ def find_tbr(firstwall_coolant,
             return result
 
 
-firstwall_coolant_options = ['H2O', 'He']
+firstwall_coolant_options = ['none']#,'H2O', 'He']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
-blanket_breeder_material_options = ['Li4SiO4','Li2SiO3']
+blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
+
+blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True)
 
 blanket_steel_fractions = []
 blanket_multiplier_fractions = []
@@ -151,25 +157,22 @@ blanket_breeder_fractions = []
 for blanket_steel_fraction in [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]: 
 
     available_space = 1. - blanket_steel_fraction
-    # print('available_space',available_space)
     for blanket_breeder_fraction, blanket_multiplier_fraction in zip(
-                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],
-                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0][::-1]
-                      ):
+                                                                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],
+                                                                     [0.,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0][::-1]
+                                                                     ):
             blanket_steel_fractions.append(blanket_steel_fraction)
             blanket_multiplier_fractions.append(blanket_multiplier_fraction*available_space)
             blanket_breeder_fractions.append(blanket_breeder_fraction*available_space)
 
-            print(blanket_steel_fraction, blanket_multiplier_fraction*available_space, blanket_breeder_fraction*available_space)
-            print(blanket_breeder_fraction*available_space / ((blanket_breeder_fraction*available_space)+(blanket_multiplier_fraction*available_space)))
-
 print(len(blanket_steel_fractions))
 results = []
-for firstwall_coolant in firstwall_coolant_options:
-    for blanket_breeder_material in blanket_breeder_material_options:
-        for blanket_multiplier_material in blanket_multiplier_material_options:
-            for blanket_breeder_li6_enrichment_fraction in np.linspace(start=0., stop=1., num=10, endpoint=True):
-                for blanket_multiplier_fraction, blanket_breeder_fraction, blanket_steel_fraction in zip(blanket_multiplier_fractions, blanket_breeder_fractions, blanket_steel_fractions):
+
+for firstwall_coolant in tqdm(firstwall_coolant_options, desc='outer0 loop', leave=True):
+    for blanket_breeder_material in tqdm(blanket_breeder_material_options, desc='inner1 loop', leave=True):
+        for blanket_multiplier_material in tqdm(blanket_multiplier_material_options, desc='inner2 loop', leave=True):
+            for blanket_breeder_li6_enrichment_fraction in tqdm(blanket_breeder_li6_enrichment_fractions, desc='inner3 loop', leave=True):
+                for blanket_multiplier_fraction, blanket_breeder_fraction, blanket_steel_fraction in tqdm(zip(blanket_multiplier_fractions, blanket_breeder_fractions, blanket_steel_fractions), leave=True):
                     results.append(find_tbr(firstwall_coolant=firstwall_coolant, 
                                             blanket_steel_fraction=blanket_steel_fraction, 
                                             blanket_multiplier_fraction=blanket_multiplier_fraction,
@@ -180,4 +183,6 @@ for firstwall_coolant in firstwall_coolant_options:
                                             ))
                     with open('results.json', 'w') as fp:
                         json.dump(results, fp, indent = 4)    
+
+
 

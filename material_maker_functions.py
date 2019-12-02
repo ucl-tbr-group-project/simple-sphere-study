@@ -61,10 +61,10 @@ material_dict = {
                      },
 
     'Li': {
-          'elements':'Pb84.2Li15.8',
+          'elements':'Li',
           'density_equation':'0.515 - 1.01e-4 * (temperature_in_C - 200)',
           'density units': 'g/cm3',
-          'reference':'http://aries.ucsd.edu/LIB/PROPS/PANOS/li.html'
+          'reference':'http://aries.ucsd.edu/LIB/PROPS/PANOS/li.html',
           },
                     
     'F2Li2BeF2': {
@@ -109,7 +109,7 @@ material_dict = {
                },
     'Be':      {
                 'elements':'Be',
-                'atoms_per_unit_cell': 8,
+                'atoms_per_unit_cell': 2,
                 'volume_of_unit_cell_cm3': 0.01622e-21,
                 'reference':'http://materials.springer.com/isp/crystallographic/docs'
                 },
@@ -376,6 +376,9 @@ class Material():
         self.density_list=density_list
         self.neutronics_material = openmc.Material(name=self.material_name)
 
+        self.list_of_fractions = None
+        self.chemical_equation = None
+
         self.populate_from_dictionary()
 
         if self.enriched_isotope != 'Li6':
@@ -418,18 +421,21 @@ class Material():
                 self.neutronics_material.add_element(element_symbol, element_number, 'ao')
 
         elif type(self.elements) == str and self.enrichment_fraction == None:
-                element_numbers = self.get_element_numbers(self.elements)
-                element_symbols = self.get_elements_from_equation(self.elements)
+                print(' making material from chemical equation')
+                self.chemical_equation = self.elements
+                element_numbers = self.get_element_numbers_normalized()
+                element_symbols = self.get_elements_from_equation()
                 for element_symbol, element_number in zip(element_symbols, element_numbers):
                     self.neutronics_material.add_element(element_symbol, element_number, 'ao')
 
         elif type(self.elements) == str and self.enrichment_fraction != None:    
             print(' making enriched material from chemical equation')
+            self.chemical_equation = self.elements
 
             enriched_element_symbol, enriched_isotope_mass_number = re.split('(\d+)',self.enriched_isotope)[:2]
 
-            element_numbers = self.get_element_numbers(self.elements)
-            element_symbols = self.get_elements_from_equation(self.elements)
+            element_numbers = self.get_element_numbers_normalized()
+            element_symbols = self.get_elements_from_equation()
 
             for element_symbol, element_number in zip(element_symbols, element_numbers):
                 
@@ -496,6 +502,7 @@ class Material():
             self.neutronics_material.set_density(self.density_unit, self.density_value)
 
         else:
+
             raise ValueError("density can't be set for ",self.material_name, \
                             'provide either a density value, equation as a string, \
                             list of density values to interpolate or \
@@ -523,11 +530,11 @@ class Material():
         
 
 
-    def readChemicalEquation(self, chemical_equation):
-            return [a for a in re.split(r'([A-Z][a-z]*)', chemical_equation) if a]
+    def readChemicalEquation(self):
+            return [a for a in re.split(r'([A-Z][a-z]*)', self.chemical_equation) if a]
 
-    def get_elements_from_equation(self, chemical_equation):
-            chemical_equation_chopped_up = self.readChemicalEquation(chemical_equation)
+    def get_elements_from_equation(self):
+            chemical_equation_chopped_up = self.readChemicalEquation()
             list_elements = []
 
             for counter in range(0, len(chemical_equation_chopped_up)):
@@ -536,8 +543,16 @@ class Material():
                     list_elements.append(element_symbol)
             return list_elements
 
-    def get_element_numbers(self, chemical_equation):
-            chemical_equation_chopped_up = self.readChemicalEquation(chemical_equation)
+    def get_element_numbers_normalized(self):
+            chemical_equation_chopped_up = self.readChemicalEquation()
+            if self.list_of_fractions == None :
+                self.get_element_numbers()
+            norm_list_of_fractions = [float(i)/sum(self.list_of_fractions) for i in self.list_of_fractions]
+            return norm_list_of_fractions
+            # return material    
+
+    def get_element_numbers(self):
+            chemical_equation_chopped_up = self.readChemicalEquation()
             list_of_fractions = []
 
             for counter in range(0, len(chemical_equation_chopped_up)):
@@ -548,16 +563,16 @@ class Material():
                         list_of_fractions.append(float(chemical_equation_chopped_up[counter + 1]))
                     else:
                         list_of_fractions.append(1.0)
-            norm_list_of_fractions = [float(i)/sum(list_of_fractions) for i in list_of_fractions]
-            return norm_list_of_fractions
-            # return material    
+            self.list_of_fractions = list_of_fractions
     
     def get_atoms_in_crystal(self):
-        atoms_in_crystal = 0 #Li4SiO4 would be 9
-        for nuc, vals in self.neutronics_material.get_nuclide_densities().items():
-            atoms_in_crystal+=vals[1]    
-        print(' atoms in crystal',atoms_in_crystal)
-        self.atoms_in_crystal = atoms_in_crystal
+        self.get_element_numbers()
+        atoms_in_crystal = sum(self.list_of_fractions)
+        # atoms_in_crystal = 0 #Li4SiO4 would be 9
+        # for nuc, vals in self.neutronics_material.get_nuclide_densities().items():
+        #     atoms_in_crystal+=vals[1]    
+        # print(' atoms in crystal',atoms_in_crystal)
+        # self.atoms_in_crystal = atoms_in_crystal
         return atoms_in_crystal
 
     def get_crystal_molar_mass(self):
@@ -591,6 +606,8 @@ class MultiMaterial(list):
         # if len(self.volume_fractions) != len(self.materials):
         #     raise ValueError("There must be equal numbers of volume_fractions and materials") 
         self.neutronics_material = openmc.Material(name=self.material_name)
+
+        # self.makeMaterial()
 
     def makeMaterial(self):
     
@@ -631,7 +648,7 @@ if __name__ == "__main__":
                                                   Material('eurofer'),
                                                   Material('Li4SiO4', enrichment_fraction=0.5)
                                                  ],
-                                      volume_fractions = [0.5, 0.5]
+                                     volume_fractions = [0.5, 0.5]
                                 )
     blanket_material.makeMaterial()
     print(blanket_material.neutronics_material)
