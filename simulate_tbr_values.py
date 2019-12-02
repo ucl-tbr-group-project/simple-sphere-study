@@ -149,8 +149,12 @@ firstwall_coolant_options = ['no firstwall','H2O', 'He']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
 
-blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True)
+blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True).tolist()
 blanket_breeder_li6_enrichment_fractions.append(0.0759)
+
+print(blanket_breeder_li6_enrichment_fractions)
+input()
+
 
 blanket_steel_fractions = []
 blanket_multiplier_fractions = []
@@ -182,7 +186,7 @@ for firstwall_coolant in tqdm(firstwall_coolant_options, desc='outer0 loop', lea
                                             blanket_breeder_material=blanket_breeder_material,
                                             blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction
                                             ))
-                    with open('results.json', 'w') as fp:
+                    with open('results_new.json', 'w') as fp:
                         json.dump(results, fp, indent = 4)    
 
 
