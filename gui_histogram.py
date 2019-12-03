@@ -9,7 +9,7 @@ st.title('TBR results explorer')
 
 @st.cache
 def load_data():
-    return pd.read_json('results_hom.json') 
+    return pd.read_json('results_new.json') 
 
 data = load_data()
 
