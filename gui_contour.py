@@ -13,11 +13,12 @@ st.title('Simple TBR plotter')
 
 @st.cache
 def load_data():
-    return pd.read_json('results_new.json') 
+    data =  pd.read_json('results_new.json') 
+    data["fraction_of_breeder_in_breeder_plus_multiplier_volume"] = data['blanket_breeder_fraction'] / (data['blanket_multiplier_fraction'] + data['blanket_breeder_fraction'])
+    return data
 
 data = load_data()
 
-data["fraction_of_breeder_in_breeder_plus_multiplier_volume"] = data['blanket_breeder_fraction'] / (data['blanket_multiplier_fraction'] + data['blanket_breeder_fraction'])
 
 # st.write(data[0])
 
