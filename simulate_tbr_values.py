@@ -87,7 +87,6 @@ def find_tbr(firstwall_coolant,
                                                   breeder_blanket_cell
                                                  ])
 
-
             geom = openmc.Geometry(universe)
 
             #SIMULATION SETTINGS#
@@ -96,7 +95,7 @@ def find_tbr(firstwall_coolant,
             # batches = 10 # this is parsed as an argument
             sett.batches = batches
             sett.inactive = 0
-            sett.particles = 50000
+            sett.particles = 10000
             sett.run_mode = 'fixed source'
 
             source = openmc.Source()
@@ -151,9 +150,6 @@ blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
 
 blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True).tolist()
 blanket_breeder_li6_enrichment_fractions.append(0.0759)
-
-print(blanket_breeder_li6_enrichment_fractions)
-input()
 
 
 blanket_steel_fractions = []

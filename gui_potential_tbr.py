@@ -13,6 +13,8 @@ from plotly.graph_objs import Scatter, Layout, Contour, Heatmap, Surface, Scatte
 import pandas as pd
 
 data = pd.read_json('results_new.json') 
+# data = pd.read_json('results_hom_optimisation.json') #this should have even higher TBR values
+# data = pd.read_json('results_graded_optimisation.json') #this should have the highest TBR values
 
 blanket_breeder_materials = data['blanket_breeder_material'].unique()
 
