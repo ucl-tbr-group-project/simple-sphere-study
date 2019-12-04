@@ -1,0 +1,1202 @@
+[
+    {
+        "tbr": 2.0251314577658035,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.42905782845751383,
+        "blanket_multiplier_fraction": 0.7405910229767807,
+        "blanket_breeder_fraction": 0.25940897702321924
+    },
+    {
+        "tbr": 1.7588302647639995,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5138633857632228,
+        "blanket_multiplier_fraction": 0.5970679569712303,
+        "blanket_breeder_fraction": 0.4029320430287697
+    },
+    {
+        "tbr": 1.5765112647554913,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.3440498612204939,
+        "blanket_multiplier_fraction": 0.46514054464706744,
+        "blanket_breeder_fraction": 0.5348594553529326
+    },
+    {
+        "tbr": 2.453829998984614,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.07962092458829174,
+        "blanket_multiplier_fraction": 0.9720088187880023,
+        "blanket_breeder_fraction": 0.027991181211997736
+    },
+    {
+        "tbr": 1.016636953712837,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8346109867207202,
+        "blanket_multiplier_fraction": 0.1472961844973555,
+        "blanket_breeder_fraction": 0.8527038155026445
+    },
+    {
+        "tbr": 1.6413233207851525,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8735308480623089,
+        "blanket_multiplier_fraction": 0.5630965984670174,
+        "blanket_breeder_fraction": 0.43690340153298257
+    },
+    {
+        "tbr": 1.7573997867099866,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8969368231150969,
+        "blanket_multiplier_fraction": 0.6273461033630423,
+        "blanket_breeder_fraction": 0.37265389663695775
+    },
+    {
+        "tbr": 2.1167418460422645,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4508780243312187,
+        "blanket_multiplier_fraction": 0.7897989200946158,
+        "blanket_breeder_fraction": 0.21020107990538411
+    },
+    {
+        "tbr": 2.2672103134711605,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5963642918257074,
+        "blanket_multiplier_fraction": 0.8737480304955951,
+        "blanket_breeder_fraction": 0.1262519695044049
+    },
+    {
+        "tbr": 0.9441277826678648,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6734267930225823,
+        "blanket_multiplier_fraction": 0.057932950240204395,
+        "blanket_breeder_fraction": 0.9420670497597956
+    },
+    {
+        "tbr": 0.027462935643346963,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 1.0,
+        "blanket_multiplier_fraction": 1.0,
+        "blanket_breeder_fraction": 0.0
+    },
+    {
+        "tbr": 2.2496799259694704,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.580725695431292,
+        "blanket_multiplier_fraction": 0.8637884014951822,
+        "blanket_breeder_fraction": 0.13621159850481776
+    },
+    {
+        "tbr": 1.7220770074614815,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8738814966846464,
+        "blanket_multiplier_fraction": 0.6060837722966789,
+        "blanket_breeder_fraction": 0.39391622770332113
+    },
+    {
+        "tbr": 0.027462935643346984,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8869771254687892,
+        "blanket_multiplier_fraction": 1.0,
+        "blanket_breeder_fraction": 0.0
+    },
+    {
+        "tbr": 1.0470090535505667,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.035406487801621936,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 0.1704734250676402,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.0,
+        "blanket_multiplier_fraction": 0.560908377624761,
+        "blanket_breeder_fraction": 0.4390916223752391
+    },
+    {
+        "tbr": 1.1107084998809293,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.3335839873656902,
+        "blanket_multiplier_fraction": 0.1189835032626817,
+        "blanket_breeder_fraction": 0.8810164967373183
+    },
+    {
+        "tbr": 0.027462935643346963,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.3326351091658181,
+        "blanket_multiplier_fraction": 1.0,
+        "blanket_breeder_fraction": 0.0
+    },
+    {
+        "tbr": 1.6560274341203292,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9086663907722494,
+        "blanket_multiplier_fraction": 0.5744633778120156,
+        "blanket_breeder_fraction": 0.42553662218798444
+    },
+    {
+        "tbr": 0.9732315825908763,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9522545025708475,
+        "blanket_multiplier_fraction": 0.13309718059542064,
+        "blanket_breeder_fraction": 0.8669028194045794
+    },
+    {
+        "tbr": 1.0939336812270757,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6349578655151472,
+        "blanket_multiplier_fraction": 0.13445576311488205,
+        "blanket_breeder_fraction": 0.865544236885118
+    },
+    {
+        "tbr": 1.1273573616545414,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.23921394818315206,
+        "blanket_multiplier_fraction": 0.1143038943850817,
+        "blanket_breeder_fraction": 0.8856961056149183
+    },
+    {
+        "tbr": 2.001122555881556,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9570642293679664,
+        "blanket_multiplier_fraction": 0.7693105745538131,
+        "blanket_breeder_fraction": 0.2306894254461868
+    },
+    {
+        "tbr": 1.2313896592940092,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4506785065481246,
+        "blanket_multiplier_fraction": 0.2334313336888897,
+        "blanket_breeder_fraction": 0.7665686663111103
+    },
+    {
+        "tbr": 2.204775161106933,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4400620523127141,
+        "blanket_multiplier_fraction": 0.8611833875479931,
+        "blanket_breeder_fraction": 0.13881661245200697
+    },
+    {
+        "tbr": 1.089796008071743,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.22874461797840523,
+        "blanket_multiplier_fraction": 0.07392322522222738,
+        "blanket_breeder_fraction": 0.9260767747777726
+    },
+    {
+        "tbr": 1.0593274677327138,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9220061599471547,
+        "blanket_multiplier_fraction": 0.1428905788549939,
+        "blanket_breeder_fraction": 0.8571094211450061
+    },
+    {
+        "tbr": 2.366261113704868,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8963479070093847,
+        "blanket_multiplier_fraction": 0.9351809957418955,
+        "blanket_breeder_fraction": 0.06481900425810451
+    },
+    {
+        "tbr": 1.560562453313929,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4976458626677509,
+        "blanket_multiplier_fraction": 0.4781016931454398,
+        "blanket_breeder_fraction": 0.5218983068545602
+    },
+    {
+        "tbr": 1.660832946659602,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.1482192656642383,
+        "blanket_multiplier_fraction": 0.5368686312650369,
+        "blanket_breeder_fraction": 0.4631313687349631
+    },
+    {
+        "tbr": 0.027462935643346998,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8403127268970686,
+        "blanket_multiplier_fraction": 1.0,
+        "blanket_breeder_fraction": 0.0
+    },
+    {
+        "tbr": 2.361048664800778,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8964577942037938,
+        "blanket_multiplier_fraction": 0.9340909420685248,
+        "blanket_breeder_fraction": 0.06590905793147513
+    },
+    {
+        "tbr": 2.3107745353041182,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5668042787816687,
+        "blanket_multiplier_fraction": 0.909112871566077,
+        "blanket_breeder_fraction": 0.09088712843392298
+    },
+    {
+        "tbr": 2.347625080614189,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8974182707920403,
+        "blanket_multiplier_fraction": 0.9280274677769225,
+        "blanket_breeder_fraction": 0.07197253222307756
+    },
+    {
+        "tbr": 0.027462935643346963,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4355702740216887,
+        "blanket_multiplier_fraction": 1.0,
+        "blanket_breeder_fraction": 0.0
+    },
+    {
+        "tbr": 1.9093955281782962,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.45681919430342544,
+        "blanket_multiplier_fraction": 0.6961450653595689,
+        "blanket_breeder_fraction": 0.3038549346404312
+    },
+    {
+        "tbr": 1.7666949478908531,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.678476182007093,
+        "blanket_multiplier_fraction": 0.6193824561889496,
+        "blanket_breeder_fraction": 0.38061754381105034
+    },
+    {
+        "tbr": 1.2534155172756505,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9959813590802652,
+        "blanket_multiplier_fraction": 0.3060311799561706,
+        "blanket_breeder_fraction": 0.6939688200438294
+    },
+    {
+        "tbr": 1.4095152819398629,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6562734204374785,
+        "blanket_multiplier_fraction": 0.3915921984383133,
+        "blanket_breeder_fraction": 0.6084078015616867
+    },
+    {
+        "tbr": 0.9039160817138596,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9313395002743534,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 2.369066443492031,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.33680080605086943,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3608163328439162,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6525020659157744,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.376168066823938,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.1474399374715071,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.352536950086182,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9877180976641782,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3721595604349988,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.30911857055732067,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.360161698387391,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5399242562815331,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3605436331830227,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6022594544785502,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3713028046172324,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.06607801961466976,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3708251103285862,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.13554366020038702,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.368060723255072,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4269756208657548,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3531347263353144,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9999864072540483,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 0.7881890638824874,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.00017658485092786338,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3650282230103072,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.09054073446072658,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3671765977791828,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.07447303906560822,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3592377004526,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.7845389347581817,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3664810396732747,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.39347272173294184,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3587087174742107,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.7436560603733811,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3682079418970186,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4852901737120529,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.36110104102338,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.882099832376999,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.374451086872185,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.23028504678223502,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3394592922428736,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.56039171360455,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3447715373697307,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.7038587269968214,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.333220569200975,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.3774379660121038,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.338854542704981,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9869721256114037,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3405386473486054,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5272680233724367,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3290723363408676,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.3355165898504568,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.340601609135059,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.7597550992102763,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3391421733696545,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.4254699872619938,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.343312051318391,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.734000213849293,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3395223172782855,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9417671399027955,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 0.10871415482428737,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.00010464507835172834,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3363640028933697,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8579372702558403,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.342529735309186,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6317064480357371,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3372797814213926,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.47339377470710003,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.336618221559616,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.8130177621365468,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.338639867495149,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 1.0,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3381974431163473,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.9013184696335292,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3463962215238583,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.6707112388065215,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3337915914607876,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.353246306857881,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 2.3366254693945114,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0.5819118998976232,
+        "blanket_multiplier_fraction": 0.9241,
+        "blanket_breeder_fraction": 0.0759
+    },
+    {
+        "tbr": 0.29163467131441295,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.04426925315207764,
+        "blanket_breeder_fraction": 0.9557307468479224
+    },
+    {
+        "tbr": 0.28033287333535,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.10089657305072952,
+        "blanket_breeder_fraction": 0.8991034269492705
+    },
+    {
+        "tbr": 0.11531721581024176,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.7439524369885666,
+        "blanket_breeder_fraction": 0.25604756301143333
+    },
+    {
+        "tbr": 0.2525683570563116,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.22934780280234146,
+        "blanket_breeder_fraction": 0.7706521971976585
+    },
+    {
+        "tbr": 0.11953377379493348,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.7306886845773104,
+        "blanket_breeder_fraction": 0.26931131542268966
+    },
+    {
+        "tbr": 0.2370694234623732,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.2998078521417007,
+        "blanket_breeder_fraction": 0.7001921478582993
+    },
+    {
+        "tbr": 0.21359650451269205,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.3973178491057545,
+        "blanket_breeder_fraction": 0.6026821508942455
+    },
+    {
+        "tbr": 0.039587049589990264,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.9670907129861548,
+        "blanket_breeder_fraction": 0.03290928701384522
+    },
+    {
+        "tbr": 0.282324373581748,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.09162699413222741,
+        "blanket_breeder_fraction": 0.9083730058677726
+    },
+    {
+        "tbr": 0.2158475864625112,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.38917943081005535,
+        "blanket_breeder_fraction": 0.6108205691899447
+    },
+    {
+        "tbr": 0.3003914694489926,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 0.2985529859055417,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.008605395023787432,
+        "blanket_breeder_fraction": 0.9913946049762126
+    },
+    {
+        "tbr": 0.3003418320777337,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 9.695712269952583e-05,
+        "blanket_breeder_fraction": 0.9999030428773005
+    },
+    {
+        "tbr": 0.30039146944899253,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 0.17622988354988417,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.5400854483460334,
+        "blanket_breeder_fraction": 0.45991455165396655
+    },
+    {
+        "tbr": 0.3001678783259725,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0010244037861218969,
+        "blanket_breeder_fraction": 0.9989755962138781
+    },
+    {
+        "tbr": 0.30028961148111966,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0006031121395446704,
+        "blanket_breeder_fraction": 0.9993968878604553
+    },
+    {
+        "tbr": 0.300248762270355,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0007445395451526338,
+        "blanket_breeder_fraction": 0.9992554604548474
+    },
+    {
+        "tbr": 0.30037061472271037,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.00016978802783029767,
+        "blanket_breeder_fraction": 0.9998302119721697
+    },
+    {
+        "tbr": 0.30035073153255226,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li4SiO4",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0003632943490271545,
+        "blanket_breeder_fraction": 0.9996367056509728
+    },
+    {
+        "tbr": 0.1484100919573789,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.41442463235626903,
+        "blanket_breeder_fraction": 0.585575367643731
+    },
+    {
+        "tbr": 0.19293892512328073,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.06959657618823645,
+        "blanket_breeder_fraction": 0.9304034238117636
+    },
+    {
+        "tbr": 0.04667125764910647,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.9259398375093107,
+        "blanket_breeder_fraction": 0.07406016249068927
+    },
+    {
+        "tbr": 0.15623939234889464,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.36105990159930323,
+        "blanket_breeder_fraction": 0.6389400984006968
+    },
+    {
+        "tbr": 0.027477195505824354,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.9999467982603603,
+        "blanket_breeder_fraction": 5.320173963974108e-05
+    },
+    {
+        "tbr": 0.07423048806492104,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.8091708327330949,
+        "blanket_breeder_fraction": 0.19082916726690508
+    },
+    {
+        "tbr": 0.11833880785057871,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.5927589531051877,
+        "blanket_breeder_fraction": 0.40724104689481233
+    },
+    {
+        "tbr": 0.14624500555077982,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.42772030878547407,
+        "blanket_breeder_fraction": 0.5722796912145259
+    },
+    {
+        "tbr": 0.15998695890853523,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.3340784688123952,
+        "blanket_breeder_fraction": 0.6659215311876048
+    },
+    {
+        "tbr": 0.11289512282392658,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.6230325133430131,
+        "blanket_breeder_fraction": 0.37696748665698687
+    },
+    {
+        "tbr": 0.19102297508124477,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.08769324297024228,
+        "blanket_breeder_fraction": 0.9123067570297577
+    },
+    {
+        "tbr": 0.19988078470539247,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 0.1777210472495641,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.1989486860321601,
+        "blanket_breeder_fraction": 0.8010513139678399
+    },
+    {
+        "tbr": 0.1976101270392237,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.022764921116426806,
+        "blanket_breeder_fraction": 0.9772350788835732
+    },
+    {
+        "tbr": 0.1993356025541592,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.005428746374955606,
+        "blanket_breeder_fraction": 0.9945712536250444
+    },
+    {
+        "tbr": 0.18407390335756768,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.14349239917194612,
+        "blanket_breeder_fraction": 0.8565076008280539
+    },
+    {
+        "tbr": 0.19986297815624013,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 5.6324159272258534e-05,
+        "blanket_breeder_fraction": 0.9999436758407277
+    },
+    {
+        "tbr": 0.19988078470539283,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0,
+        "blanket_breeder_fraction": 1.0
+    },
+    {
+        "tbr": 0.19986142080197866,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 5.062341414552307e-05,
+        "blanket_breeder_fraction": 0.9999493765858545
+    },
+    {
+        "tbr": 0.19977873996036263,
+        "firstwall_coolant": "no firstwall",
+        "blanket_steel_fraction": 0.0,
+        "blanket_multiplier_material": "Be",
+        "blanket_breeder_material": "Li2TiO3",
+        "fraction_of_breeder_in_breeder_plus_multiplier_volume": 0,
+        "blanket_multiplier_fraction": 0.0015045487953109227,
+        "blanket_breeder_fraction": 0.9984954512046891
+    }
+]
