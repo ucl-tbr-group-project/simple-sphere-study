@@ -72,7 +72,8 @@ def make_2d_scatter_trace(x,y,z,text_values, name=''):
                         text=text_values,
                         marker = {'size':6,
                                        'color':'red',
-                                       'symbol':'cross'} 
+                                       'symbol':'cross'} ,
+                        showlegend=False,
         )
         return trace
 
@@ -132,16 +133,30 @@ coords_gp = [ (i,j) for i in x_gp for j in y_gp ]
 gp_mu, gp_sigma = GP(coords_gp)
 gp_mu_folded = np.reshape(gp_mu,(len(x_gp),len(y_gp))).T
 
+max_tbr_coords = coords_gp[(np.where(gp_mu==max(gp_mu)))[0][0]]
+
 traces= []
 traces.append(make_2d_surface_trace(gp_mu_folded,x_gp,y_gp,'Tritium Breeding Ratio (TBR)'))   # Makes the actual contours
 traces.append(make_2d_scatter_trace(x,y,z,labels))
+traces.append(Scatter(x=[max_tbr_coords[0]],
+                      y=[max_tbr_coords[1]],
+                      mode='markers',
+                      marker=dict(size=8,
+                                  line=dict(color='MediumPurple',
+                                            width=2),
+                                  color='LightSkyBlue'),
+                      showlegend=False,
+                      hoverinfo='text',
+                      text='Max TBR = ' + str(max(gp_mu)),
+                    )
+            )
 
 layout = generate_2d_layout('TBR for '+ blanket_breeder_material +' and ' + blanket_multiplier_material + ' with ' + str(round(blanket_steel_fraction,2)) + ' steel fraction', 
                             'Blanket Breeder Li6 Enrichment Fraction',
                             'breeder / (breeder + multiplier)',x,y)
 
 fig = go.Figure({'data':traces,
-                    'layout':layout})
+                 'layout':layout})
 st.write(filtered_data)
 st.write('number of data points', len(filtered_data))
 st.write('max tbr (fitted)', max(gp_mu))
@@ -150,4 +165,4 @@ st.write('Plot of matching materials at given steel fraction')
 st.write(fig)
 
 #except:
-st.write('No available data for criteria')
+# st.write('No available data for criteria')
