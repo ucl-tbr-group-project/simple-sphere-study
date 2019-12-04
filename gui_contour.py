@@ -14,7 +14,8 @@ st.title('Simple TBR plotter')
 @st.cache
 def load_data():
     data =  pd.read_json('results_new.json') 
-    data["fraction_of_breeder_in_breeder_plus_multiplier_volume"] = data['blanket_breeder_fraction'] / (data['blanket_multiplier_fraction'] + data['blanket_breeder_fraction'])
+    if 'fraction_of_breeder_in_breeder_plus_multiplier_volume' not in data.keys():
+        data["fraction_of_breeder_in_breeder_plus_multiplier_volume"] = data['blanket_breeder_fraction'] / (data['blanket_multiplier_fraction'] + data['blanket_breeder_fraction'])
     return data
 
 data = load_data()
@@ -22,7 +23,7 @@ data = load_data()
 
 # st.write(data[0])
 
-st.write(data.keys())
+# st.write(data.keys())
 firstwall_coolant = st.selectbox('select a firstwall coolant', data['firstwall_coolant'].unique())
 blanket_multiplier_material = st.selectbox('select a blanket multiplier material', data['blanket_multiplier_material'].unique())
 blanket_breeder_material = st.selectbox('select a blanket breeder material', data['blanket_breeder_material'].unique())
