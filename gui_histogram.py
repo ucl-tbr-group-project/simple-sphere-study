@@ -61,84 +61,90 @@ filtered_data = data[
                      (data.blanket_breeder_li6_enrichment_fraction >= blanket_enrichment_fractions[0]) & (data.blanket_breeder_li6_enrichment_fraction <= blanket_enrichment_fractions[1])
                     ]
 
-st.write(' Number of simulations matching criteria ' ,len(filtered_data))
-st.write(filtered_data)
+if len(filtered_data) == 0:
+        st.write('No simulations matching criteria')
 
-colors = ['rgba(93, 164, 214)', 'rgba(255, 144, 14)']
+else:
+        
 
-fig = go.Figure()
-for c, breeder_material in zip(colors, selected_blanket_breeder_materials):
+        st.write(' Number of simulations matching criteria ' ,len(filtered_data))
+        st.write(filtered_data)
+
+        colors = ['rgba(93, 164, 214)', 'rgba(255, 144, 14)']
+
+        fig = go.Figure()
+        for c, breeder_material in zip(colors, selected_blanket_breeder_materials):
     
-    y_data = filtered_data[(filtered_data.blanket_breeder_material == breeder_material)]['tbr']
-                 
-    fig.add_trace(go.Histogram(x=y_data,
-                               name= breeder_material,
-                               xbins=dict(start=0),
-                               marker_line_width=1.5
-                              )
-                )
+                y_data = filtered_data[(filtered_data.blanket_breeder_material == breeder_material)]['tbr']
+                                
+                fig.add_trace(go.Histogram(x=y_data,
+                                        name= breeder_material,
+                                        xbins=dict(start=0),
+                                        marker_line_width=1.5
+                                        )
+                                )
 
 
-fig.update_layout(barmode='overlay',
-                  xaxis_title="TBR",
-                  yaxis_title="number of simulations",
-                  title="Impact of Breeder Material",               
-                  )    
-fig.update_traces(opacity=0.4)
-st.write(fig)
-for breeder_material in selected_blanket_breeder_materials:
-    y_data = filtered_data[(filtered_data.blanket_breeder_material == breeder_material)]['tbr']
-    if len(y_data) != 0:                
-        st.write(' Maximum TBR for ' ,breeder_material, ' = ',max(y_data) )
+        fig.update_layout(barmode='overlay',
+                        xaxis_title="TBR",
+                        yaxis_title="number of simulations",
+                        title="Impact of Breeder Material",               
+                        )    
+        fig.update_traces(opacity=0.4)
+        st.write(fig)
+        for breeder_material in selected_blanket_breeder_materials:
+                y_data = filtered_data[(filtered_data.blanket_breeder_material == breeder_material)]['tbr']
+                if len(y_data) != 0:                
+                        st.write(' Maximum TBR for ' ,breeder_material, ' = ',max(y_data) )
 
 
 
 
-fig = go.Figure()
-for multiplier_material in selected_blanket_multiplier_materials:
+        fig = go.Figure()
+        for multiplier_material in selected_blanket_multiplier_materials:
     
-    y_data = filtered_data[(filtered_data.blanket_multiplier_material == multiplier_material)]['tbr']
-                 
-    fig.add_trace(go.Histogram(x=y_data,
-                               name= multiplier_material,
-                               xbins=dict(start=0),
-                               marker_line_width=1.5
-                              )
-                )
+                y_data = filtered_data[(filtered_data.blanket_multiplier_material == multiplier_material)]['tbr']
+                                
+                fig.add_trace(go.Histogram(x=y_data,
+                                        name= multiplier_material,
+                                        xbins=dict(start=0),
+                                        marker_line_width=1.5
+                                        )
+                                )
 
-fig.update_layout(barmode='overlay',
-                  xaxis_title="TBR",
-                  yaxis_title="number of simulations",
-                  title="Impact of Multiplier Material")    
-fig.update_traces(opacity=0.4)
-st.write(fig)
-for multiplier_material in selected_blanket_multiplier_materials:
-    y_data = filtered_data[(filtered_data.blanket_multiplier_material == multiplier_material)]['tbr']
-    if len(y_data) != 0:                
-        st.write(' Maximum TBR for ' ,multiplier_material, ' = ',max(y_data) )
+        fig.update_layout(barmode='overlay',
+                        xaxis_title="TBR",
+                        yaxis_title="number of simulations",
+                        title="Impact of Multiplier Material")    
+        fig.update_traces(opacity=0.4)
+        st.write(fig)
+        for multiplier_material in selected_blanket_multiplier_materials:
+                y_data = filtered_data[(filtered_data.blanket_multiplier_material == multiplier_material)]['tbr']
+                if len(y_data) != 0:                
+                        st.write(' Maximum TBR for ' ,multiplier_material, ' = ',max(y_data) )
 
 
 
-fig = go.Figure()
-for firstwall_coolant in selected_firstwall_coolants:
+        fig = go.Figure()
+        for firstwall_coolant in selected_firstwall_coolants:
     
-    y_data = filtered_data[(filtered_data.firstwall_coolant == firstwall_coolant)]['tbr']
-                 
-    fig.add_trace(go.Histogram(x=y_data,
-                               name= firstwall_coolant,
-                               xbins=dict(start=0),
-                               marker_line_width=1.5
-                              )
-                )
+                y_data = filtered_data[(filtered_data.firstwall_coolant == firstwall_coolant)]['tbr']
+                                
+                fig.add_trace(go.Histogram(x=y_data,
+                                        name= firstwall_coolant,
+                                        xbins=dict(start=0),
+                                        marker_line_width=1.5
+                                        )
+                                )
     
 
-fig.update_layout(barmode='overlay',
-                  xaxis_title="TBR",
-                  yaxis_title="number of simulations",
-                  title="Impact of Firstwall Coolant")  
-fig.update_traces(opacity=0.4)
-st.write(fig)
-for firstwall_coolant in selected_firstwall_coolants:
-    y_data = filtered_data[(filtered_data.firstwall_coolant == firstwall_coolant)]['tbr']
-    if len(y_data) != 0:
-        st.write(' Maximum TBR for ' ,firstwall_coolant, ' = ',max(y_data) )
+        fig.update_layout(barmode='overlay',
+                        xaxis_title="TBR",
+                        yaxis_title="number of simulations",
+                        title="Impact of Firstwall Coolant")  
+        fig.update_traces(opacity=0.4)
+        st.write(fig)
+        for firstwall_coolant in selected_firstwall_coolants:
+                y_data = filtered_data[(filtered_data.firstwall_coolant == firstwall_coolant)]['tbr']
+                if len(y_data) != 0:
+                        st.write(' Maximum TBR for ' ,firstwall_coolant, ' = ',max(y_data) )
