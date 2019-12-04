@@ -11,7 +11,7 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-data = pd.read_json('results_hom.json') 
+data = pd.read_json('results_new.json') 
 
 x = ['Product A', 'Product B', 'Product C']
 y = [20, 14, 23]
