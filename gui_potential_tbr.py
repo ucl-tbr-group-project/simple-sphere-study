@@ -9,41 +9,80 @@
 
 
 import plotly.graph_objects as go
+from plotly.graph_objs import Scatter, Layout, Contour, Heatmap, Surface, Scatter3d
 import pandas as pd
 
 data = pd.read_json('results_new.json') 
 
-x = ['Product A', 'Product B', 'Product C']
-y = [20, 14, 23]
-
-fig = go.Figure()
-
 blanket_breeder_materials = data['blanket_breeder_material'].unique()
 
-print(blanket_breeder_materials)
-max_tbr_values = []
+materials = []
+filtered_data = []
+names = []
 
 for blanket_breeder_material in blanket_breeder_materials:
-    filtered_data = data[data.blanket_breeder_material == blanket_breeder_material]
+    
 
-    max_tbr_values.append(max(filtered_data.tbr))
+    # max tbr with no li6 enrichment, no multiplier
+    filtered_data_1 = data[
+                        (data.blanket_breeder_material == blanket_breeder_material) &
+                        (data.blanket_breeder_li6_enrichment_fraction == 0) &
+                        (data.blanket_multiplier_fraction == 0)
+    ]
+    names.append('No Li6 enrichment, no multiplier')
+    filtered_data.append(filtered_data_1)
+    materials.append(blanket_breeder_material)
 
-fig = fig.add_trace(go.Scatter(
-                        y=max_tbr_values,
-                        x=blanket_breeder_materials, 
-                        text=max_tbr_values,
-                        mode='markers',
-                        marker=dict(size=20)
-                    )
-                    )
 
-#TODO set the Y axis to start at 0
-fig.update_layout(
-                  yaxis_title="TBR",
-                  xaxis_title="Breeder material",
-                 )  
+    # max tbr with li6 enrichment, no multiplier
+    filtered_data_2 = data[
+                        (data.blanket_breeder_material == blanket_breeder_material) &
+                        (data.blanket_breeder_li6_enrichment_fraction > 0) &
+                        (data.blanket_multiplier_fraction == 0)
+    ]
+    names.append('Li6 enrichment, no multiplier')
+    filtered_data.append(filtered_data_2)
+    materials.append(blanket_breeder_material)
+  
 
+    # max tbr with no li6 enrichment, with multiplier
+    filtered_data_3 = data[
+                        (data.blanket_breeder_material == blanket_breeder_material) &
+                        (data.blanket_breeder_li6_enrichment_fraction == 0) &
+                        (data.blanket_multiplier_fraction > 0)
+    ]
+    names.append('No Li6 enrichment, with multiplier')
+    filtered_data.append(filtered_data_3)
+    materials.append(blanket_breeder_material)
+
+
+    # max tbr with li6 enrichment, with multiplier
+    filtered_data_4 = data[
+                        (data.blanket_breeder_material == blanket_breeder_material) &
+                        (data.blanket_breeder_li6_enrichment_fraction > 0) &
+                        (data.blanket_multiplier_fraction > 0)
+    ]
+    names.append('Li6 enrichment, with multiplier')
+    filtered_data.append(filtered_data_4)
+    materials.append(blanket_breeder_material)
+
+
+traces = []
+
+for data, material, name in zip(filtered_data, materials, names):
+    traces.append(Scatter(
+                    y=[max(data.tbr)],
+                    x=[material],
+                    text=max(data.tbr),
+                    mode='markers',
+                    marker=dict(size=20),
+                    name=name,
+    )
+    )
+
+layout = Layout(xaxis={'title':'Breeder material'},
+                yaxis={'title':'TBR'})
+
+fig = go.Figure({'data':traces,
+                 'layout':layout})
 fig.show()
-
-# filtered_data_yes_enrichment_no_multiplier
-# filtered_data_yes_enrichment__multiplier
