@@ -18,22 +18,20 @@ data = pd.read_json('results_new.json')
 
 blanket_breeder_materials = data['blanket_breeder_material'].unique()
 
-materials = []
-filtered_data = []
-names = []
+scenario_1 = []
+scenario_2 = []
+scenario_3 = []
+scenario_4 = []
 
 for blanket_breeder_material in blanket_breeder_materials:
     
-
     # max tbr with no li6 enrichment, no multiplier
     filtered_data_1 = data[
                         (data.blanket_breeder_material == blanket_breeder_material) &
                         (data.blanket_breeder_li6_enrichment_fraction == 0) &
                         (data.blanket_multiplier_fraction == 0)
     ]
-    names.append('No Li6 enrichment, no multiplier')
-    filtered_data.append(filtered_data_1)
-    materials.append(blanket_breeder_material)
+    scenario_1.append(['No Li6 enrichment, no multiplier', filtered_data_1, blanket_breeder_material])
 
 
     # max tbr with li6 enrichment, no multiplier
@@ -42,9 +40,7 @@ for blanket_breeder_material in blanket_breeder_materials:
                         (data.blanket_breeder_li6_enrichment_fraction > 0) &
                         (data.blanket_multiplier_fraction == 0)
     ]
-    names.append('Li6 enrichment, no multiplier')
-    filtered_data.append(filtered_data_2)
-    materials.append(blanket_breeder_material)
+    scenario_2.append(['Li6 enrichment, no multiplier', filtered_data_2, blanket_breeder_material])
   
 
     # max tbr with no li6 enrichment, with multiplier
@@ -53,9 +49,7 @@ for blanket_breeder_material in blanket_breeder_materials:
                         (data.blanket_breeder_li6_enrichment_fraction == 0) &
                         (data.blanket_multiplier_fraction > 0)
     ]
-    names.append('No Li6 enrichment, with multiplier')
-    filtered_data.append(filtered_data_3)
-    materials.append(blanket_breeder_material)
+    scenario_3.append(['No Li6 enrichment, with multiplier', filtered_data_3, blanket_breeder_material])
 
 
     # max tbr with li6 enrichment, with multiplier
@@ -64,23 +58,20 @@ for blanket_breeder_material in blanket_breeder_materials:
                         (data.blanket_breeder_li6_enrichment_fraction > 0) &
                         (data.blanket_multiplier_fraction > 0)
     ]
-    names.append('Li6 enrichment, with multiplier')
-    filtered_data.append(filtered_data_4)
-    materials.append(blanket_breeder_material)
+    scenario_4.append(['Li6 enrichment, with multiplier', filtered_data_4, blanket_breeder_material])
 
 
 traces = []
-
-for data, material, name in zip(filtered_data, materials, names):
+for scenario in (scenario_1, scenario_2, scenario_3, scenario_4):
     traces.append(Scatter(
-                    y=[max(data.tbr)],
-                    x=[material],
-                    text=max(data.tbr),
+                    y=[max(scenario[0][1].tbr), max(scenario[1][1].tbr)],
+                    x=[scenario[0][2], scenario[1][2]],
+                    text=[max(scenario[0][1].tbr), max(scenario[1][1].tbr)],
                     mode='markers',
                     marker=dict(size=20),
-                    name=name,
-    )
-    )
+                    name=str(scenario[0][0])
+    ))
+
 
 layout = Layout(xaxis={'title':'Breeder material'},
                 yaxis={'title':'TBR'})
