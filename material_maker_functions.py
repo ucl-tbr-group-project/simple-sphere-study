@@ -414,7 +414,7 @@ class Material():
             self.density_unit = material_dict[self.material_name]['density_unit']
 
     def addElements(self):
-        print('making material from elements')
+        # print('making material from elements')
         if self.elements == None:
             self.elements = material_dict[self.material_name]['elements']
         else:
@@ -428,7 +428,7 @@ class Material():
                 self.neutronics_material.add_element(element_symbol, element_number, 'ao')
 
         elif type(self.elements) == str and self.enrichment_fraction == None:
-                print(' making material from chemical equation')
+                # print(' making material from chemical equation')
                 self.chemical_equation = self.elements
                 element_numbers = self.get_element_numbers_normalized()
                 element_symbols = self.get_elements_from_equation()
@@ -436,7 +436,7 @@ class Material():
                     self.neutronics_material.add_element(element_symbol, element_number, 'ao')
 
         elif type(self.elements) == str and self.enrichment_fraction != None:    
-            print(' making enriched material from chemical equation')
+            # print(' making enriched material from chemical equation')
             self.chemical_equation = self.elements
 
             enriched_element_symbol, enriched_isotope_mass_number = re.split('(\d+)',self.enriched_isotope)[:2]
@@ -465,7 +465,7 @@ class Material():
 
     def addIsotopes(self):
         if 'isotopes' in material_dict[self.material_name].keys():
-            print('making material from isotopes')
+            # print('making material from isotopes')
 
             self.isotopes = material_dict[self.material_name]['isotopes']
 
@@ -477,15 +477,15 @@ class Material():
         temperature_in_C = self.temperature_in_C
         # temperature_in_K = self.temperature_in_K #todo intergrate this into the init
         if type(self.density) == float:
-            print(' setting density from value')
+            # print(' setting density from value')
             self.density_value = self.density
             self.neutronics_material.set_density(self.density_unit, 
                                                  self.density_value*self.packing_fraction)
 
         elif self.density == None and self.density_equation != None:
-            print(' calculating density from equation provided')
+            # print(' calculating density from equation provided')
             if temperature_in_C != None:
-                print(' temperature_in_C',temperature_in_C)
+                # print(' temperature_in_C',temperature_in_C)
                 temperature_in_K = temperature_in_C + 273.15
                 print(' temperature_in_K',temperature_in_K)
             self.density_value = eval(self.density_equation)
@@ -493,12 +493,12 @@ class Material():
                                                  self.density_value*self.packing_fraction)
                             
         elif self.density_list != None:
-            print(' interpolating density from list of densities')
+            # print(' interpolating density from list of densities')
             raise ValueError("Not yet implmented") 
 
 
         elif self.atoms_per_unit_cell != None and self.volume_of_unit_cell_cm3 != None:
-            print(' calculating density from unit cell size')
+            # print(' calculating density from unit cell size')
             
             self.atoms_per_unit_cell = material_dict[self.material_name]['atoms_per_unit_cell']
             self.volume_of_unit_cell_cm3 = material_dict[self.material_name]['volume_of_unit_cell_cm3']
@@ -515,19 +515,19 @@ class Material():
                             list of density values to interpolate or \
                             atoms_per_unit_cell and volume_of_unit_cell_cm3')  
 
-        print(' density',self.neutronics_material.get_mass_density(),self.density_unit)
+        # print(' density',self.neutronics_material.get_mass_density(),self.density_unit)
 
         return self.neutronics_material
 
     def makeMaterial(self):
-        print('making material',self.material_name)
+        # print('making material',self.material_name)
         
         if self.isotopes != None:
-            print('making material from isotopes')
+            # print('making material from isotopes')
             self.addIsotopes()
 
         if self.elements != None:
-            print('making material from elements')
+            # print('making material from elements')
             self.addElements()
 
         self.addDensity()
@@ -584,13 +584,13 @@ class Material():
 
     def get_crystal_molar_mass(self):
         molar_mass = self.neutronics_material.average_molar_mass*self.get_atoms_in_crystal()
-        print(' molar_mass',molar_mass)
+        # print(' molar_mass',molar_mass)
         self.molar_mass = molar_mass
         return molar_mass
 
     def calculate_crystal_structure_density(self):
         density_g_per_cm3 = (self.get_crystal_molar_mass() * self.atomic_mass_unit_in_g * self.atoms_per_unit_cell) / self.volume_of_unit_cell_cm3
-        print('pre packing density =',density_g_per_cm3)
+        # print('pre packing density =',density_g_per_cm3)
         self.density = density_g_per_cm3
         
 

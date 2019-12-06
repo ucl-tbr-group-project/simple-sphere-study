@@ -118,12 +118,16 @@ def generate_2d_layout(title,x_axis_name,y_axis_name,x,y):
 x = list(filtered_data.blanket_breeder_li6_enrichment_fraction)
 y = list(filtered_data.fraction_of_breeder_in_breeder_plus_multiplier_volume)
 z = list(filtered_data.tbr)
-z_e = list(filtered_data.tbr_std_dev)
-labels = [str(i)+'+-'+str(j) for i,j in zip(z,z_e)]
+if 'tbr_std_dev' in filtered_data.keys():
+    z_e = list(filtered_data.tbr_std_dev)
+    labels = [str(i)+'+-'+str(j) for i,j in zip(z,z_e)]
+else:
+    labels = [str(i) for i in zip(z)]
 
 coords = list(zip(x,y))
 
-GP = GpRegressor(coords, z, y_err=z_e)
+# GP = GpRegressor(coords, z, y_err=z_e)
+GP = GpRegressor(coords, z)
 
 x_gp = linspace(start=min(x), stop=max(x), num=75)
 y_gp = linspace(start=min(y), stop=max(y), num=75)
@@ -157,7 +161,7 @@ layout = generate_2d_layout('TBR for '+ blanket_breeder_material +' and ' + blan
 
 fig = go.Figure({'data':traces,
                  'layout':layout})
-st.write(filtered_data)
+# st.write(filtered_data)
 st.write('number of data points', len(filtered_data))
 st.write('max tbr (fitted)', max(gp_mu))
 st.write('max tbr (simulated)', max(z))

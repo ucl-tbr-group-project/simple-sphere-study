@@ -28,7 +28,7 @@ if __name__ == "__main__":
                         [
                         (0., 1.0), # layer 1 thickness_fraction
                         (0., 1.0), # layer 2 thickness_fraction
-                        (0., 1.0), # layer 2 layer_li6_enrichments
+                        (0., 1.0), # layer 1 layer_li6_enrichments
                         (0., 1.0), # layer 2 layer_li6_enrichments
                         (0., 1.0), # layer 1 layer_fraction_of_breeder_in_breeder_plus_multiplier_volume
                         (0., 1.0), # layer 2 layer_fraction_of_breeder_in_breeder_plus_multiplier_volume

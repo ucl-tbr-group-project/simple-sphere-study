@@ -5,7 +5,11 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-from skopt import load
+import openmc.lib
+try:
+    from skopt import load
+except:
+    print('scikit opt not available')
 
 def convert_res_to_json_layered(input_res = None, input_filename = None, output_filename = None):
 
@@ -365,8 +369,10 @@ def find_tbr_from_graded_blanket(number_of_layers,
     tallies.append(tally)
 
     model = openmc.model.Model(geom, mats, sett, tallies)
+    model.export_to_xml()
+    # model.run()
+    openmc.lib.run()
 
-    model.run()
 
     sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
@@ -467,6 +473,7 @@ def find_tbr(firstwall_coolant,
             sett.inactive = 0
             sett.particles = 10000
             sett.run_mode = 'fixed source'
+            sett.verbosity = 1
 
             source = openmc.Source()
             source.space = openmc.stats.Point((0,0,0))
@@ -491,13 +498,14 @@ def find_tbr(firstwall_coolant,
             model = openmc.model.Model(geom, mats, sett, tallies)
             model.export_to_xml()
             model.run()
-
+            # openmc.lib.run()
+            
             sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
             tally = sp.get_tally(name='TBR')
 
             df = tally.get_pandas_dataframe()
-            print(df)
+            # print(df)
             tally_result = df['mean'].sum()
             tally_std_dev = df['std. dev.'].sum()
 
