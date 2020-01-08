@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-import openmc.lib
+
 try:
     from skopt import load
 except:
@@ -45,8 +45,8 @@ def convert_res_to_json_layered(input_res = None, input_filename = None, output_
         firstwall_coolant = x[-2]
         print('firstwall_coolant',firstwall_coolant)
         
-        blanket_steel_fraction = x[-1]
-        print('blanket_steel_fraction',blanket_steel_fraction)
+        blanket_structural_fraction = x[-1]
+        print('blanket_structural_fraction',blanket_structural_fraction)
 
         result['tbr'] = 1. / output_parameter
         result['number_of_layers'] = number_of_layers
@@ -56,7 +56,7 @@ def convert_res_to_json_layered(input_res = None, input_filename = None, output_
         result['blanket_multiplier_material'] = blanket_multiplier_material
         result['blanket_breeder_material'] = blanket_breeder_material
         result['firstwall_coolant'] = firstwall_coolant
-        result['blanket_steel_fraction'] = blanket_steel_fraction
+        result['blanket_structural_fraction'] = blanket_structural_fraction
         # result['tbr_std_dev'] = tally_std_dev 
         result['fraction_of_breeder_in_breeder_plus_multiplier_volume'] = layer_fractions_of_breeder_in_breeder_plus_multiplier_volume
         
@@ -65,9 +65,9 @@ def convert_res_to_json_layered(input_res = None, input_filename = None, output_
         layer_multiplier_fractions = []
         layer_breeder_fractions = []
         for entry in layer_fractions_of_breeder_in_breeder_plus_multiplier_volume:
-            layer_multiplier_fractions.append((1. - entry) * (1. - blanket_steel_fraction))
+            layer_multiplier_fractions.append((1. - entry) * (1. - blanket_structural_fraction))
         
-            layer_breeder_fractions.append(entry * (1. - blanket_steel_fraction))
+            layer_breeder_fractions.append(entry * (1. - blanket_structural_fraction))
 
         result['blanket_multiplier_fraction'] = layer_multiplier_fractions
         result['blanket_breeder_fraction'] = layer_breeder_fractions
@@ -94,8 +94,8 @@ def convert_res_to_json(input_res = None, input_filename = None, output_filename
         result['tbr'] = 1. / output_parameter
         # result['tbr_std_dev'] = tally_std_dev
         result['firstwall_coolant'] = input_parameters[0] 
-        blanket_steel_fraction = input_parameters[1]  
-        result['blanket_steel_fraction'] = blanket_steel_fraction
+        blanket_structural_fraction = input_parameters[1]  
+        result['blanket_structural_fraction'] = blanket_structural_fraction
         result['blanket_multiplier_material'] = input_parameters[2]
         result['blanket_breeder_material'] = input_parameters[3]
         result['blanket_breeder_li6_enrichment_fraction'] = input_parameters[4]
@@ -103,8 +103,8 @@ def convert_res_to_json(input_res = None, input_filename = None, output_filename
         breeder_to_breeder_plus_multiplier_fraction = input_parameters[5]
         result['fraction_of_breeder_in_breeder_plus_multiplier_volume'] = breeder_to_breeder_plus_multiplier_fraction
         
-        result['blanket_multiplier_fraction'] = (1. - breeder_to_breeder_plus_multiplier_fraction) * (1. - blanket_steel_fraction)
-        result['blanket_breeder_fraction'] = breeder_to_breeder_plus_multiplier_fraction * (1. - blanket_steel_fraction)
+        result['blanket_multiplier_fraction'] = (1. - breeder_to_breeder_plus_multiplier_fraction) * (1. - blanket_structural_fraction)
+        result['blanket_breeder_fraction'] = breeder_to_breeder_plus_multiplier_fraction * (1. - blanket_structural_fraction)
         results.append(result)
 
     if output_filename != None:
@@ -114,17 +114,17 @@ def convert_res_to_json(input_res = None, input_filename = None, output_filename
 
 def find_tbr_optimisation(x):
     firstwall_coolant = x[0]
-    blanket_steel_fraction = x[1]
+    blanket_structural_fraction = x[1]
     blanket_multiplier_material = x[2]
     blanket_breeder_material = x[3]
     blanket_breeder_li6_enrichment_fraction = x[4]
     breeder_to_breeder_plus_multiplier_fraction = x[5]
 
-    blanket_multiplier_fraction = (1. - breeder_to_breeder_plus_multiplier_fraction) * (1. - blanket_steel_fraction) 
-    blanket_breeder_fraction = breeder_to_breeder_plus_multiplier_fraction * (1. - blanket_steel_fraction)
+    blanket_multiplier_fraction = (1. - breeder_to_breeder_plus_multiplier_fraction) * (1. - blanket_structural_fraction) 
+    blanket_breeder_fraction = breeder_to_breeder_plus_multiplier_fraction * (1. - blanket_structural_fraction)
 
     tbr = find_tbr(firstwall_coolant, 
-                    blanket_steel_fraction, 
+                    blanket_structural_fraction, 
                     blanket_multiplier_fraction,
                     blanket_multiplier_material,
                     blanket_breeder_fraction,
@@ -164,15 +164,15 @@ def find_graded_tbr_optimisation(x):
     firstwall_coolant = x[-2]
     print('firstwall_coolant',firstwall_coolant)
     
-    blanket_steel_fraction = x[-1]
-    print('blanket_steel_fraction',blanket_steel_fraction)
+    blanket_structural_fraction = x[-1]
+    print('blanket_structural_fraction',blanket_structural_fraction)
 
     layer_multiplier_fractions = []
     layer_breeder_fractions = []
     for entry in layer_fractions_of_breeder_in_breeder_plus_multiplier_volume:
-        layer_multiplier_fractions.append((1. - entry) * (1. - blanket_steel_fraction))
+        layer_multiplier_fractions.append((1. - entry) * (1. - blanket_structural_fraction))
     
-        layer_breeder_fractions.append(entry * (1. - blanket_steel_fraction))
+        layer_breeder_fractions.append(entry * (1. - blanket_structural_fraction))
 
     thickness = 200 #2m
     inner_radius = 1000 #10m
@@ -186,7 +186,7 @@ def find_graded_tbr_optimisation(x):
                                        blanket_multiplier_material,
                                        blanket_breeder_material,
                                        firstwall_coolant,
-                                       blanket_steel_fraction,
+                                       blanket_structural_fraction,
                                        inner_radius,
                                        thickness,
                                        firstwall_thickness)
@@ -201,21 +201,17 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                 layer_li6_enrichments,
                                 layer_breeder_fractions,
                                 layer_multiplier_fractions,
+                                blanket_structural_material,
                                 blanket_multiplier_material,
                                 blanket_breeder_material,
                                 firstwall_coolant,
-                                blanket_steel_fraction,
+                                blanket_structural_fraction,
                                 inner_radius,
                                 thickness,
                                 firstwall_thickness
                                 ):
 
-    
-
-      #10m
-   
     batches = 10
-    
     
     thickness_fraction_scaler = thickness / sum(layer_thickness_fractions)
     print('thickness_fraction_scaler',thickness_fraction_scaler)
@@ -245,10 +241,10 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                                             Material(blanket_breeder_material, 
                                                                         enrichment_fraction=layer_enrichment),
                                                             Material(blanket_multiplier_material),
-                                                            Material('eurofer')
+                                                            Material(blanket_structural_material)
                                                             ],
-                                                volume_fractions = [layer_breeder_fraction, layer_multiplier_fraction, blanket_steel_fraction]
-                                                ).makeMaterial()
+                                                volume_fractions = [layer_breeder_fraction, layer_multiplier_fraction, blanket_structural_fraction]
+                                                ).neutronics_material
             all_layers_materials.append(layer_material)
 
             additional_thickness = additional_thickness + (layer_thickness * thickness_fraction_scaler)
@@ -275,10 +271,10 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                 materials = [
                                             Material('tungsten'),
                                             Material(firstwall_coolant),
-                                            Material('eurofer')
+                                            Material(blanket_structural_material)
                                             ],
                                 volume_fractions = [0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
-                                ).makeMaterial()
+                                ).neutronics_material
 
 
         breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
@@ -311,10 +307,10 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                                             Material(blanket_breeder_material, 
                                                                         enrichment_fraction=layer_enrichment),
                                                             Material(blanket_multiplier_material),
-                                                            Material('eurofer')
+                                                            Material(blanket_structural_material)
                                                             ],
-                                                volume_fractions = [layer_breeder_fraction, layer_multiplier_fraction, blanket_steel_fraction]
-                                                ).makeMaterial()
+                                                volume_fractions = [layer_breeder_fraction, layer_multiplier_fraction, blanket_structural_fraction]
+                                                )
             all_layers_materials.append(layer_material)
 
             additional_thickness = additional_thickness + (layer_thickness * thickness_fraction_scaler)
@@ -365,7 +361,7 @@ def find_tbr_from_graded_blanket(number_of_layers,
     
     tally = openmc.Tally(name='TBR')
     tally.filters = [particle_filter]
-    tally.scores = ['205'] #could be (n,t)
+    tally.scores = ['(n,Xt)'] #could be (n,Xt)
     tallies.append(tally)
 
     model = openmc.model.Model(geom, mats, sett, tallies)
@@ -384,12 +380,27 @@ def find_tbr_from_graded_blanket(number_of_layers,
 
 
 
-def find_tbr(firstwall_coolant, 
-             blanket_steel_fraction, 
+def find_tbr( 
+             firstwall_amour_material,
+             firstwall_amour_fraction,
+
+             firstwall_structural_material,
+             firstwall_structural_fraction,
+
+             firstwall_coolant_material,
+             firstwall_coolant_fraction,
+
+             blanket_structural_material, 
+             blanket_structural_fraction,
+             blanket_coolant_material, 
+             blanket_coolant_fraction,
+
              blanket_multiplier_fraction,
              blanket_multiplier_material,
+
              blanket_breeder_fraction,
              blanket_breeder_material,
+
              blanket_breeder_li6_enrichment_fraction
              ):
 
@@ -404,25 +415,25 @@ def find_tbr(firstwall_coolant,
                                                                      enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
                                                                      temperature_in_C = 500),
                                                             Material(blanket_multiplier_material),
-                                                            Material('eurofer')
+                                                            Material(blanket_structural_material)
                                                             ],
-                                                volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_steel_fraction]
-                                                ).makeMaterial()
-            if firstwall_coolant != 'no firstwall':
+                                                volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction]
+                                                ).neutronics_material
+            if firstwall_coolant_material != 'no firstwall':
                 firstwall_material = MultiMaterial('firstwall_material',
                                     materials = [
-                                                Material('tungsten'),
-                                                Material(firstwall_coolant),
-                                                Material('eurofer')
+                                                Material(firstwall_amour_material),
+                                                Material(firstwall_coolant_material),
+                                                Material(blanket_structural_material)
                                                 ],
-                                    volume_fractions = [0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
-                                    ).makeMaterial()
+                                    volume_fractions = [firstwall_amour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]  #[0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
+                                    ).neutronics_material
                                 
                 mats = openmc.Materials([blanket_material, firstwall_material]) 
             else:
                 mats = openmc.Materials([blanket_material]) 
 
-            if firstwall_coolant == 'no firstwall':
+            if firstwall_coolant_material == 'no firstwall':
 
                 breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
                 inner_void_region = -breeder_blanket_inner_surface 
@@ -492,7 +503,7 @@ def find_tbr(firstwall_coolant,
             
             tally = openmc.Tally(name='TBR')
             tally.filters = [cell_filter_breeder, particle_filter]
-            tally.scores = ['205'] # MT 205 is the (n,XT) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
+            tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
             tallies.append(tally)
 
             model = openmc.model.Model(geom, mats, sett, tallies)
@@ -509,4 +520,24 @@ def find_tbr(firstwall_coolant,
             tally_result = df['mean'].sum()
             tally_std_dev = df['std. dev.'].sum()
 
-            return tally_result
+            inputs_and_results = {
+                'tbr':tally_result,
+                'tbr_error':tally_std_dev,
+                'firstwall_amour_material':firstwall_amour_material,
+                'firstwall_amour_fraction':firstwall_amour_fraction,
+                'firstwall_structural_material':firstwall_structural_material,
+                'firstwall_structural_fraction':firstwall_structural_fraction,
+                'firstwall_coolant_material':firstwall_coolant_material,
+                'firstwall_coolant_fraction':firstwall_coolant_fraction,
+                'blanket_structural_material': blanket_structural_material,
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material': blanket_coolant_material,
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+            }
+
+            return inputs_and_results
