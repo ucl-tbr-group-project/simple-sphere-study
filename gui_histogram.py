@@ -13,14 +13,31 @@ def load_data():
 
 data = load_data()
 
-
-st.write('Firstwall materials coolant')
-firstwall_coolants = data['firstwall_coolant_material'].unique()
-selected_firstwall_coolants = []
-for firstwall_coolant in firstwall_coolants:
-    is_selected = st.checkbox(label=firstwall_coolant, value=False)
+st.write('firstwall_amour_material')
+firstwall_amour_materials = data['firstwall_amour_material'].unique()
+selected_firstwall_amour_materials = []
+for firstwall_amour_material in firstwall_amour_materials:
+    is_selected = st.checkbox(label=firstwall_amour_material, value=False)
     if is_selected == True:
-        selected_firstwall_coolants.append(firstwall_coolant)
+        selected_firstwall_amour_materials.append(firstwall_amour_material)
+
+st.write('firstwall_coolant_material')
+firstwall_coolant_materials = data['firstwall_coolant_material'].unique()
+selected_firstwall_coolants = []
+for firstwall_coolant_material in firstwall_coolant_materials:
+    is_selected = st.checkbox(label=firstwall_coolant_material, value=False)
+    if is_selected == True:
+        selected_firstwall_coolants.append(firstwall_coolant_material)
+
+st.write('firstwall_structural_material')
+firstwall_structural_materials = data['firstwall_structural_material'].unique()
+selected_firstwall_structurals = []
+for firstwall_structural_material in firstwall_structural_materials:
+    is_selected = st.checkbox(label=firstwall_structural_material, value=False)
+    if is_selected == True:
+        selected_firstwall_structurals.append(firstwall_structural_material)
+
+
 
 st.write('Blanket multiplier materials')
 blanket_multiplier_materials = data['blanket_multiplier_material'].unique()
