@@ -21,6 +21,8 @@ firstwall_coolant_fraction = 0.690776
 
 blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True).tolist()
 blanket_breeder_li6_enrichment_fractions.append(0.0759)
+blanket_breeder_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
+blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
 
 blanket_structural_fractions = []
 blanket_multiplier_fractions = []
@@ -41,8 +43,10 @@ def random_simulation():
     blanket_breeder_material = random.choice(blanket_breeder_material_options)
     blanket_multiplier_material = random.choice(blanket_multiplier_material_options)
     blanket_coolant_material = random.choice(blanket_coolant_material_options)
-    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
 
+    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
+    blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
+    blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
 
     selected_blanket_fractions = random.choice(blanket_fractions)
     blanket_multiplier_fraction = selected_blanket_fractions[0]
@@ -72,17 +76,17 @@ def random_simulation():
                                     blanket_breeder_fraction,
                                     blanket_breeder_material,
 
-                                    blanket_breeder_li6_enrichment_fraction
+                                    blanket_breeder_li6_enrichment_fraction,
+                                    blanket_breeder_packing_fraction,
+                                    blanket_multiplier_packing_fraction
                                     )
 
     return inputs_and_results
     print('done')
 
 results = []
-for x in range(2):
+for x in range(500):
     result = random_simulation()
     results.append(result)
     with open('results_grid3.json', 'w') as fp:
         json.dump(results, fp, indent = 4)    
-
-    # # openmc.lib.finalize()

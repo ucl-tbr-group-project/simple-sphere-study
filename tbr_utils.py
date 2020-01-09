@@ -401,7 +401,9 @@ def find_tbr(
              blanket_breeder_fraction,
              blanket_breeder_material,
 
-             blanket_breeder_li6_enrichment_fraction
+             blanket_breeder_li6_enrichment_fraction,
+             blanket_breeder_packing_fraction,
+             blanket_multiplier_packing_fraction,
              ):
 
             inner_radius = 1000  #10m
@@ -413,8 +415,10 @@ def find_tbr(
                                                 materials = [
                                                             Material(blanket_breeder_material, 
                                                                      enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                                                     temperature_in_C = 500),
-                                                            Material(blanket_multiplier_material),
+                                                                     temperature_in_C = 500,
+                                                                     packing_fraction = blanket_breeder_packing_fraction),
+                                                            Material(blanket_multiplier_material,
+                                                                     packing_fraction = blanket_multiplier_packing_fraction),
                                                             Material(blanket_structural_material)
                                                             ],
                                                 volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction]
@@ -538,6 +542,8 @@ def find_tbr(
                 'blanket_breeder_fraction':blanket_breeder_fraction,
                 'blanket_breeder_material':blanket_breeder_material,
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction
             }
 
             return inputs_and_results

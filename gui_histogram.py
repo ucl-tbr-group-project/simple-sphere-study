@@ -9,13 +9,13 @@ st.title('TBR results explorer')
 
 @st.cache
 def load_data():
-    return pd.read_json('results_grid.json') 
+    return pd.read_json('results_grid3.json') 
 
 data = load_data()
 
 
-st.write('Firstwall coolants')
-firstwall_coolants = data['firstwall_coolant'].unique()
+st.write('Firstwall materials coolant')
+firstwall_coolants = data['firstwall_coolant_material'].unique()
 selected_firstwall_coolants = []
 for firstwall_coolant in firstwall_coolants:
     is_selected = st.checkbox(label=firstwall_coolant, value=False)
