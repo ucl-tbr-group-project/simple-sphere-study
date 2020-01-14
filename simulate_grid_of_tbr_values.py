@@ -6,8 +6,8 @@ from tbr_utils import find_tbr
 import openmc
 import random
 
-
-firstwall_coolant_material_options = ['no firstwall','H2O', 'He', 'D2O']
+model_names = ['sphere with firstwall','sphere with no firstwall']
+firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
@@ -34,6 +34,7 @@ for i in range(50):
 
 
 def random_simulation():
+    model_name = random.choice(model_names)
 
     firstwall_amour_material = random.choice(firstwall_amour_material_options)
     firstwall_structural_material = random.choice(firstwall_structural_material_options)
@@ -54,7 +55,9 @@ def random_simulation():
     blanket_structural_fraction = selected_blanket_fractions[2]
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-    inputs_and_results = find_tbr( 
+    inputs_and_results = find_tbr(  
+                                    model_name,
+
                                     firstwall_amour_material,
                                     firstwall_amour_fraction,
 
@@ -85,8 +88,12 @@ def random_simulation():
     print('done')
 
 results = []
-for x in range(500):
+for x in range(2000):
     result = random_simulation()
     results.append(result)
-    with open('results_grid3.json', 'w') as fp:
+    with open('results_grid4.json', 'w') as fp:
         json.dump(results, fp, indent = 4)    
+
+
+sett = openmc.Settings() #currently the openmc-plotter needs to find a settings.xml file to work, so this makes a default one
+sett.export_to_xml()
