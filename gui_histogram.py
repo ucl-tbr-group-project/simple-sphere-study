@@ -5,61 +5,82 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-st.title('TBR results explorer')
 
 @st.cache
 def load_data():
-    return pd.read_json('results_grid3.json') 
+    return pd.read_json('results_grid4.json') 
 
 data = load_data()
 
-catorgorical_key_names = [
-                          'firstwall_amour_material',
-                          'firstwall_structural_material',
-                          'firstwall_coolant_material'
-                         ]
+st.title('TBR results explorer')
+st.text('Filter a dataset of '+str(len(data))+ ' simulations')
+
+catorgorical_key_names = []
+continious_key_names = []
+
+for entry in data.keys(): 
+        if type(data[entry][0]) == str:
+                catorgorical_key_names.append(entry)
+        else:
+                continious_key_names.append(entry)
+
 selected_catorgorical_key_names = {}
 
+key_number = 0
 for key_name in catorgorical_key_names:
         st.write(key_name.replace('_',' '))
         selected = []
         for material in data[key_name].unique():
-                is_selected = st.checkbox(label=material, value=False)
+
+                is_selected = st.checkbox(label=material, value=False, key=str(key_name))
                 if is_selected == True:
                         selected.append(material)
+                key_number = key_number + 1
         selected_catorgorical_key_names[key_name] = selected
 
-print(selected_catorgorical_key_names)
+# print(selected_catorgorical_key_names)
 
 # 'Blanket only' image is displayed only when 'no firstwall' is selected - i.e. when only the model without a blanket is used
 # 'Blanket AND first wall' image is displayed when ONLY 'H2O' and/or 'He' are selected - i.e. when only model WITH blanket is used
 # 'Placeholder' image is displayed when 'no firstwall' AND ('H2O' or 'He') are selected - i.e. when both models are used
 # Image path specified with respect to current directory
 
-# try:
-#         if selected_firstwall_coolants[0] == "no firstwall":
-#                 try:
-#                         if len(selected_firstwall_coolants) >= 1:
-#                                 st.image('./images/placeholder_image.png')
+if selected_catorgorical_key_names['model_name'] != None:
 
-#                 except IndexError:
-#                         st.image('./images/blanket_only.png')
+        if len(selected_catorgorical_key_names['model_name']) == 1:
+                st.image('./images/'+selected_catorgorical_key_names['model_name'][0]+'.png')
+        if len(selected_catorgorical_key_names['model_name']) == 2:
+                st.image('./images/both.png')
 
-#         else:
-#                 st.image('./images/blanket_and_fw.png')
+selected_continious_values = {}
+for key_name in continious_key_names:
+  
+        cleaned_key_name = key_name.replace('_', ' ')
 
-# except IndexError:
-#         st.write('Please select firstwall criteria')
+        st.write(cleaned_key_name)
+        min_val = min(data[key_name])
+        max_val = max(data[key_name])
+        # print('min_val',min_val)
+        # print('max_val',max_val)
+        selected = st.slider('select a range of ' + str(cleaned_key_name), min_val, max_val, (min_val, max_val))
+
+        selected_continious_values[key_name] = selected
+
+# print(selected_continious_values)
+
+filtered_data = data
 
 
-# tbr_values = st.slider( 'Required TBR value', 0.0, 3., (0., 3.))
-# blanket_structural_fractions = st.slider( 'select a range of blanket structural fractions', 0.0, 1.0, (0., 1.))
-# blanket_coolant_fractions = st.slider( 'select a range of blanket breeder fractions', 0.0, 1.0, (0., 1.))
-# blanket_multiplier_fractions = st.slider( 'select a range of blanket multiplier fractions', 0.0, 1.0, (0., 1.))
-# blanket_breeder_fractions = st.slider( 'select a range of blanket breeder fractions', 0.0, 1.0, (0., 1.))
-# blanket_enrichment_fractions = st.slider( 'select a range of lithium 6 enrichment fractions', 0.0, 1.0, (0., 1.))
+filters = []
+for key, value in selected_continious_values.items():
+        print(key)
+        # key_name = entry.key()
+        print(value)
+        # data[]
+        if len(value) != 0:
+                filtered_data = filtered_data[(filtered_data[key].isin(value))]
 
-
+# (data.selected_firstwall_coolants.isin(selected_firstwall_coolants))
 
 # filtered_data = data[
 #                 (data.selected_firstwall_amour_material.isin(selected_firstwall_amour_materials)) & 
@@ -80,7 +101,7 @@ print(selected_catorgorical_key_names)
 # else:
 
 
-#         st.write(' Number of simulations matching criteria ' ,len(filtered_data))
+st.write(' Number of simulations matching criteria ' ,len(filtered_data))
 #         st.write(filtered_data)
 
 #         colors = ['rgba(93, 164, 214)', 'rgba(255, 144, 14)']

@@ -192,10 +192,6 @@ def find_graded_tbr_optimisation(x):
                                        firstwall_thickness)
     return 1. / tbr
 
-
-
-
-    
 def find_tbr_from_graded_blanket(number_of_layers,
                                 layer_thickness_fractions,
                                 layer_li6_enrichments,
@@ -212,7 +208,7 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                 ):
 
     batches = 10
-    
+
     thickness_fraction_scaler = thickness / sum(layer_thickness_fractions)
     print('thickness_fraction_scaler',thickness_fraction_scaler)
 
@@ -379,8 +375,9 @@ def find_tbr_from_graded_blanket(number_of_layers,
     return df['mean'].sum()
 
 def find_tbr(**kwargs):
-    if kawrgs['model_name'] == 'sphere with firstwall':
-        results = find_tbr_model_sphere_with_no_firstwall(blanket_structural_material=kargs['blanket_structural_material'], 
+    if kwargs['model_name'] == 'sphere_with_firstwall':
+        results = find_tbr_model_sphere_with_no_firstwall(
+                                                blanket_structural_material=kwargs['blanket_structural_material'], 
                                                 blanket_structural_fraction=kwargs['blanket_structural_fraction'],
                                                 blanket_coolant_material=kwargs['blanket_coolant_material'], 
                                                 blanket_coolant_fraction=kwargs['blanket_coolant_fraction'],
@@ -392,10 +389,10 @@ def find_tbr(**kwargs):
                                                 blanket_breeder_packing_fraction=kwargs['blanket_breeder_packing_fraction'],
                                                 blanket_multiplier_packing_fraction=kwargs['blanket_multiplier_packing_fraction'],
                                                 )
-        return results
-        
-    if kwargs['model_name'] == 'sphere with no firstwall':
+
+    if kwargs['model_name'] == 'sphere_with_no_firstwall':
         results = find_tbr_model_sphere_with_firstwall(
+                                             firstwall_thickness=kwargs['firstwall_thickness'],
                                              firstwall_amour_material=kwargs['firstwall_amour_material'],
                                              firstwall_amour_fraction=kwargs['firstwall_amour_fraction'],
                                              firstwall_structural_material=kwargs['firstwall_structural_material'],
@@ -414,7 +411,8 @@ def find_tbr(**kwargs):
                                              blanket_breeder_packing_fraction=kwargs['blanket_breeder_packing_fraction'],
                                              blanket_multiplier_packing_fraction=kwargs['blanket_multiplier_packing_fraction'],
         )
-        return results
+    kwargs.update(results)
+    return kwargs
 
 
 def find_tbr_model_sphere_with_no_firstwall(
@@ -432,12 +430,12 @@ def find_tbr_model_sphere_with_no_firstwall(
              blanket_breeder_li6_enrichment_fraction,
              blanket_breeder_packing_fraction,
              blanket_multiplier_packing_fraction,
+
              ):
 
             inner_radius = 1000  #10m
             thickness = 200
             batches = 10
-            firstwall_thickness = 2.5
 
             blanket_material = MultiMaterial('blanket_material',
                                                 materials = [
@@ -458,7 +456,7 @@ def find_tbr_model_sphere_with_no_firstwall(
             inner_void_region = -breeder_blanket_inner_surface 
             inner_void_cell = openmc.Cell(region=inner_void_region) 
             inner_void_cell.name = 'inner_void'
-        
+
             breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+thickness, boundary_type='vacuum')
             breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
             breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
@@ -479,7 +477,7 @@ def find_tbr_model_sphere_with_no_firstwall(
             sett.inactive = 0
             sett.particles = 10000
             sett.run_mode = 'fixed source'
-            sett.verbosity = 1
+            # sett.verbosity = 1
 
             source = openmc.Source()
             source.space = openmc.stats.Point((0,0,0))
@@ -495,7 +493,7 @@ def find_tbr_model_sphere_with_no_firstwall(
             # define filters
             cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
             particle_filter = openmc.ParticleFilter(['neutron']) #1 is neutron, 2 is photon
-            
+
             tally = openmc.Tally(name='TBR')
             tally.filters = [cell_filter_breeder, particle_filter]
             tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
@@ -505,7 +503,7 @@ def find_tbr_model_sphere_with_no_firstwall(
             model.export_to_xml()
             model.run()
             # openmc.lib.run()
-            
+
             sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
             tally = sp.get_tally(name='TBR')
@@ -515,23 +513,12 @@ def find_tbr_model_sphere_with_no_firstwall(
             tally_result = df['mean'].sum()
             tally_std_dev = df['std. dev.'].sum()
 
-            inputs_and_results = {
+            results = {
                 'tbr':tally_result,
                 'tbr_error':tally_std_dev,
-                'blanket_structural_material': blanket_structural_material,
-                'blanket_structural_fraction':blanket_structural_fraction,
-                'blanket_coolant_material': blanket_coolant_material,
-                'blanket_coolant_fraction':blanket_coolant_fraction,
-                'blanket_multiplier_fraction':blanket_multiplier_fraction,
-                'blanket_multiplier_material':blanket_multiplier_material,
-                'blanket_breeder_fraction':blanket_breeder_fraction,
-                'blanket_breeder_material':blanket_breeder_material,
-                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
-                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
-                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction
             }
 
-            return inputs_and_results
+            return results
 
 def find_tbr_model_sphere_with_firstwall(
              firstwall_amour_material,
@@ -557,12 +544,13 @@ def find_tbr_model_sphere_with_firstwall(
              blanket_breeder_li6_enrichment_fraction,
              blanket_breeder_packing_fraction,
              blanket_multiplier_packing_fraction,
+
+             firstwall_thickness
              ):
 
             inner_radius = 1000  #10m
             thickness = 200
             batches = 10
-            firstwall_thickness = 2.5
 
             blanket_material = MultiMaterial('blanket_material',
                                                 materials = [
@@ -576,60 +564,41 @@ def find_tbr_model_sphere_with_firstwall(
                                                             ],
                                                 volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction]
                                                 ).neutronics_material
-            if model_name != 'sphere with firstwall':
-                firstwall_material = MultiMaterial('firstwall_material',
-                                    materials = [
-                                                Material(firstwall_amour_material),
-                                                Material(firstwall_coolant_material),
-                                                Material(blanket_structural_material)
-                                                ],
-                                    volume_fractions = [firstwall_amour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]  #[0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
-                                    ).neutronics_material
-                                
-                mats = openmc.Materials([blanket_material, firstwall_material]) 
-            else:
-                mats = openmc.Materials([blanket_material]) 
 
-            if model_name == 'sphere with no firstwall':
+            firstwall_material = MultiMaterial('firstwall_material',
+                                materials = [
+                                            Material(firstwall_amour_material),
+                                            Material(firstwall_coolant_material),
+                                            Material(blanket_structural_material)
+                                            ],
+                                volume_fractions = [firstwall_amour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]  #[0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
+                                ).neutronics_material
 
-                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
-                inner_void_region = -breeder_blanket_inner_surface 
-                inner_void_cell = openmc.Cell(region=inner_void_region) 
-                inner_void_cell.name = 'inner_void'
-            
-                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+thickness, boundary_type='vacuum')
-                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
-                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
-                breeder_blanket_cell.fill = blanket_material
-                breeder_blanket_cell.name = 'breeder_blanket'
+            mats = openmc.Materials([blanket_material, firstwall_material]) 
 
-                universe = openmc.Universe(cells=[inner_void_cell, 
-                                                  breeder_blanket_cell
-                                                 ])
-            else:
 
-                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
-                firstwall_outer_surface = openmc.Sphere(r=inner_radius)  
+            breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
+            firstwall_outer_surface = openmc.Sphere(r=inner_radius)  
 
-                inner_void_region = -firstwall_outer_surface 
-                inner_void_cell = openmc.Cell(region=inner_void_region) 
-                inner_void_cell.name = 'inner_void'
+            inner_void_region = -firstwall_outer_surface 
+            inner_void_cell = openmc.Cell(region=inner_void_region) 
+            inner_void_cell.name = 'inner_void'
 
-                firstwall_region = +firstwall_outer_surface & -breeder_blanket_inner_surface 
-                firstwall_cell = openmc.Cell(region=firstwall_region)
-                firstwall_cell.fill = firstwall_material
-                firstwall_cell.name = 'firstwall'
+            firstwall_region = +firstwall_outer_surface & -breeder_blanket_inner_surface 
+            firstwall_cell = openmc.Cell(region=firstwall_region)
+            firstwall_cell.fill = firstwall_material
+            firstwall_cell.name = 'firstwall'
 
-                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+firstwall_thickness+thickness, boundary_type='vacuum')
-                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
-                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
-                breeder_blanket_cell.fill = blanket_material
-                breeder_blanket_cell.name = 'breeder_blanket'
-                
-                universe = openmc.Universe(cells=[inner_void_cell, 
-                                                  firstwall_cell,
-                                                  breeder_blanket_cell
-                                                 ])
+            breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+firstwall_thickness+thickness, boundary_type='vacuum')
+            breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
+            breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+            breeder_blanket_cell.fill = blanket_material
+            breeder_blanket_cell.name = 'breeder_blanket'
+
+            universe = openmc.Universe(cells=[inner_void_cell, 
+                                                firstwall_cell,
+                                                breeder_blanket_cell
+                                                ])
 
             geom = openmc.Geometry(universe)
 
@@ -641,7 +610,7 @@ def find_tbr_model_sphere_with_firstwall(
             sett.inactive = 0
             sett.particles = 10000
             sett.run_mode = 'fixed source'
-            sett.verbosity = 1
+            # sett.verbosity = 1
 
             source = openmc.Source()
             source.space = openmc.stats.Point((0,0,0))
@@ -657,7 +626,7 @@ def find_tbr_model_sphere_with_firstwall(
             # define filters
             cell_filter_breeder = openmc.CellFilter(breeder_blanket_cell)
             particle_filter = openmc.ParticleFilter(['neutron']) #1 is neutron, 2 is photon
-            
+
             tally = openmc.Tally(name='TBR')
             tally.filters = [cell_filter_breeder, particle_filter]
             tally.scores = ['(n,Xt)'] # MT 205 is the (n,Xt) reaction where X is a wildcard, if MT 105 or (n,t) then some tritium production will be missed, for example (n,nt) which happens in Li7 would be missed
@@ -667,7 +636,7 @@ def find_tbr_model_sphere_with_firstwall(
             model.export_to_xml()
             model.run()
             # openmc.lib.run()
-            
+
             sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
 
             tally = sp.get_tally(name='TBR')
@@ -677,26 +646,9 @@ def find_tbr_model_sphere_with_firstwall(
             tally_result = df['mean'].sum()
             tally_std_dev = df['std. dev.'].sum()
 
-            inputs_and_results = {
+            results = {
                 'tbr':tally_result,
                 'tbr_error':tally_std_dev,
-                'firstwall_amour_material':firstwall_amour_material,
-                'firstwall_amour_fraction':firstwall_amour_fraction,
-                'firstwall_structural_material':firstwall_structural_material,
-                'firstwall_structural_fraction':firstwall_structural_fraction,
-                'firstwall_coolant_material':firstwall_coolant_material,
-                'firstwall_coolant_fraction':firstwall_coolant_fraction,
-                'blanket_structural_material': blanket_structural_material,
-                'blanket_structural_fraction':blanket_structural_fraction,
-                'blanket_coolant_material': blanket_coolant_material,
-                'blanket_coolant_fraction':blanket_coolant_fraction,
-                'blanket_multiplier_fraction':blanket_multiplier_fraction,
-                'blanket_multiplier_material':blanket_multiplier_material,
-                'blanket_breeder_fraction':blanket_breeder_fraction,
-                'blanket_breeder_material':blanket_breeder_material,
-                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
-                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
-                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction
             }
 
-            return inputs_and_results
+            return results
