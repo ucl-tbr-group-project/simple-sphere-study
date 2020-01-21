@@ -379,8 +379,8 @@ def find_tbr_from_graded_blanket(number_of_layers,
     return df['mean'].sum()
 
 def find_tbr(**kwargs):
-    if kawrgs['model_name'] == 'sphere with firstwall':
-        results = find_tbr_model_sphere_with_no_firstwall(blanket_structural_material=kargs['blanket_structural_material'], 
+    if kwargs['model_name'] == 'sphere with firstwall':
+        results = find_tbr_model_sphere_with_no_firstwall(blanket_structural_material=kwargs['blanket_structural_material'], 
                                                 blanket_structural_fraction=kwargs['blanket_structural_fraction'],
                                                 blanket_coolant_material=kwargs['blanket_coolant_material'], 
                                                 blanket_coolant_fraction=kwargs['blanket_coolant_fraction'],
@@ -576,60 +576,40 @@ def find_tbr_model_sphere_with_firstwall(
                                                             ],
                                                 volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction]
                                                 ).neutronics_material
-            if model_name != 'sphere with firstwall':
-                firstwall_material = MultiMaterial('firstwall_material',
-                                    materials = [
-                                                Material(firstwall_amour_material),
-                                                Material(firstwall_coolant_material),
-                                                Material(blanket_structural_material)
-                                                ],
-                                    volume_fractions = [firstwall_amour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]  #[0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
-                                    ).neutronics_material
-                                
-                mats = openmc.Materials([blanket_material, firstwall_material]) 
-            else:
-                mats = openmc.Materials([blanket_material]) 
 
-            if model_name == 'sphere with no firstwall':
+            firstwall_material = MultiMaterial('firstwall_material',
+                                materials = [
+                                            Material(firstwall_amour_material),
+                                            Material(firstwall_coolant_material),
+                                            Material(blanket_structural_material)
+                                            ],
+                                volume_fractions = [firstwall_amour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]  #[0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
+                                ).neutronics_material
+                            
+            mats = openmc.Materials([blanket_material, firstwall_material]) 
 
-                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
-                inner_void_region = -breeder_blanket_inner_surface 
-                inner_void_cell = openmc.Cell(region=inner_void_region) 
-                inner_void_cell.name = 'inner_void'
+            breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
+            firstwall_outer_surface = openmc.Sphere(r=inner_radius)  
+
+            inner_void_region = -firstwall_outer_surface 
+            inner_void_cell = openmc.Cell(region=inner_void_region) 
+            inner_void_cell.name = 'inner_void'
+
+            firstwall_region = +firstwall_outer_surface & -breeder_blanket_inner_surface 
+            firstwall_cell = openmc.Cell(region=firstwall_region)
+            firstwall_cell.fill = firstwall_material
+            firstwall_cell.name = 'firstwall'
+
+            breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+firstwall_thickness+thickness, boundary_type='vacuum')
+            breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
+            breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
+            breeder_blanket_cell.fill = blanket_material
+            breeder_blanket_cell.name = 'breeder_blanket'
             
-                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+thickness, boundary_type='vacuum')
-                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
-                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
-                breeder_blanket_cell.fill = blanket_material
-                breeder_blanket_cell.name = 'breeder_blanket'
-
-                universe = openmc.Universe(cells=[inner_void_cell, 
-                                                  breeder_blanket_cell
-                                                 ])
-            else:
-
-                breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius+firstwall_thickness)
-                firstwall_outer_surface = openmc.Sphere(r=inner_radius)  
-
-                inner_void_region = -firstwall_outer_surface 
-                inner_void_cell = openmc.Cell(region=inner_void_region) 
-                inner_void_cell.name = 'inner_void'
-
-                firstwall_region = +firstwall_outer_surface & -breeder_blanket_inner_surface 
-                firstwall_cell = openmc.Cell(region=firstwall_region)
-                firstwall_cell.fill = firstwall_material
-                firstwall_cell.name = 'firstwall'
-
-                breeder_blanket_outer_surface = openmc.Sphere(r=inner_radius+firstwall_thickness+thickness, boundary_type='vacuum')
-                breeder_blanket_region = -breeder_blanket_outer_surface & +breeder_blanket_inner_surface
-                breeder_blanket_cell = openmc.Cell(region=breeder_blanket_region) 
-                breeder_blanket_cell.fill = blanket_material
-                breeder_blanket_cell.name = 'breeder_blanket'
-                
-                universe = openmc.Universe(cells=[inner_void_cell, 
-                                                  firstwall_cell,
-                                                  breeder_blanket_cell
-                                                 ])
+            universe = openmc.Universe(cells=[inner_void_cell, 
+                                                firstwall_cell,
+                                                breeder_blanket_cell
+                                                ])
 
             geom = openmc.Geometry(universe)
 
