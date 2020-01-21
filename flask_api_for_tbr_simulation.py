@@ -6,7 +6,7 @@ import numpy as np
 
 application = Flask(__name__)
 
-model_names = ['sphere with firstwall','sphere with no firstwall']
+model_names = ['sphere_with_firstwall', 'sphere_with_no_firstwall']
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
@@ -28,7 +28,7 @@ for i in range(50):
     blanket_fractions = np.random.dirichlet(np.ones(4),size=1)
 
 
-@application.route('/simulate_tbr' ,methods=['GET','POST'])
+@application.route('/find_tbr' ,methods=['GET','POST'])
 def call_find_tbr():
 
     model_name = random.choice(model_names)
