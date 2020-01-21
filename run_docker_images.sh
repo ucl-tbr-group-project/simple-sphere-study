@@ -1,1 +1,1 @@
-sudo docker run -p 8080:8080 gcr.io/find-tbr-cloud-run/api:latest
+docker run -p 8080:8080 gcr.io/find_tbr-cloud-run/api:latest
