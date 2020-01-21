@@ -5,5 +5,5 @@
 FROM openmcworkshop/openmc_nndc
 RUN pip3 install flask
 COPY *.py ./
-ENTRYPOINT ['python', 'flask_api_for_tbr_simulation.py']
+ENTRYPOINT ['python flask_api_for_tbr_simulation.py']
 
