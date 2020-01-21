@@ -374,45 +374,7 @@ def find_tbr_from_graded_blanket(number_of_layers,
 
     return df['mean'].sum()
 
-def find_tbr(**kwargs):
-    if kwargs['model_name'] == 'sphere_with_firstwall':
-        results = find_tbr_model_sphere_with_no_firstwall(
-                                                blanket_structural_material=kwargs['blanket_structural_material'], 
-                                                blanket_structural_fraction=kwargs['blanket_structural_fraction'],
-                                                blanket_coolant_material=kwargs['blanket_coolant_material'], 
-                                                blanket_coolant_fraction=kwargs['blanket_coolant_fraction'],
-                                                blanket_multiplier_fraction=kwargs['blanket_multiplier_fraction'],
-                                                blanket_multiplier_material=kwargs['blanket_multiplier_material'],
-                                                blanket_breeder_fraction=kwargs['blanket_breeder_fraction'],
-                                                blanket_breeder_material=kwargs['blanket_breeder_material'],
-                                                blanket_breeder_li6_enrichment_fraction=kwargs['blanket_breeder_li6_enrichment_fraction'],
-                                                blanket_breeder_packing_fraction=kwargs['blanket_breeder_packing_fraction'],
-                                                blanket_multiplier_packing_fraction=kwargs['blanket_multiplier_packing_fraction'],
-                                                )
 
-    if kwargs['model_name'] == 'sphere_with_no_firstwall':
-        results = find_tbr_model_sphere_with_firstwall(
-                                             firstwall_thickness=kwargs['firstwall_thickness'],
-                                             firstwall_amour_material=kwargs['firstwall_amour_material'],
-                                             firstwall_amour_fraction=kwargs['firstwall_amour_fraction'],
-                                             firstwall_structural_material=kwargs['firstwall_structural_material'],
-                                             firstwall_structural_fraction=kwargs['firstwall_structural_fraction'],
-                                             firstwall_coolant_material=kwargs['firstwall_coolant_material'],
-                                             firstwall_coolant_fraction=kwargs['firstwall_coolant_fraction'],
-                                             blanket_structural_material=kwargs['blanket_structural_material'], 
-                                             blanket_structural_fraction=kwargs['blanket_structural_fraction'],
-                                             blanket_coolant_material=kwargs['blanket_coolant_material'], 
-                                             blanket_coolant_fraction=kwargs['blanket_coolant_fraction'],
-                                             blanket_multiplier_fraction=kwargs['blanket_multiplier_fraction'],
-                                             blanket_multiplier_material=kwargs['blanket_multiplier_material'],
-                                             blanket_breeder_fraction=kwargs['blanket_breeder_fraction'],
-                                             blanket_breeder_material=kwargs['blanket_breeder_material'],
-                                             blanket_breeder_li6_enrichment_fraction=kwargs['blanket_breeder_li6_enrichment_fraction'],
-                                             blanket_breeder_packing_fraction=kwargs['blanket_breeder_packing_fraction'],
-                                             blanket_multiplier_packing_fraction=kwargs['blanket_multiplier_packing_fraction'],
-        )
-    kwargs.update(results)
-    return kwargs
 
 
 def find_tbr_model_sphere_with_no_firstwall(
@@ -516,11 +478,24 @@ def find_tbr_model_sphere_with_no_firstwall(
             results = {
                 'tbr':tally_result,
                 'tbr_error':tally_std_dev,
+                'blanket_structural_material':blanket_structural_material, 
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material':blanket_coolant_material, 
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
             }
 
             return results
 
 def find_tbr_model_sphere_with_firstwall(
+             firstwall_thickness,
+
              firstwall_amour_material,
              firstwall_amour_fraction,
 
@@ -545,7 +520,6 @@ def find_tbr_model_sphere_with_firstwall(
              blanket_breeder_packing_fraction,
              blanket_multiplier_packing_fraction,
 
-             firstwall_thickness
              ):
 
             inner_radius = 1000  #10m
@@ -649,6 +623,24 @@ def find_tbr_model_sphere_with_firstwall(
             results = {
                 'tbr':tally_result,
                 'tbr_error':tally_std_dev,
+                'firstwall_thickness':firstwall_thickness,
+                'firstwall_amour_material':firstwall_amour_material,
+                'firstwall_amour_fraction':firstwall_amour_fraction,
+                'firstwall_structural_material':firstwall_structural_material,
+                'firstwall_structural_fraction':firstwall_structural_fraction,
+                'firstwall_coolant_material':firstwall_coolant_material,
+                'firstwall_coolant_fraction':firstwall_coolant_fraction,
+                'blanket_structural_material':blanket_structural_material, 
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material':blanket_coolant_material, 
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
             }
 
             return results

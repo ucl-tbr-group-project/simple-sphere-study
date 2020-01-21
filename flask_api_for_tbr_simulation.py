@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, make_response, request
 import json
-from tbr_utils import find_tbr
+from tbr_utils import find_tbr_model_sphere_with_firstwall, find_tbr_model_sphere_with_no_firstwall
 import random
 import numpy as np
 
@@ -30,13 +30,24 @@ for i in range(50):
 
 @application.route('/' ,methods=['GET','POST'])
 def return_help():
-    return 'try /find_tbr'
-
+    return 'try a different url endpoint <br> \
+            /find_tbr_model_sphere_with_firstwall \
+            <br> \
+            /find_tbr_model_sphere_with_no_firstwall \
+            '
 
 @application.route('/find_tbr' ,methods=['GET','POST'])
-def call_find_tbr():
+def return_specific_help():
+    return 'try a different url endpoint <br> \
+            /find_tbr_model_sphere_with_firstwall \
+            <br> \
+            /find_tbr_model_sphere_with_no_firstwall \
+            '
 
-    model_name = random.choice(model_names)
+
+
+@application.route('/find_tbr_model_sphere_with_firstwall' ,methods=['GET','POST'])
+def call_find_tbr_model_sphere_with_firstwall():
 
     firstwall_thickness = random.choice(firstwall_thicknesses)
     firstwall_amour_material = random.choice(firstwall_amour_material_options)
@@ -58,19 +69,18 @@ def call_find_tbr():
     blanket_structural_fraction = selected_blanket_fractions[2]
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-    model_name = request.args.get('model_name', 
-                                  type=str,
-                                  default=model_name
+    firstwall_thickness = request.args.get('firstwall_thickness', 
+                                  type=float,
+                                  default=firstwall_thickness
                                   )
 
-    print('model_name', model_name)
  
     firstwall_structural_material = request.args.get(firstwall_structural_material, 
                                                      type=str,
                                                      default=firstwall_structural_material
                                                      )
 
-    inputs_and_results = find_tbr( model_name=model_name,
+    inputs_and_results = find_tbr_model_sphere_with_firstwall(
                                     firstwall_thickness=firstwall_thickness,
                                     firstwall_amour_material=firstwall_amour_material,
                                     firstwall_amour_fraction=firstwall_amour_fraction,
@@ -78,6 +88,45 @@ def call_find_tbr():
                                     firstwall_structural_fraction=firstwall_structural_fraction,
                                     firstwall_coolant_material=firstwall_coolant_material,
                                     firstwall_coolant_fraction=firstwall_coolant_fraction,
+                                    blanket_structural_material=blanket_structural_material,
+                                    blanket_structural_fraction=blanket_structural_fraction,
+                                    blanket_coolant_material=blanket_coolant_material,
+                                    blanket_coolant_fraction=blanket_coolant_fraction,
+                                    blanket_multiplier_fraction=blanket_multiplier_fraction,
+                                    blanket_multiplier_material=blanket_multiplier_material,
+                                    blanket_breeder_fraction=blanket_breeder_fraction,
+                                    blanket_breeder_material=blanket_breeder_material,
+                                    blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                    blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
+                                    blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction,
+    
+    )
+    print(inputs_and_results)
+    
+    return inputs_and_results    
+
+
+
+
+@application.route('/find_tbr_model_sphere_with_no_firstwall' ,methods=['GET','POST'])
+def call_find_tbr_model_sphere_with_no_firstwall():
+
+    blanket_structural_material = random.choice(blanket_structural_material_options)
+    blanket_breeder_material = random.choice(blanket_breeder_material_options)
+    blanket_multiplier_material = random.choice(blanket_multiplier_material_options)
+    blanket_coolant_material = random.choice(blanket_coolant_material_options)
+
+    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
+    blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
+    blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
+
+    selected_blanket_fractions = random.choice(blanket_fractions)
+    blanket_multiplier_fraction = selected_blanket_fractions[0]
+    blanket_breeder_fraction = selected_blanket_fractions[1]
+    blanket_structural_fraction = selected_blanket_fractions[2]
+    blanket_coolant_fraction = selected_blanket_fractions[3]
+
+    inputs_and_results = find_tbr_model_sphere_with_no_firstwall(
                                     blanket_structural_material=blanket_structural_material,
                                     blanket_structural_fraction=blanket_structural_fraction,
                                     blanket_coolant_material=blanket_coolant_material,
