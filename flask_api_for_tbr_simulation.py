@@ -14,6 +14,7 @@ blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
 blanket_structural_material_options = ['SiC','eurofer']
 firstwall_amour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
+firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
 firstwall_amour_fraction = 0.055262
 firstwall_structural_fraction = 0.253962
 firstwall_coolant_fraction = 0.690776
@@ -33,6 +34,7 @@ def call_find_tbr():
 
     model_name = random.choice(model_names)
 
+    firstwall_thickness = random.choice(firstwall_thicknesses)
     firstwall_amour_material = random.choice(firstwall_amour_material_options)
     firstwall_structural_material = random.choice(firstwall_structural_material_options)
     firstwall_coolant_material = random.choice(firstwall_coolant_material_options)
@@ -64,6 +66,7 @@ def call_find_tbr():
                                                      )
 
     inputs_and_results = find_tbr( model_name=model_name,
+                                    firstwall_thickness=firstwall_thickness,
                                     firstwall_amour_material=firstwall_amour_material,
                                     firstwall_amour_fraction=firstwall_amour_fraction,
                                     firstwall_structural_material=firstwall_structural_material,
