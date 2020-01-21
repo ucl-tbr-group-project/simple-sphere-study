@@ -28,6 +28,10 @@ blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, e
 for i in range(50):
     blanket_fractions = np.random.dirichlet(np.ones(4),size=1)
 
+@application.route('/' ,methods=['GET','POST'])
+def return_help():
+    return 'try /find_tbr'
+
 
 @application.route('/find_tbr' ,methods=['GET','POST'])
 def call_find_tbr():
@@ -54,12 +58,13 @@ def call_find_tbr():
     blanket_structural_fraction = selected_blanket_fractions[2]
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-
-    model_name = request.args.get(model_name, 
+    model_name = request.args.get('model_name', 
                                   type=str,
                                   default=model_name
                                   )
 
+    print('model_name', model_name)
+ 
     firstwall_structural_material = request.args.get(firstwall_structural_material, 
                                                      type=str,
                                                      default=firstwall_structural_material
