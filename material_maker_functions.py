@@ -35,7 +35,8 @@ material_dict = {
     "WC": {"elements": "WC", "density": 18.0, "density units": "g/cm3",},
     "H2O": {"elements": "H2O", "density": 1.0, "density units": "g/cm3",},
     "D2O": {
-        "isotopes": {"H2": 2.0, "O16": 0.99757, "O17": 0.00038, "O18": 0.00205,},
+        # "isotopes": {"H2": 2.0, "O16": 0.99757, "O17": 0.00038, "O18": 0.00205,},
+        "isotopes": {"H2": 2.0, "O16": 0.99757+0.00205, "O17": 0.00038}, #not O18 in endf
         "density": 1.1,  # could be calculated using presure and temp
         "density units": "g/cm3",
     },
