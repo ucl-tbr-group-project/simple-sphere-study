@@ -1,1 +1,0 @@
-docker build -t gcr.io/find-tbr-cloud-run/api:latest .
