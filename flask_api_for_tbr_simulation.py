@@ -49,36 +49,71 @@ def return_specific_help():
 @application.route('/find_tbr_model_sphere_with_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_firstwall():
 
-    firstwall_thickness = random.choice(firstwall_thicknesses)
-    firstwall_amour_material = random.choice(firstwall_amour_material_options)
-    firstwall_structural_material = random.choice(firstwall_structural_material_options)
-    firstwall_coolant_material = random.choice(firstwall_coolant_material_options)
+    firstwall_thickness = request.args.get('firstwall_thickness', 
+                                  type=float,
+                                  default=random.choice(firstwall_thicknesses)
+                                  )
 
-    blanket_structural_material = random.choice(blanket_structural_material_options)
-    blanket_breeder_material = random.choice(blanket_breeder_material_options)
-    blanket_multiplier_material = random.choice(blanket_multiplier_material_options)
-    blanket_coolant_material = random.choice(blanket_coolant_material_options)
+    firstwall_amour_material = request.args.get('firstwall_amour_material', 
+                                  type=str,
+                                  default=random.choice(firstwall_amour_material_options)
+                                  )
 
-    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
-    blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
-    blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
+    firstwall_structural_material = request.args.get('firstwall_structural_material', 
+                                  type=str,
+                                  default=random.choice(firstwall_structural_material_options)
+                                  )
 
-    selected_blanket_fractions = random.choice(blanket_fractions)
+    firstwall_coolant_material = request.args.get('firstwall_coolant_material', 
+                                  type=str,
+                                  default=random.choice(firstwall_coolant_material_options)
+                                  )
+
+    blanket_structural_material = request.args.get('blanket_structural_material', 
+                                  type=str,
+                                  default=random.choice(blanket_structural_material_options)
+                                  )
+
+    blanket_breeder_material = request.args.get('blanket_breeder_material', 
+                                  type=str,
+                                  default=random.choice(blanket_breeder_material_options)
+                                  )
+
+    blanket_multiplier_material = request.args.get('blanket_multiplier_material', 
+                                  type=str,
+                                  default=random.choice(blanket_multiplier_material_options)
+                                  )
+
+    blanket_coolant_material = request.args.get('blanket_coolant_material', 
+                                  type=str,
+                                  default=random.choice(blanket_coolant_material_options)
+                                  )
+
+    blanket_breeder_li6_enrichment_fraction = request.args.get('blanket_breeder_li6_enrichment_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_breeder_li6_enrichment_fractions)
+                                  )
+
+    blanket_breeder_packing_fraction = request.args.get('blanket_breeder_packing_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_breeder_packing_fractions)
+                                  )
+
+    blanket_multiplier_packing_fraction = request.args.get('blanket_multiplier_packing_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_multiplier_packing_fractions)
+                                  )
+
+    selected_blanket_fractions = request.args.get('selected_blanket_fractions', 
+                                  type=list,
+                                  default=random.choice(blanket_fractions)
+                                  )   
+
     blanket_multiplier_fraction = selected_blanket_fractions[0]
     blanket_breeder_fraction = selected_blanket_fractions[1]
     blanket_structural_fraction = selected_blanket_fractions[2]
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-    firstwall_thickness = request.args.get('firstwall_thickness', 
-                                  type=float,
-                                  default=firstwall_thickness
-                                  )
-
- 
-    firstwall_structural_material = request.args.get(firstwall_structural_material, 
-                                                     type=str,
-                                                     default=firstwall_structural_material
-                                                     )
 
     inputs_and_results = find_tbr_model_sphere_with_firstwall(
                                     firstwall_thickness=firstwall_thickness,
@@ -111,16 +146,46 @@ def call_find_tbr_model_sphere_with_firstwall():
 @application.route('/find_tbr_model_sphere_with_no_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_no_firstwall():
 
-    blanket_structural_material = random.choice(blanket_structural_material_options)
-    blanket_breeder_material = random.choice(blanket_breeder_material_options)
-    blanket_multiplier_material = random.choice(blanket_multiplier_material_options)
-    blanket_coolant_material = random.choice(blanket_coolant_material_options)
+    blanket_structural_material = request.args.get('blanket_structural_material', 
+                                  type=str,
+                                  default=random.choice(blanket_structural_material_options)
+                                  )
 
-    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
-    blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
-    blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
+    blanket_breeder_material = request.args.get('blanket_breeder_material', 
+                                  type=str,
+                                  default=random.choice(blanket_breeder_material_options)
+                                  )
 
-    selected_blanket_fractions = random.choice(blanket_fractions)
+    blanket_multiplier_material = request.args.get('blanket_multiplier_material', 
+                                  type=str,
+                                  default=random.choice(blanket_multiplier_material_options)
+                                  )
+
+    blanket_coolant_material = request.args.get('blanket_coolant_material', 
+                                  type=str,
+                                  default=random.choice(blanket_coolant_material_options)
+                                  )
+
+    blanket_breeder_li6_enrichment_fraction = request.args.get('blanket_breeder_li6_enrichment_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_breeder_li6_enrichment_fractions)
+                                  )
+
+    blanket_breeder_packing_fraction = request.args.get('blanket_breeder_packing_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_breeder_packing_fractions)
+                                  )
+
+    blanket_multiplier_packing_fraction = request.args.get('blanket_multiplier_packing_fraction', 
+                                  type=float,
+                                  default=random.choice(blanket_multiplier_packing_fractions)
+                                  )
+
+    selected_blanket_fractions = request.args.get('selected_blanket_fractions', 
+                                  type=list,
+                                  default=random.choice(blanket_fractions)
+                                  )   
+
     blanket_multiplier_fraction = selected_blanket_fractions[0]
     blanket_breeder_fraction = selected_blanket_fractions[1]
     blanket_structural_fraction = selected_blanket_fractions[2]
