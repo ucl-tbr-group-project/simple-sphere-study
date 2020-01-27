@@ -409,8 +409,7 @@ def find_tbr_model_sphere_with_no_firstwall(
                                                                      packing_fraction = blanket_multiplier_packing_fraction),
                                                             Material(material_name = blanket_structural_material)
                                                             ],
-                                                # volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
-                                                volume_fractions = [0.2, 0.3, 0.3, 0.2]
+                                                volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
                                                 ).neutronics_material
 
             mats = openmc.Materials([blanket_material]) 
@@ -538,8 +537,7 @@ def find_tbr_model_sphere_with_firstwall(
                                                   Material(material_name = blanket_structural_material),
                                                   Material(material_name = blanket_coolant_material)
                                               ],
-                                            #   volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
-                                              volume_fractions = [0.2, 0.3, 0.3, 0.2]
+                                              volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
                                               ).neutronics_material
 
             firstwall_material = MultiMaterial('firstwall_material',
