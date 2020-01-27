@@ -1,7 +1,7 @@
 import numpy as np
 import json
 from tqdm import tqdm
-from tbr_utils import find_tbr
+from tbr_utils import find_tbr_model_sphere_with_firstwall
 
 import openmc
 import random
@@ -51,8 +51,7 @@ def random_simulation():
     blanket_structural_fraction = selected_blanket_fractions[2]
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-    inputs_and_results = find_tbr(
-                                    model_name=model_name,
+    inputs_and_results = find_tbr_model_sphere_with_firstwall(
 
                                     firstwall_thickness=firstwall_thickness,
 
@@ -86,7 +85,7 @@ def random_simulation():
 
 
 results = []
-for x in range(50):
+for x in range(5):
     result = random_simulation()
     results.append(result)
     with open('results_grid4.json', 'w') as fp:
