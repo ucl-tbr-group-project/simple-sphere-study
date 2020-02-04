@@ -30,18 +30,19 @@ breeder_materials = []
 for material in materials:
 
     breeder_material = {'material_name' : material}
-    volume_fraction = st.text_input(label=material + ' volume fraction')
-    breeder_material['volume_fraction'] = volume_fraction
+    # VOLUME FRACTION CANNOT BE PASSED HERE, HAS TO BE PASSED LATER ON
+    # volume_fraction = st.text_input(label=material + ' volume fraction')
+    # breeder_material['volume_fraction'] = float(volume_fraction)
     if 'packable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['packable'] == True:
             packing_fraction = st.text_input(label=material + ' packing fraction')
-            breeder_material['packing_fraction'] = packing_fraction
+            breeder_material['packing_fraction'] = float(packing_fraction)
         else: breeder_material['packing_fraction'] = 0
     else: breeder_material['packing_fraction'] = 0
     if 'enrichable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['enrichable'] == True:
             enrichment_fraction = st.text_input(label=material + ' enrichment fraction')
-            breeder_material['enrichment_fraction'] = enrichment_fraction
+            breeder_material['enrichment_fraction'] = float(enrichment_fraction)
         else: breeder_material['enrichment_fraction'] = 0
     else: breeder_material['enrichment_fraction'] = 0
     breeder_materials.append(breeder_material)
@@ -51,15 +52,16 @@ if st.button('make material'):
 
     if len(materials) == 1:
         for material in breeder_materials:
-            breeder_material = Material(material_name=material['material_name'], packing_fraction=float(material['packing_fraction']), enrichment_fraction=float(material['enrichment_fraction'])).neutronics_material
+            breeder_material = Material(**material).neutronics_material
         tbr = find_tbr_model_sphere_with_no_firstwall(breeder_material)
         st.write('tbr',tbr)
 
+    # multimaterials not yet working because volume fraction has not yet been passed
     else:
         multimaterials = []
         volume_fractions = []
         for material in breeder_materials:
-            multimaterials.append(Material(material_name=material['material_name'], packing_fraction=float(material['packing_fraction']), enrichment_fraction=float(material['enrichment_fraction'])))
+            multimaterials.append(Material(**material))
             volume_fractions.append(float(material['volume_fraction']))
         breeder_material = MultiMaterial(material_name='breeder_material', materials=multimaterials, volume_fractions=volume_fractions).neutronics_material
         print(breeder_material)
