@@ -10,9 +10,6 @@ application = Flask(__name__)
 firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
 firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
-firstwall_armour_fraction = 0.055262
-firstwall_structural_fraction = 0.253962
-firstwall_coolant_fraction = 0.690776
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
@@ -25,8 +22,9 @@ blanket_breeder_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endp
 blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
 
 
-for i in range(50):
-    blanket_fractions = np.random.dirichlet(np.ones(4),size=1)
+blanket_fractions = np.random.dirichlet(np.ones(4),size=100)
+firstwall_fractions = np.random.dirichlet(np.ones(3),size=100)
+
 
 help_hints = 'try a different url endpoint <br> \
             <br> \
@@ -180,6 +178,29 @@ def call_find_tbr_model_sphere_with_firstwall():
                                   type=float,
                                   default=selected_blanket_fractions[3]
                                   )
+
+    # selected_firstwall_fractions = request.args.get('selected_firstwall_fractions', 
+    #                               type=list,
+    #                               default=random.choice(firstwall_fractions)
+    #                               )  
+
+    selected_firstwall_fractions = random.choice(firstwall_fractions)
+
+    firstwall_armour_fraction = request.args.get('firstwall_armour_fraction', 
+                                  type=float,
+                                  default=selected_firstwall_fractions[0]
+                                  )
+
+    firstwall_structural_fraction = request.args.get('firstwall_structural_fraction', 
+                                  type=float,
+                                  default=selected_firstwall_fractions[1]
+                                  )
+
+    firstwall_coolant_fraction = request.args.get('firstwall_coolant_fraction', 
+                                  type=float,
+                                  default=selected_firstwall_fractions[2]
+                                  )
+                                  
     inputs = {
                 'firstwall_thickness':firstwall_thickness,
                 'firstwall_armour_material':firstwall_armour_material,
