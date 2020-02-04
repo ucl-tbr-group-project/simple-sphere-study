@@ -126,7 +126,7 @@ def random_sphere_with_firstwall_simulation():
 
 
 results = []
-for x in range(5):
+for x in tqdm(range(5000)):
     result = random_sphere_with_firstwall_simulation()
 
 
