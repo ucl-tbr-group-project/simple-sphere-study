@@ -375,16 +375,17 @@ def find_tbr_from_graded_blanket(number_of_layers,
     return df['mean'].sum()
 
 
-def make_breeder_material(  blanket_structural_material, 
+def make_blanket_material(  blanket_structural_material, 
                             blanket_structural_fraction,
+
                             blanket_coolant_material, 
                             blanket_coolant_fraction,
 
-                            blanket_multiplier_fraction,
                             blanket_multiplier_material,
+                            blanket_multiplier_fraction,
 
-                            blanket_breeder_fraction,
                             blanket_breeder_material,
+                            blanket_breeder_fraction,
 
                             blanket_breeder_li6_enrichment_fraction,
                             blanket_breeder_packing_fraction,
@@ -393,19 +394,43 @@ def make_breeder_material(  blanket_structural_material,
 
     blanket_material = MultiMaterial('blanket_material',
                                         materials = [
+                                                    Material(material_name = blanket_structural_material),
+                                                    Material(material_name = blanket_coolant_material),
+                                                    Material(material_name = blanket_multiplier_material,
+                                                                packing_fraction = blanket_multiplier_packing_fraction),
                                                     Material(material_name = blanket_breeder_material, 
                                                                 enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
                                                                 temperature_in_C = 500,
                                                                 packing_fraction = blanket_breeder_packing_fraction),
-                                                    Material(material_name = blanket_multiplier_material,
-                                                                packing_fraction = blanket_multiplier_packing_fraction),
-                                                    Material(material_name = blanket_structural_material)
                                                     ],
-                                        volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
+                                        volume_fractions = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction]
                                         ).neutronics_material
 
     return blanket_material
-    
+
+def make_firstwall_material(
+             firstwall_armour_material,
+             firstwall_armour_fraction,
+
+             firstwall_coolant_material,
+             firstwall_coolant_fraction,
+
+             firstwall_structural_material,
+             firstwall_structural_fraction
+             ):
+
+
+        firstwall_material = MultiMaterial('firstwall_material',
+                                            materials = [
+                                                Material(material_name = firstwall_armour_material),
+                                                Material(material_name = firstwall_coolant_material),
+                                                Material(material_name = firstwall_structural_material)
+                                            ],
+                                            volume_fractions = [firstwall_armour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]
+                                            ).neutronics_material
+
+        return firstwall_material
+
 
 def find_tbr_model_sphere_with_no_firstwall(blanket_material):
 
@@ -483,62 +508,12 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material):
 
             return results
 
-def find_tbr_model_sphere_with_firstwall(
-             firstwall_thickness,
-
-             firstwall_armour_material,
-             firstwall_armour_fraction,
-
-             firstwall_structural_material,
-             firstwall_structural_fraction,
-
-             firstwall_coolant_material,
-             firstwall_coolant_fraction,
-
-             blanket_structural_material, 
-             blanket_structural_fraction,
-             blanket_coolant_material, 
-             blanket_coolant_fraction,
-
-             blanket_multiplier_fraction,
-             blanket_multiplier_material,
-
-             blanket_breeder_fraction,
-             blanket_breeder_material,
-
-             blanket_breeder_li6_enrichment_fraction,
-             blanket_breeder_packing_fraction,
-             blanket_multiplier_packing_fraction,
-
-             ):
+def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, firstwall_thickness):
 
             inner_radius = 1000  #10m
             thickness = 200
             batches = 10
 
-            blanket_material = MultiMaterial('blanket_material',
-                                              materials = [
-                                                  Material(material_name = blanket_breeder_material,
-                                                           enrichment_fraction = blanket_breeder_li6_enrichment_fraction,
-                                                           temperature_in_C = 500,
-                                                           packing_fraction = blanket_breeder_packing_fraction),
-                                                  Material(material_name = blanket_multiplier_material,
-                                                           packing_fraction = blanket_multiplier_packing_fraction),
-                                                  Material(material_name = blanket_structural_material),
-                                                  Material(material_name = blanket_coolant_material)
-                                              ],
-                                              volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
-                                              ).neutronics_material
-
-            firstwall_material = MultiMaterial('firstwall_material',
-                                                materials = [
-                                                    Material(material_name = firstwall_armour_material),
-                                                    Material(material_name = firstwall_coolant_material),
-                                                    Material(material_name = blanket_structural_material)
-                                                ],
-                                                volume_fractions = [firstwall_armour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]
-                                                ).neutronics_material
-         
             mats = openmc.Materials([blanket_material, firstwall_material]) 
 
 
@@ -613,25 +588,7 @@ def find_tbr_model_sphere_with_firstwall(
 
             results = {
                 'tbr':tally_result,
-                'tbr_error':tally_std_dev,
-                'firstwall_thickness':firstwall_thickness,
-                'firstwall_armour_material':firstwall_armour_material,
-                'firstwall_armour_fraction':firstwall_armour_fraction,
-                'firstwall_structural_material':firstwall_structural_material,
-                'firstwall_structural_fraction':firstwall_structural_fraction,
-                'firstwall_coolant_material':firstwall_coolant_material,
-                'firstwall_coolant_fraction':firstwall_coolant_fraction,
-                'blanket_structural_material':blanket_structural_material, 
-                'blanket_structural_fraction':blanket_structural_fraction,
-                'blanket_coolant_material':blanket_coolant_material, 
-                'blanket_coolant_fraction':blanket_coolant_fraction,
-                'blanket_multiplier_fraction':blanket_multiplier_fraction,
-                'blanket_multiplier_material':blanket_multiplier_material,
-                'blanket_breeder_fraction':blanket_breeder_fraction,
-                'blanket_breeder_material':blanket_breeder_material,
-                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
-                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
-                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'tbr_error':tally_std_dev
             }
 
             return results
