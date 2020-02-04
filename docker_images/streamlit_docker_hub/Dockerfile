@@ -3,4 +3,4 @@ FROM openmcworkshop/openmc_nndc
 RUN pip3 install flask
 RUN git clone https://github.com/Shimwell/simple_sphere_TBR_study.git
 RUN pip3 install neutronics_material_maker
-ENTRYPOINT ["python3", "simple_sphere_TBR_study/flask_api_for_tbr_simulation.py"]
+ENTRYPOINT ["streamlit", "run", "simple_sphere_TBR_study/gui_for_simulation.py"]
