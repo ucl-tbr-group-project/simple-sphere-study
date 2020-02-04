@@ -30,9 +30,6 @@ breeder_materials = []
 for material in materials:
 
     breeder_material = {'material_name' : material}
-    # VOLUME FRACTION CANNOT BE PASSED HERE, HAS TO BE PASSED LATER ON
-    # volume_fraction = st.text_input(label=material + ' volume fraction')
-    # breeder_material['volume_fraction'] = float(volume_fraction)
     if 'packable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['packable'] == True:
             packing_fraction = st.text_input(label=material + ' packing fraction')
@@ -45,6 +42,12 @@ for material in materials:
             breeder_material['enrichment_fraction'] = float(enrichment_fraction)
         else: breeder_material['enrichment_fraction'] = 0
     else: breeder_material['enrichment_fraction'] = 0
+    
+    if len(materials) > 1:
+        volume_fraction = st.text_input(label=material + ' volume fraction')
+        breeder_material['volume_fraction'] = float(volume_fraction)
+    else: breeder_material['volume_fraction'] = 1
+    
     breeder_materials.append(breeder_material)
 
 
@@ -56,7 +59,6 @@ if st.button('make material'):
         tbr = find_tbr_model_sphere_with_no_firstwall(breeder_material)
         st.write('tbr',tbr)
 
-    # multimaterials not yet working because volume fraction has not yet been passed
     else:
         multimaterials = []
         volume_fractions = []
