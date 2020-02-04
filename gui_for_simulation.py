@@ -29,6 +29,7 @@ for material in materials:
     volume_fraction = st.text_input(label=material)
     volume_fractions.append(volume_fraction)
 
+print(materials)
 print(volume_fractions)
 # required_inputs = {
 #                     'sphere with no firstwall':['blanket_structural_material',
