@@ -3,8 +3,8 @@ import openmc
 import streamlit as st
 
 import numpy as np
-from neutronics_material_maker import material_maker_classes
-
+from neutronics_material_maker import material_maker_classes, Material, MultiMaterial
+from tbr_utils import find_tbr_model_sphere_with_no_firstwall
 
 # from paramak import Shape, Reactor
 # from neutronics_material_maker import Material, MultiMaterial
@@ -43,8 +43,21 @@ for material in materials:
     breeder_materials.append(breeder_material)
 
 
+if st.button('make material'):
+    print(breeder_materials)
 
-print(breeder_materials)
+    if len(materials) == 1:
+        print(material)
+        breeder_material = Material(material).neutronics_material
+        print(breeder_material)
+        tbr = find_tbr_model_sphere_with_no_firstwall(breeder_material)
+        st.write('tbr',tbr)
+
+    #else:
+    #   for material in materials:
+        #TODO make the multimaterial
+
+
 
 # required_inputs = {
 #                     'sphere with no firstwall':['blanket_structural_material',

@@ -375,44 +375,45 @@ def find_tbr_from_graded_blanket(number_of_layers,
     return df['mean'].sum()
 
 
+def make_breeder_material(  blanket_structural_material, 
+                            blanket_structural_fraction,
+                            blanket_coolant_material, 
+                            blanket_coolant_fraction,
 
+                            blanket_multiplier_fraction,
+                            blanket_multiplier_material,
 
-def find_tbr_model_sphere_with_no_firstwall(
-             blanket_structural_material, 
-             blanket_structural_fraction,
-             blanket_coolant_material, 
-             blanket_coolant_fraction,
+                            blanket_breeder_fraction,
+                            blanket_breeder_material,
 
-             blanket_multiplier_fraction,
-             blanket_multiplier_material,
+                            blanket_breeder_li6_enrichment_fraction,
+                            blanket_breeder_packing_fraction,
+                            blanket_multiplier_packing_fraction
+                            ):
 
-             blanket_breeder_fraction,
-             blanket_breeder_material,
+    blanket_material = MultiMaterial('blanket_material',
+                                        materials = [
+                                                    Material(material_name = blanket_breeder_material, 
+                                                                enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                                                temperature_in_C = 500,
+                                                                packing_fraction = blanket_breeder_packing_fraction),
+                                                    Material(material_name = blanket_multiplier_material,
+                                                                packing_fraction = blanket_multiplier_packing_fraction),
+                                                    Material(material_name = blanket_structural_material)
+                                                    ],
+                                        volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
+                                        ).neutronics_material
 
-             blanket_breeder_li6_enrichment_fraction,
-             blanket_breeder_packing_fraction,
-             blanket_multiplier_packing_fraction,
+    return blanket_material
+    
 
-             ):
+def find_tbr_model_sphere_with_no_firstwall(blanket_material):
 
             inner_radius = 1000  #10m
             thickness = 200
             batches = 10
 
-            blanket_material = MultiMaterial('blanket_material',
-                                                materials = [
-                                                            Material(material_name = blanket_breeder_material, 
-                                                                     enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                                                     temperature_in_C = 500,
-                                                                     packing_fraction = blanket_breeder_packing_fraction),
-                                                            Material(material_name = blanket_multiplier_material,
-                                                                     packing_fraction = blanket_multiplier_packing_fraction),
-                                                            Material(material_name = blanket_structural_material)
-                                                            ],
-                                                volume_fractions = [blanket_breeder_fraction, blanket_multiplier_fraction, blanket_structural_fraction, blanket_coolant_fraction]
-                                                ).neutronics_material
-
-            mats = openmc.Materials([blanket_material]) 
+            mats = openmc.Materials([blanket_material])
 
             breeder_blanket_inner_surface = openmc.Sphere(r=inner_radius)
             inner_void_region = -breeder_blanket_inner_surface 
@@ -477,18 +478,7 @@ def find_tbr_model_sphere_with_no_firstwall(
 
             results = {
                 'tbr':tally_result,
-                'tbr_error':tally_std_dev,
-                'blanket_structural_material':blanket_structural_material, 
-                'blanket_structural_fraction':blanket_structural_fraction,
-                'blanket_coolant_material':blanket_coolant_material, 
-                'blanket_coolant_fraction':blanket_coolant_fraction,
-                'blanket_multiplier_fraction':blanket_multiplier_fraction,
-                'blanket_multiplier_material':blanket_multiplier_material,
-                'blanket_breeder_fraction':blanket_breeder_fraction,
-                'blanket_breeder_material':blanket_breeder_material,
-                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
-                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
-                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'tbr_error':tally_std_dev
             }
 
             return results
