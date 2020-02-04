@@ -22,27 +22,29 @@ st.write('Runs simulation using scalable "serverless" solution')
 
 print(list(material_maker_classes.material_dict.keys()))
 
-materials = st.multiselect(label='Select materials',
+materials = st.multiselect(label='Create a material for the breeder zone',
                            options =  list(material_maker_classes.material_dict.keys())
                           )
 
-breeder_material = {}
+breeder_materials = []
 for material in materials:
-    breeder_material[material] = {}
+
+    breeder_material = {'material_name' : material}
     volume_fraction = st.text_input(label=material + ' volume fraction')
-    breeder_material[material]['volume_fraction'] = volume_fraction
+    breeder_material['volume_fraction'] = volume_fraction
     if 'packable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['packable']:
             packing_fraction = st.text_input(label=material + ' packing fraction')
-            breeder_material[material]['packing_fraction'] = packing_fraction
+            breeder_material['packing_fraction'] = packing_fraction
     if 'enrichable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['enrichable']:
             enrichment_fraction = st.text_input(label=material + ' enrichment fraction')
-            breeder_material[material]['enrichment_fraction'] = enrichment_fraction
+            breeder_material['enrichment_fraction'] = enrichment_fraction
+    breeder_materials.append(breeder_material)
 
 
 
-print(breeder_material)
+print(breeder_materials)
 
 # required_inputs = {
 #                     'sphere with no firstwall':['blanket_structural_material',
