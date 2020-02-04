@@ -3,6 +3,8 @@ import openmc
 import streamlit as st
 
 import numpy as np
+from neutronics_material_maker import material_maker_classes
+
 
 # from paramak import Shape, Reactor
 # from neutronics_material_maker import Material, MultiMaterial
@@ -18,19 +20,26 @@ st.write('Runs simulation using scalable "serverless" solution')
 # model = st.selectbox('Select neutronics model', 
 #                       model_names = ['sphere with firstwall','sphere with no firstwall'])
 
+print(list(material_maker_classes.material_dict.keys()))
 
 materials = st.multiselect(label='What are your favorite colors',
-                        options =  ('Green', 'Yellow', 'Red', 'Blue')
+                        options =  list(material_maker_classes.material_dict.keys())
                         )
 
-volume_fractions = []
-
+breeder_material = {}
 for material in materials:
+    breeder_material[material] = {}
     volume_fraction = st.text_input(label=material)
-    volume_fractions.append(volume_fraction)
+    breeder_material[material]['volume_fraction'] = volume_fraction
+    if 'packable' in material_maker_classes.material_dict['material'].keys():
+        if material_maker_classes.material_dict[material]['packable']:
+            packing_fraction = st.text_input(label=material)
+            breeder_material[material]['packing_fraction'] = packing_fraction
 
-print(materials)
-print(volume_fractions)
+
+
+print(breeder_material)
+
 # required_inputs = {
 #                     'sphere with no firstwall':['blanket_structural_material',
 #                                                 'blanket_structural_fraction',
