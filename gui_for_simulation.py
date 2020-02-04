@@ -22,19 +22,23 @@ st.write('Runs simulation using scalable "serverless" solution')
 
 print(list(material_maker_classes.material_dict.keys()))
 
-materials = st.multiselect(label='What are your favorite colors',
-                        options =  list(material_maker_classes.material_dict.keys())
-                        )
+materials = st.multiselect(label='Select materials',
+                           options =  list(material_maker_classes.material_dict.keys())
+                          )
 
 breeder_material = {}
 for material in materials:
     breeder_material[material] = {}
-    volume_fraction = st.text_input(label=material)
+    volume_fraction = st.text_input(label=material + ' volume fraction')
     breeder_material[material]['volume_fraction'] = volume_fraction
-    if 'packable' in material_maker_classes.material_dict['material'].keys():
+    if 'packable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['packable']:
-            packing_fraction = st.text_input(label=material)
+            packing_fraction = st.text_input(label=material + ' packing fraction')
             breeder_material[material]['packing_fraction'] = packing_fraction
+    if 'enrichable' in material_maker_classes.material_dict[material].keys():
+        if material_maker_classes.material_dict[material]['enrichable']:
+            enrichment_fraction = st.text_input(label=material + ' enrichment fraction')
+            breeder_material[material]['enrichment_fraction'] = enrichment_fraction
 
 
 
