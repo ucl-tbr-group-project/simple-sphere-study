@@ -4,9 +4,10 @@ import streamlit as st
 
 import numpy as np
 
-from paramak import Shape, Reactor, Material, MultiMaterial
-from paramak.find_coordinates.find_plasma_coordinates import *
-from paramak.material_maker_functions import *
+# from paramak import Shape, Reactor
+# from neutronics_material_maker import Material, MultiMaterial
+# from paramak.find_coordinates.find_plasma_coordinates import *
+
 
 # Define model
 
@@ -14,56 +15,66 @@ st.write('GUI for performing neutronics simulations')
 
 st.write('Runs simulation using scalable "serverless" solution')
 
-model = st.selectbox('Select neutronics model', 
-                      model_names = ['sphere with firstwall','sphere with no firstwall'])
+# model = st.selectbox('Select neutronics model', 
+#                       model_names = ['sphere with firstwall','sphere with no firstwall'])
 
 
+materials = st.multiselect(label='What are your favorite colors',
+                        options =  ('Green', 'Yellow', 'Red', 'Blue')
+                        )
 
-required_inputs = {
-                    'sphere with no firstwall':['blanket_structural_material',
-                                                'blanket_structural_fraction',
-                                                'blanket_coolant_material',
-                                                'blanket_coolant_fraction',
-                                                'blanket_multiplier_fraction',
-                                                'blanket_multiplier_material',
-                                                'blanket_breeder_fraction',
-                                                'blanket_breeder_material',
-                                                'blanket_breeder_li6_enrichment_fraction',
-                                                'blanket_breeder_packing_fraction',
-                                                'blanket_multiplier_packing_fraction'
-                                                ]
-}
+volume_fractions = []
 
-description_of_inputs = {'blanket_structural_material':'selectbox'
-                         'blanket_structural_fraction':'slider'
-                         'blanket_coolant_material':'selectbox'
-                         'blanket_coolant_fraction':'slider'
-                         'blanket_multiplier_fraction':'slider'
-                         'blanket_multiplier_material':'selectbox'
-                         'blanket_breeder_fraction':'slider'
-                         'blanket_breeder_material':'selectbox'
-                         'blanket_breeder_li6_enrichment_fraction':
-                         'blanket_breeder_packing_fraction':'slider'
-                         'blanket_multiplier_packing_fraction':
-                         }
+for material in materials:
+    volume_fraction = st.text_input(label=material)
+    volume_fractions.append(volume_fraction)
 
-contents_of_inputs = {'blanket_structural_material':['eurofer','steel']
-                        'blanket_structural_fraction':'slider'
-                        'blanket_coolant_material':'selectbox'
-                        'blanket_coolant_fraction':'slider'
-                        'blanket_multiplier_fraction':'slider'
-                        'blanket_multiplier_material':'selectbox'
-                        'blanket_breeder_fraction':'slider'
-                        'blanket_breeder_material':'selectbox'
-                        'blanket_breeder_li6_enrichment_fraction':
-                        'blanket_breeder_packing_fraction':'slider'
-                        'blanket_multiplier_packing_fraction':
-                         }
+print(volume_fractions)
+# required_inputs = {
+#                     'sphere with no firstwall':['blanket_structural_material',
+#                                                 'blanket_structural_fraction',
+#                                                 'blanket_coolant_material',
+#                                                 'blanket_coolant_fraction',
+#                                                 'blanket_multiplier_fraction',
+#                                                 'blanket_multiplier_material',
+#                                                 'blanket_breeder_fraction',
+#                                                 'blanket_breeder_material',
+#                                                 'blanket_breeder_li6_enrichment_fraction',
+#                                                 'blanket_breeder_packing_fraction',
+#                                                 'blanket_multiplier_packing_fraction'
+#                                                 ]
+# }
+
+# description_of_inputs = {'blanket_structural_material':'selectbox',
+#                          'blanket_structural_fraction':'slider',
+#                          'blanket_coolant_material':'selectbox',
+#                          'blanket_coolant_fraction':'slider',
+#                          'blanket_multiplier_fraction':'slider',
+#                          'blanket_multiplier_material':'selectbox',
+#                          'blanket_breeder_fraction':'slider',
+#                          'blanket_breeder_material':'selectbox',
+#                          'blanket_breeder_li6_enrichment_fraction':'slider',
+#                          'blanket_breeder_packing_fraction':'slider',
+#                          'blanket_multiplier_packing_fraction':'slider'
+#                          }
+
+# contents_of_inputs = {'blanket_structural_material':['eurofer','steel'],
+#                         'blanket_structural_fraction':[0,1],
+#                         'blanket_coolant_material':['eurofer','steel'],
+#                         'blanket_coolant_fraction':[0,1],
+#                         'blanket_multiplier_fraction':[0,1],
+#                         'blanket_multiplier_material':['eurofer','steel'],
+#                         'blanket_breeder_fraction':[0,1],
+#                         'blanket_breeder_material':['eurofer','steel'],
+#                         'blanket_breeder_li6_enrichment_fraction':[0,1],
+#                         'blanket_breeder_packing_fraction':[0,1],
+#                         'blanket_multiplier_packing_fraction':[0,1]
+#                          }
 
 
-if model == None:
-    pass
-else:
+# if model == None:
+#     pass
+# else:
 
 
 
