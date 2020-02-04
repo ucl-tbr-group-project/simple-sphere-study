@@ -1,16 +1,16 @@
 from flask import Flask, jsonify, make_response, request
 import json
-from tbr_utils import find_tbr_model_sphere_with_firstwall, find_tbr_model_sphere_with_no_firstwall
+from tbr_utils import find_tbr_model_sphere_with_firstwall, find_tbr_model_sphere_with_no_firstwall, make_firstwall_material, make_blanket_material
 import random
 import numpy as np
 
 application = Flask(__name__)
 
 
-firstwall_amour_material_options = ['tungsten']
+firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
 firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
-firstwall_amour_fraction = 0.055262
+firstwall_armour_fraction = 0.055262
 firstwall_structural_fraction = 0.253962
 firstwall_coolant_fraction = 0.690776
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
@@ -34,7 +34,7 @@ help_hints = 'try a different url endpoint <br> \
             URL endpoint with optional arguments <br> \
             /find_tbr_model_sphere_with_firstwall <br> \
             firstwall_thickness <br> \
-            firstwall_amour_material <br> \
+            firstwall_armour_material <br> \
             firstwall_structural_material <br> \
             firstwall_coolant_material <br> \
             blanket_structural_material <br> \
@@ -62,14 +62,14 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             <br> \
             Arguments take the form ... <br> \
-            http://localhost:8080/find_tbr_model_sphere_with_firstwall?=firstwall_thickness=20 <br> \
-            http://localhost:8080/find_tbr_model_sphere_with_firstwall?=firstwall_thickness=20&blanket_breeder_material=Li4SiO4 <br> \
+            http://localhost:8080/find_tbr_model_sphere_with_firstwall?firstwall_thickness=20 <br> \
+            http://localhost:8080/find_tbr_model_sphere_with_firstwall?firstwall_thickness=20&blanket_breeder_material=Li4SiO4 <br> \
             <br> \
             <br> \
             <br> \
             Argument options are <br> \
             firstwall_thickness 0 to 20 <br> \
-            firstwall_amour_material '+str(firstwall_amour_material_options)+'<br> \
+            firstwall_armour_material '+str(firstwall_armour_material_options)+'<br> \
             firstwall_structural_material '+str(firstwall_structural_material_options)+'<br> \
             firstwall_coolant_material '+str(firstwall_coolant_material_options)+'<br> \
             blanket_structural_material '+str(blanket_structural_material_options)+'<br> \
@@ -104,9 +104,9 @@ def call_find_tbr_model_sphere_with_firstwall():
                                   default=random.choice(firstwall_thicknesses)
                                   )
 
-    firstwall_amour_material = request.args.get('firstwall_amour_material', 
+    firstwall_armour_material = request.args.get('firstwall_armour_material', 
                                   type=str,
-                                  default=random.choice(firstwall_amour_material_options)
+                                  default=random.choice(firstwall_armour_material_options)
                                   )
 
     firstwall_structural_material = request.args.get('firstwall_structural_material', 
@@ -158,55 +158,79 @@ def call_find_tbr_model_sphere_with_firstwall():
     #                               type=list,
     #                               default=random.choice(blanket_fractions)
     #                               )   
-    
+
     selected_blanket_fractions = random.choice(blanket_fractions)
 
     blanket_multiplier_fraction = request.args.get('blanket_multiplier_fraction', 
                                   type=float,
                                   default=selected_blanket_fractions[0]
-                                  )  
+                                  )
 
     blanket_breeder_fraction = request.args.get('blanket_breeder_fraction', 
                                   type=float,
                                   default=selected_blanket_fractions[1]
-                                  )  
+                                  )
 
     blanket_structural_fraction = request.args.get('blanket_structural_fraction', 
                                   type=float,
                                   default=selected_blanket_fractions[2]
-                                  )  
+                                  )
 
     blanket_coolant_fraction = request.args.get('blanket_coolant_fraction', 
                                   type=float,
                                   default=selected_blanket_fractions[3]
-                                  )  
+                                  )
+    inputs = {
+                'firstwall_thickness':firstwall_thickness,
+                'firstwall_armour_material':firstwall_armour_material,
+                'firstwall_armour_fraction':firstwall_armour_fraction,
+                'firstwall_structural_material':firstwall_structural_material,
+                'firstwall_structural_fraction':firstwall_structural_fraction,
+                'firstwall_coolant_material':firstwall_coolant_material,
+                'firstwall_coolant_fraction':firstwall_coolant_fraction,
+                'blanket_structural_material':blanket_structural_material,
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material':blanket_coolant_material,
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+            }
 
+    firstwall_material = make_firstwall_material(
+                                                 firstwall_armour_material=firstwall_armour_material,
+                                                 firstwall_armour_fraction=firstwall_armour_fraction,
+                                                 firstwall_structural_material=firstwall_structural_material,
+                                                 firstwall_structural_fraction=firstwall_structural_fraction,
+                                                 firstwall_coolant_material=firstwall_coolant_material,
+                                                 firstwall_coolant_fraction=firstwall_coolant_fraction
+                                                )
 
+    blanket_material = make_blanket_material(
+                                            blanket_structural_material=blanket_structural_material,
+                                            blanket_structural_fraction=blanket_structural_fraction,
+                                            blanket_coolant_material=blanket_coolant_material,
+                                            blanket_coolant_fraction=blanket_coolant_fraction,
+                                            blanket_multiplier_fraction=blanket_multiplier_fraction,
+                                            blanket_multiplier_material=blanket_multiplier_material,
+                                            blanket_breeder_fraction=blanket_breeder_fraction,
+                                            blanket_breeder_material=blanket_breeder_material,
+                                            blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                            blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
+                                            blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
+                                            )
 
-    inputs_and_results = find_tbr_model_sphere_with_firstwall(
-                                    firstwall_thickness=firstwall_thickness,
-                                    firstwall_amour_material=firstwall_amour_material,
-                                    firstwall_amour_fraction=firstwall_amour_fraction,
-                                    firstwall_structural_material=firstwall_structural_material,
-                                    firstwall_structural_fraction=firstwall_structural_fraction,
-                                    firstwall_coolant_material=firstwall_coolant_material,
-                                    firstwall_coolant_fraction=firstwall_coolant_fraction,
-                                    blanket_structural_material=blanket_structural_material,
-                                    blanket_structural_fraction=blanket_structural_fraction,
-                                    blanket_coolant_material=blanket_coolant_material,
-                                    blanket_coolant_fraction=blanket_coolant_fraction,
-                                    blanket_multiplier_fraction=blanket_multiplier_fraction,
-                                    blanket_multiplier_material=blanket_multiplier_material,
-                                    blanket_breeder_fraction=blanket_breeder_fraction,
-                                    blanket_breeder_material=blanket_breeder_material,
-                                    blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                    blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
-                                    blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction,
-    
-    )
-    print(inputs_and_results)
-    
-    return inputs_and_results    
+    results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
+                                                   blanket_material = blanket_material,
+                                                   firstwall_thickness = firstwall_thickness
+                                                   )
+    results.update(inputs)
+
+    return results
 
 
 
@@ -271,28 +295,43 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                   default=selected_blanket_fractions[3]
                                   )  
 
-    inputs_and_results = find_tbr_model_sphere_with_no_firstwall(
-                                    blanket_structural_material=blanket_structural_material,
-                                    blanket_structural_fraction=blanket_structural_fraction,
-                                    blanket_coolant_material=blanket_coolant_material,
-                                    blanket_coolant_fraction=blanket_coolant_fraction,
-                                    blanket_multiplier_fraction=blanket_multiplier_fraction,
-                                    blanket_multiplier_material=blanket_multiplier_material,
-                                    blanket_breeder_fraction=blanket_breeder_fraction,
-                                    blanket_breeder_material=blanket_breeder_material,
-                                    blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                    blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
-                                    blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction,
-    
-    )
-    print(inputs_and_results)
-    
-    return inputs_and_results    
+    inputs = {
+                'blanket_structural_material':blanket_structural_material, 
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material':blanket_coolant_material, 
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+            }
+
+    firstwall_material = make_blanket_material(blanket_structural_material=blanket_structural_material,
+                                                blanket_structural_fraction=blanket_structural_fraction,
+                                                blanket_coolant_material=blanket_coolant_material,
+                                                blanket_coolant_fraction=blanket_coolant_fraction,
+                                                blanket_multiplier_fraction=blanket_multiplier_fraction,
+                                                blanket_multiplier_material=blanket_multiplier_material,
+                                                blanket_breeder_fraction=blanket_breeder_fraction,
+                                                blanket_breeder_material=blanket_breeder_material,
+                                                blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                                blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
+                                                blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
+                                                )
+
+    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material)
+
+    results.update(inputs)
+
+    return results
 
 if __name__ == '__main__':
     application.run(
         #debug=True,
         host='0.0.0.0',
-        port=8080,
+        port=8081,
         # ssl_context=context
     )
