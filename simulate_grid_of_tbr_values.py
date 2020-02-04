@@ -2,9 +2,10 @@ import numpy as np
 import json
 from tqdm import tqdm
 from tbr_utils import find_tbr_model_sphere_with_firstwall, find_tbr_model_sphere_with_no_firstwall, make_firstwall_material, make_blanket_material
-
+import uuid
 import openmc
 import random
+from pathlib import Path
 
 firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
@@ -115,15 +116,19 @@ def random_sphere_with_firstwall_simulation():
                                                    )
     results.update(inputs)
 
+    results.update({'model':'sphere_with_firstwall'})
+
+    Path('outputs/').mkdir(parents=True, exist_ok=True)
+    filename = 'outputs/'+str(uuid.uuid4())+'.json'
+    with open(filename, mode='w', encoding='utf-8') as f:
+        json.dump(results, f, indent=4)
     return results
 
 
 results = []
 for x in range(5):
     result = random_sphere_with_firstwall_simulation()
-    results.append(result)
-    with open('results_grid4.json', 'w') as fp:
-        json.dump(results, fp, indent = 4)    
+
 
 # TODO random_sphere_with_no_firstwall_simulation
 # for x in range(5):
