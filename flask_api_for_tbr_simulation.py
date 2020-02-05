@@ -97,6 +97,16 @@ def return_specific_help():
 @application.route('/find_tbr_model_sphere_with_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_firstwall():
 
+    number_of_batches = request.args.get('number_of_batches',
+                                         type=int,
+                                         default=10 
+                                        )
+
+    particles_per_batch = request.args.get('particles_per_batch',
+                                           type=int,
+                                           default=10000
+                                          )
+
     firstwall_thickness = request.args.get('firstwall_thickness', 
                                   type=float,
                                   default=random.choice(firstwall_thicknesses)
@@ -220,6 +230,8 @@ def call_find_tbr_model_sphere_with_firstwall():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches':number_of_batches,
+                'particles_per_batch':particles_per_batch,
             }
 
     firstwall_material = make_firstwall_material(
@@ -247,7 +259,9 @@ def call_find_tbr_model_sphere_with_firstwall():
 
     results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
                                                    blanket_material = blanket_material,
-                                                   firstwall_thickness = firstwall_thickness
+                                                   firstwall_thickness = firstwall_thickness,
+                                                   number_of_batches = number_of_batches,
+                                                   particles_per_batch = particles_per_batch,
                                                    )
     results.update(inputs)
 
@@ -258,6 +272,16 @@ def call_find_tbr_model_sphere_with_firstwall():
 
 @application.route('/find_tbr_model_sphere_with_no_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_no_firstwall():
+
+    number_of_batches = request.args.get('number_of_batches',
+                                         type=float,
+                                         default=10 
+                                        )
+
+    particles_per_batch = request.args.get('particles_per_batch',
+                                           type=float,
+                                           default=10000
+                                          )
 
     blanket_structural_material = request.args.get('blanket_structural_material', 
                                   type=str,
@@ -328,6 +352,8 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches':number_of_batches,
+                'particles_per_batch':particles_per_batch
             }
 
     firstwall_material = make_blanket_material(blanket_structural_material=blanket_structural_material,
@@ -343,7 +369,10 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                                 blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
                                                 )
 
-    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material)
+    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material = firstwall_material,
+                                                      number_of_batches = number_of_batches,
+                                                      particles_per_batch = particles_per_batch,
+                                                     )
 
     results.update(inputs)
 
