@@ -1,30 +1,33 @@
 
 import os
+
+import numpy as np
 import openmc
 import streamlit as st
 
-import numpy as np
-from neutronics_material_maker import material_maker_classes, Material, MultiMaterial
-from tbr_utils import find_tbr_model_sphere_with_no_firstwall, find_tbr_model_sphere_with_firstwall
+from neutronics_material_maker import (Material, MultiMaterial,
+                                       material_maker_classes)
+from tbr_utils import (find_tbr_model_sphere_with_firstwall,
+                       find_tbr_model_sphere_with_no_firstwall)
 
 st.write('GUI for performing neutronics simulations')
 
 st.write('Runs simulation using scalable "serverless" solution')
 
-model = st.selectbox('Select neutronics model', 
-                      ['sphere with firstwall','sphere with no firstwall'])
+model = st.selectbox('Select neutronics model',
+                     ['sphere with firstwall', 'sphere with no firstwall'])
 
 if model == 'sphere with firstwall':
-    st.image('images/blanket_and_fw.png', width=500)
+   st.image('images/blanket_and_fw.png', width=500)
 if model == 'sphere with no firstwall':
-    st.image('images/blanket_only.png', width=500)
+   st.image('images/blanket_only.png', width=500)
 
 
 st.write('BLANKET')
 
 materials = st.multiselect(label='Create a material for the breeder zone',
-                        options =  list(material_maker_classes.material_dict.keys())
-                        )
+                           options =  list(material_maker_classes.material_dict.keys())
+                           )
 
 breeder_materials = []
 for material in materials:
@@ -40,7 +43,6 @@ for material in materials:
         if material_maker_classes.material_dict[material]['packable'] == True:
             packing_fraction = st.text_input(key='breeder', label=material + ' packing fraction')  # key is required to allow same materials to be chosen for both breeder and firstwall
             breeder_material['packing_fraction'] = packing_fraction
-
 
     if 'enrichable' in material_maker_classes.material_dict[material].keys():
         if material_maker_classes.material_dict[material]['enrichable'] == True:
@@ -66,8 +68,8 @@ if model == 'sphere with firstwall':
     fw_thickness = st.text_input(label='Select firstwall thickness')
 
     fw_materials = st.multiselect(label='Create a material for the firstwall',
-                                         options = list(material_maker_classes.material_dict.keys())
-    )
+                                  options = list(material_maker_classes.material_dict.keys())
+                                  )
 
     firstwall_materials = []
     for material in fw_materials:
@@ -77,7 +79,7 @@ if model == 'sphere with firstwall':
             if material_maker_classes.material_dict[material]['packable'] == True:
                 packing_fraction = st.text_input(key='firstwall', label=material + ' packing fraction')
                 fw_material['packing_fraction'] = packing_fraction
-        
+
         if 'enrichable' in material_maker_classes.material_dict[material].keys():
             if material_maker_classes.material_dict[material]['enrichable'] == True:
                 enrichment_fraction = st.text_input(key='firstwall', label=material + ' enrichment fraction')
@@ -122,7 +124,7 @@ if st.button('Simulate model'):
             for float_key in ['enrichment_fraction', 'packing_fraction', 'volume_fraction', 'temperature_in_C']:
                 if float_key in material.keys():
                     material[float_key] = float(material[float_key])
-    
+
         if len(firstwall_materials) == 1:
             for material in firstwall_materials:
                 firstwall_material = Material(**material).neutronics_material
@@ -133,7 +135,7 @@ if st.button('Simulate model'):
                 multimaterials.append(Material(**material))
                 volume_fractions.append(material['volume_fraction'])
             firstwall_material = MultiMaterial(material_name='firstwall_material', materials=multimaterials, volume_fractions=volume_fractions).neutronics_material
-        
+
         tbr = find_tbr_model_sphere_with_firstwall(breeder_material, firstwall_material, float(fw_thickness))
         st.write('tbr', tbr)
 
