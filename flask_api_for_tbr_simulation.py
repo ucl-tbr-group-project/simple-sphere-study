@@ -31,6 +31,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             URL endpoint with optional arguments <br> \
             /find_tbr_model_sphere_with_firstwall <br> \
+            number_of_batches <br> \
+            particles_per_batch <br> \
             firstwall_thickness <br> \
             firstwall_armour_material <br> \
             firstwall_structural_material <br> \
@@ -48,6 +50,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             URL endpoint with optional arguments <br> \
             /find_tbr_model_sphere_with_no_firstwall <br> \
+            number_of_batches <br> \
+            particles_per_batch <br> \
             blanket_structural_material <br> \
             blanket_breeder_material <br> \
             blanket_multiplier_material <br> \
@@ -66,6 +70,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             <br> \
             Argument options are <br> \
+            number_of_batches default is 10<br> \
+            particles_per_batch default is 10000<br> \
             firstwall_thickness 0 to 20 <br> \
             firstwall_armour_material '+str(firstwall_armour_material_options)+'<br> \
             firstwall_structural_material '+str(firstwall_structural_material_options)+'<br> \
@@ -96,6 +102,16 @@ def return_specific_help():
 
 @application.route('/find_tbr_model_sphere_with_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_firstwall():
+
+    number_of_batches = request.args.get('number_of_batches',
+                                         type=int,
+                                         default=10 
+                                        )
+
+    particles_per_batch = request.args.get('particles_per_batch',
+                                           type=int,
+                                           default=10000
+                                          )
 
     firstwall_thickness = request.args.get('firstwall_thickness', 
                                   type=float,
@@ -220,6 +236,8 @@ def call_find_tbr_model_sphere_with_firstwall():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches':number_of_batches,
+                'particles_per_batch':particles_per_batch,
             }
 
     firstwall_material = make_firstwall_material(
@@ -247,7 +265,9 @@ def call_find_tbr_model_sphere_with_firstwall():
 
     results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
                                                    blanket_material = blanket_material,
-                                                   firstwall_thickness = firstwall_thickness
+                                                   firstwall_thickness = firstwall_thickness,
+                                                   number_of_batches = number_of_batches,
+                                                   particles_per_batch = particles_per_batch,
                                                    )
     results.update(inputs)
 
@@ -258,6 +278,16 @@ def call_find_tbr_model_sphere_with_firstwall():
 
 @application.route('/find_tbr_model_sphere_with_no_firstwall' ,methods=['GET','POST'])
 def call_find_tbr_model_sphere_with_no_firstwall():
+
+    number_of_batches = request.args.get('number_of_batches',
+                                         type=float,
+                                         default=10 
+                                        )
+
+    particles_per_batch = request.args.get('particles_per_batch',
+                                           type=float,
+                                           default=10000
+                                          )
 
     blanket_structural_material = request.args.get('blanket_structural_material', 
                                   type=str,
@@ -328,6 +358,8 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches':number_of_batches,
+                'particles_per_batch':particles_per_batch
             }
 
     firstwall_material = make_blanket_material(blanket_structural_material=blanket_structural_material,
@@ -343,7 +375,10 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                                 blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
                                                 )
 
-    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material)
+    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material = firstwall_material,
+                                                      number_of_batches = number_of_batches,
+                                                      particles_per_batch = particles_per_batch,
+                                                     )
 
     results.update(inputs)
 
@@ -353,6 +388,6 @@ if __name__ == '__main__':
     application.run(
         #debug=True,
         host='0.0.0.0',
-        port=8081,
+        port=8080,
         # ssl_context=context
     )

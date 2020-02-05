@@ -432,11 +432,11 @@ def make_firstwall_material(
         return firstwall_material
 
 
-def find_tbr_model_sphere_with_no_firstwall(blanket_material):
+def find_tbr_model_sphere_with_no_firstwall(blanket_material, number_of_batches, particles_per_batch):
 
             inner_radius = 1000  #10m
             thickness = 200
-            batches = 10
+            # batches = number_of_batches
 
             mats = openmc.Materials([blanket_material])
 
@@ -461,9 +461,9 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material):
 
             sett = openmc.Settings()
             # batches = 10 # this is parsed as an argument
-            sett.batches = batches
+            sett.batches = number_of_batches
             sett.inactive = 0
-            sett.particles = 10000
+            sett.particles = particles_per_batch
             sett.run_mode = 'fixed source'
             # sett.verbosity = 1
 
@@ -492,7 +492,7 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material):
             model.run()
             # openmc.lib.run()
 
-            sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+            sp = openmc.StatePoint('statepoint.'+str(number_of_batches)+'.h5')
 
             tally = sp.get_tally(name='TBR')
 
@@ -508,11 +508,11 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material):
 
             return results
 
-def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, firstwall_thickness):
+def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, firstwall_thickness, number_of_batches, particles_per_batch):
 
             inner_radius = 1000  #10m
             thickness = 200
-            batches = 10
+            # batches = number_of_batches
 
             mats = openmc.Materials([blanket_material, firstwall_material]) 
 
@@ -546,9 +546,9 @@ def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, f
 
             sett = openmc.Settings()
             # batches = 10 # this is parsed as an argument
-            sett.batches = batches
+            sett.batches = number_of_batches
             sett.inactive = 0
-            sett.particles = 10000
+            sett.particles = particles_per_batch
             sett.run_mode = 'fixed source'
             # sett.verbosity = 1
 
@@ -577,7 +577,7 @@ def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, f
             model.run()
             # openmc.lib.run()
 
-            sp = openmc.StatePoint('statepoint.'+str(batches)+'.h5')
+            sp = openmc.StatePoint('statepoint.'+str(number_of_batches)+'.h5')
 
             tally = sp.get_tally(name='TBR')
 
