@@ -45,7 +45,7 @@ def random_sphere_with_firstwall_simulation():
     blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
 
     blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
-                                  
+
     blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
 
     selected_blanket_fractions = random.choice(blanket_fractions)
@@ -126,7 +126,7 @@ def random_sphere_with_firstwall_simulation():
 
 
 results = []
-for x in tqdm(range(5000)):
+for x in tqdm(range(10000)):
     result = random_sphere_with_firstwall_simulation()
 
 
