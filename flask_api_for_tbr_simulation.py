@@ -31,6 +31,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             URL endpoint with optional arguments <br> \
             /find_tbr_model_sphere_with_firstwall <br> \
+            number_of_batches <br> \
+            particles_per_batch <br> \
             firstwall_thickness <br> \
             firstwall_armour_material <br> \
             firstwall_structural_material <br> \
@@ -48,6 +50,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             URL endpoint with optional arguments <br> \
             /find_tbr_model_sphere_with_no_firstwall <br> \
+            number_of_batches <br> \
+            particles_per_batch <br> \
             blanket_structural_material <br> \
             blanket_breeder_material <br> \
             blanket_multiplier_material <br> \
@@ -66,6 +70,8 @@ help_hints = 'try a different url endpoint <br> \
             <br> \
             <br> \
             Argument options are <br> \
+            number_of_batches default is 10<br> \
+            particles_per_batch default is 10000<br> \
             firstwall_thickness 0 to 20 <br> \
             firstwall_armour_material '+str(firstwall_armour_material_options)+'<br> \
             firstwall_structural_material '+str(firstwall_structural_material_options)+'<br> \
