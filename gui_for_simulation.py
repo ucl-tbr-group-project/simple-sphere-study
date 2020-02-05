@@ -142,4 +142,4 @@ if st.button('Simulate model'):
     else:
         print(breeder_material)
         tbr = find_tbr_model_sphere_with_no_firstwall(breeder_material)
-        st.write('tbr',tbr)
+        st.write('tbr', tbr)
