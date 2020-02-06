@@ -21,8 +21,8 @@ blanket_breeder_li6_enrichment_fractions.append(0.0759)
 blanket_breeder_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
 blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
 
-blanket_fractions = np.random.dirichlet(np.ones(4),size=100)
-firstwall_fractions = np.random.dirichlet(np.ones(3),size=100)
+blanket_fractions = np.random.dirichlet(np.ones(4),size=1000)
+firstwall_fractions = np.random.dirichlet(np.ones(3),size=1000)
 
 def random_sphere_with_firstwall_simulation():
 
@@ -112,7 +112,9 @@ def random_sphere_with_firstwall_simulation():
 
     results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
                                                    blanket_material = blanket_material,
-                                                   firstwall_thickness = firstwall_thickness
+                                                   firstwall_thickness = firstwall_thickness,
+                                                   number_of_batches = 10,
+                                                   particles_per_batch = 1000
                                                    )
     results.update(inputs)
 
