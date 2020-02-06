@@ -20,8 +20,10 @@ def load_data():
 
         return results_df
 
-
+# try:
 data = load_data()
+# except:
+#         st.title('Data not loaded, try generating dat with the simulate_random_parameters.py script')
 
 st.title('TBR results explorer')
 st.text('Filter a dataset of '+str(len(data))+ ' simulations')

@@ -85,6 +85,8 @@ def random_sphere_with_firstwall_simulation():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches': 10,
+                'particles_per_batch': 5000
             }
 
     firstwall_material = make_firstwall_material(
@@ -114,7 +116,7 @@ def random_sphere_with_firstwall_simulation():
                                                    blanket_material = blanket_material,
                                                    firstwall_thickness = firstwall_thickness,
                                                    number_of_batches = 10,
-                                                   particles_per_batch = 1000
+                                                   particles_per_batch = 2000
                                                    )
     results.update(inputs)
 
@@ -128,7 +130,7 @@ def random_sphere_with_firstwall_simulation():
 
 
 results = []
-for x in tqdm(range(10000)):
+for x in tqdm(range(100000)):
     result = random_sphere_with_firstwall_simulation()
 
 
