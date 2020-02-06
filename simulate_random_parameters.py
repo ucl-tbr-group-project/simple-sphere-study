@@ -66,6 +66,10 @@ def random_sphere_with_firstwall_simulation():
 
     firstwall_coolant_fraction = selected_firstwall_fractions[2]
 
+    number_of_batches = 10
+
+    particles_per_batch = 5000
+
     inputs = {
                 'firstwall_thickness':firstwall_thickness,
                 'firstwall_armour_material':firstwall_armour_material,
@@ -85,8 +89,8 @@ def random_sphere_with_firstwall_simulation():
                 'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
                 'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
                 'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
-                'number_of_batches': 10,
-                'particles_per_batch': 5000
+                'number_of_batches': number_of_batches,
+                'particles_per_batch': particles_per_batch
             }
 
     firstwall_material = make_firstwall_material(
@@ -115,8 +119,8 @@ def random_sphere_with_firstwall_simulation():
     results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
                                                    blanket_material = blanket_material,
                                                    firstwall_thickness = firstwall_thickness,
-                                                   number_of_batches = 10,
-                                                   particles_per_batch = 2000
+                                                   number_of_batches = number_of_batches,
+                                                   particles_per_batch = particles_per_batch
                                                    )
     results.update(inputs)
 
