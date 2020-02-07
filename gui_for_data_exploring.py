@@ -67,51 +67,6 @@ def plot_graphs():
                 figs.append(fig)
                 st.write(fig)
 
-
-
-
-data = load_data()
-
-st.title('TBR results explorer')
-st.text('Filter a dataset of '+str(len(data))+ ' simulations')
-
-catorgorical_key_names, continious_key_names = find_type_of_entries_in_each_field()
-
-selected_catorgorical_key_names = {}
-
-key_number = 0
-for key_name in catorgorical_key_names:
-
-        defaults = list(data[key_name].unique())
-
-        selected_catorgorical_key_names[key_name] = st.multiselect(
-                                                                label = key_name.replace('_',' '), 
-                                                                default=list(defaults),
-                                                                options=list(data[key_name].unique())
-                                                                )
-
-if selected_catorgorical_key_names['model'] != None:
-
-        if len(selected_catorgorical_key_names['model']) == 1:
-                st.image('./images/'+selected_catorgorical_key_names['model'][0]+'.png')
-        if len(selected_catorgorical_key_names['model']) == 2:
-                st.image('./images/both.png')
-
-selected_continious_values = {}
-for key_name in continious_key_names:
-
-                cleaned_key_name = key_name.replace('_', ' ')
-
-                min_val = min(data[key_name])
-                max_val = max(data[key_name])
-
-                if min_val != max_val:
-                        selected = st.slider('select a range of ' + str(cleaned_key_name), min_val, max_val, (min_val, max_val))
-
-                        selected_continious_values[key_name] = selected
-
-
-
 def perform_data_filtering(filtered_data):
         filters = []
         for key, value in selected_continious_values.items():
@@ -133,6 +88,64 @@ def perform_data_filtering(filtered_data):
         st.write(' Number of simulations matching criteria ' ,len(filtered_data))
         st.write(filtered_data)
         return filtered_data
+
+
+def write_multiselect_boxes():
+        selected_catorgorical_key_names = {}
+
+        for key_name in catorgorical_key_names:
+
+                defaults = list(data[key_name].unique())
+
+                selected_catorgorical_key_names[key_name] = st.multiselect(
+                                                                        label = key_name.replace('_',' '), 
+                                                                        default=list(defaults),
+                                                                        options=list(data[key_name].unique())
+                                                                        )
+        return selected_catorgorical_key_names
+
+
+def write_slider_bars():
+        selected_continious_values = {}
+        for key_name in continious_key_names:
+
+                        cleaned_key_name = key_name.replace('_', ' ')
+
+                        min_val = min(data[key_name])
+                        max_val = max(data[key_name])
+
+                        if min_val != max_val:
+                                selected = st.slider('select a range of ' + str(cleaned_key_name), min_val, max_val, (min_val, max_val))
+
+                                selected_continious_values[key_name] = selected
+        return selected_continious_values
+
+def draw_model_diagram():
+        if selected_catorgorical_key_names['model'] != None:
+
+                if len(selected_catorgorical_key_names['model']) == 1:
+                        st.image('./images/'+selected_catorgorical_key_names['model'][0]+'.png')
+                if len(selected_catorgorical_key_names['model']) == 2:
+                        st.image('./images/both.png')
+
+
+data = load_data()
+
+st.title('TBR results explorer')
+st.text('Filter a dataset of '+str(len(data))+ ' simulations')
+
+catorgorical_key_names, continious_key_names = find_type_of_entries_in_each_field()
+
+
+
+
+selected_catorgorical_key_names = write_multiselect_boxes()
+
+draw_model_diagram()
+
+selected_continious_values = write_slider_bars()
+
+
 
 filtered_data = perform_data_filtering(data)
 
