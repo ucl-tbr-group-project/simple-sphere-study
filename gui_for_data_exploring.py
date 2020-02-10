@@ -156,8 +156,9 @@ def plot_kde_graph(data):
         kde.fit(data[:, None])
         logprob = kde.score_samples(x_d[:, None])
 
-        plt.fill_between(x_d, np.exp(logprob), alpha=0.5)
-        plt.plot(data, np.full_like(data, -0.01), '|k', markeredgewidth=1)
+        plt.plot(x_d, np.exp(logprob), alpha=0.5)
+        # plt.fill_between(x_d, np.exp(logprob), alpha=0.5)
+        # plt.plot(data, np.full_like(data, -0.01), '|k', markeredgewidth=1)
         plt.ylim(0.00, 2.00)
         st.pyplot(plt)
 
