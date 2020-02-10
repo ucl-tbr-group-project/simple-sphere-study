@@ -5,19 +5,22 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import os
-
+from tqdm import tqdm
 
 @st.cache
 def load_data():
         path_to_json = "outputs"
         list_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
         resultdict = []
-        for filename in list_files:
-                with open(os.path.join(path_to_json, filename), "r") as inputjson:
-                        resultdict.append(json.load(inputjson))
+        for filename in tqdm(list_files):
+                try:
+                        with open(os.path.join(path_to_json, filename), "r") as inputjson:
+                                resultdict.append(json.load(inputjson))
+                except:
+                        print(filename)
 
         results_df = pd.DataFrame(resultdict)
-
+        print(results_df)
         return results_df
 
 
