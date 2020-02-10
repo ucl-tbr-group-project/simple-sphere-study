@@ -45,7 +45,6 @@ def plot_graphs():
 
                         print(catorgory, material)
 
-
                         y_data = filtered_data[(filtered_data[catorgory] == material)]['tbr']
 
                         fig.add_trace(go.Histogram(x=y_data,

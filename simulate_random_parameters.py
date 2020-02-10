@@ -6,27 +6,28 @@ import uuid
 import openmc
 import random
 from pathlib import Path
+from random import uniform
 
 firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
-firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
+# firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
 blanket_structural_material_options = ['SiC','eurofer']
 
-blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True).tolist()
-blanket_breeder_li6_enrichment_fractions.append(0.0759)
-blanket_breeder_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
-blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
+# blanket_breeder_li6_enrichment_fractions = np.linspace(start=0., stop=1., num=10, endpoint=True).tolist()
+# blanket_breeder_li6_enrichment_fractions.append(0.0759)
+# blanket_breeder_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
+# blanket_multiplier_packing_fractions = np.linspace(start=0.6, stop=1., num=10, endpoint=True).tolist()
 
-blanket_fractions = np.random.dirichlet(np.ones(4),size=1000)
-firstwall_fractions = np.random.dirichlet(np.ones(3),size=1000)
+blanket_fractions = np.random.dirichlet(np.ones(4),size=10000)
+firstwall_fractions = np.random.dirichlet(np.ones(3),size=10000)
 
 def random_sphere_with_firstwall_simulation():
 
-    firstwall_thickness = random.choice(firstwall_thicknesses)
+    firstwall_thickness = uniform(0.5, 5)
 
     firstwall_armour_material = random.choice(firstwall_armour_material_options)
 
@@ -42,11 +43,11 @@ def random_sphere_with_firstwall_simulation():
 
     blanket_coolant_material = random.choice(blanket_coolant_material_options)
 
-    blanket_breeder_li6_enrichment_fraction = random.choice(blanket_breeder_li6_enrichment_fractions)
+    blanket_breeder_li6_enrichment_fraction = uniform(0., 1.)
 
-    blanket_breeder_packing_fraction = random.choice(blanket_breeder_packing_fractions)
+    blanket_breeder_packing_fraction = uniform(0.5, 1.)
 
-    blanket_multiplier_packing_fraction = random.choice(blanket_multiplier_packing_fractions)
+    blanket_multiplier_packing_fraction = uniform(0.5, 1.)
 
     selected_blanket_fractions = random.choice(blanket_fractions)
 
