@@ -18,9 +18,9 @@ model = st.selectbox('Select neutronics model',
                      ['sphere with firstwall', 'sphere with no firstwall'])
 
 if model == 'sphere with firstwall':
-   st.image('images/blanket_and_fw.png', width=500)
+   st.image('images/sphere_with_firstwall.png', width=500)
 if model == 'sphere with no firstwall':
-   st.image('images/blanket_only.png', width=500)
+   st.image('images/sphere_with_no_firstwall.png', width=500)
 
 
 st.write('BLANKET')

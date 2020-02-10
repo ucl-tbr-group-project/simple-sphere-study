@@ -137,8 +137,6 @@ st.text('Filter a dataset of '+str(len(data))+ ' simulations')
 catorgorical_key_names, continious_key_names = find_type_of_entries_in_each_field()
 
 
-
-
 selected_catorgorical_key_names = write_multiselect_boxes()
 
 draw_model_diagram()
