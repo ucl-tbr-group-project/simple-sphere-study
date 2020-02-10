@@ -6,6 +6,12 @@ import numpy as np
 import plotly.graph_objects as go
 import os
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+
+from scipy.stats import norm
+from sklearn.neighbors import KernelDensity
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import LeaveOneOut
 
 @st.cache
 def load_data():
@@ -132,6 +138,32 @@ def draw_model_diagram():
                         st.image('./images/both.png')
 
 
+
+def calculate_approximate_bandwidth(data):
+        # only uses first 100 values to calculate bandwidth
+        bandwidths = 10 ** np.linspace(-1, 1, 100)
+        grid = GridSearchCV(KernelDensity(kernel='gaussian'),
+                            {'bandwidth': bandwidths},
+                            cv=LeaveOneOut())
+        grid.fit(data.head(100)[:, None])
+        approx_bandwidth = grid.best_params_['bandwidth']
+        return approx_bandwidth
+
+def plot_kde_graph(data):
+        x_d = np.linspace(0, 2, 1000)   # change to max(tbr) for upper limit
+
+        kde = KernelDensity(bandwidth=calculate_approximate_bandwidth(data), kernel='gaussian')
+        kde.fit(data[:, None])
+        logprob = kde.score_samples(x_d[:, None])
+
+        plt.fill_between(x_d, np.exp(logprob), alpha=0.5)
+        plt.plot(data, np.full_like(data, -0.01), '|k', markeredgewidth=1)
+        plt.ylim(0.00, 2.00)
+        st.pyplot(plt)
+
+
+
+
 data = load_data()
 
 st.title('TBR results explorer')
@@ -146,8 +178,14 @@ draw_model_diagram()
 
 selected_continious_values = write_slider_bars()
 
-
-
 filtered_data = perform_data_filtering(data)
 
-plot_graphs()
+st.write(filtered_data)
+
+
+# plots a basic kde using all of the filtered tbr data
+# this will need to be incorporated into the plot_graphs() function
+plot_kde_graph(filtered_data['tbr'])
+
+
+# plot_graphs()
