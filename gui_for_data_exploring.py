@@ -88,7 +88,7 @@ def perform_data_filtering(filtered_data):
                 filtered_data = filtered_data[(filtered_data[key].isin(value))]
 
 
-        st.write(' Number of simulations matching criteria ' ,len(filtered_data))
+        st.write(' Number of simulations matching criteria ' ,len(filtered_data), ' from ', len(data), 'simulations')
         st.write(filtered_data)
         return filtered_data
 
