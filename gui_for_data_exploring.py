@@ -198,8 +198,8 @@ selected_continuous_values = write_slider_bars()
 
 filtered_data = perform_data_filtering(data)
 
-if st.button("Plot histogram"):
-        plot_histogram()
+# if st.button("Plot histogram"):
+#         plot_histogram()
 
-if st.button("Plot Kernel Density"):
-        plot_kernel_density()
+# if st.button("Plot Kernel Density"):
+plot_kernel_density()
