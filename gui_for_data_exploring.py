@@ -94,7 +94,7 @@ def plot_kernel_density():
 
                         data = filtered_data[(filtered_data[category] == material)]['tbr']
 
-                        x_d = np.linspace(min(data), max(data), 1000)
+                        x_d = np.linspace(min(data), max(data), 500)
                         kde = KernelDensity(bandwidth=calculate_bandwidth(data), kernel='gaussian')
                         kde.fit(data[:, None])
                         logprob = kde.score_samples(x_d[:, None])
@@ -103,6 +103,11 @@ def plot_kernel_density():
                                                  y=np.exp(logprob),
                                                  name=material,
                         ))
+
+                        try:
+                                st.write(' Maximum TBR for ' ,material, ' = ',max(x_d) )
+                        except:
+                                pass
 
                 fig.update_layout(xaxis_title="TBR",
                                   yaxis_title="Number of simulations",
@@ -192,8 +197,6 @@ draw_model_diagram()
 selected_continuous_values = write_slider_bars()
 
 filtered_data = perform_data_filtering(data)
-
-st.write(filtered_data)
 
 if st.button("Plot histogram"):
         plot_histogram()
