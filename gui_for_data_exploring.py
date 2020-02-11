@@ -54,6 +54,7 @@ def plot_histogram():
 
                         y_data = filtered_data[(filtered_data[category] == material)]['tbr']
 
+
                         fig.add_trace(go.Histogram(x=y_data,
                                                 name= material,
                                                 xbins=dict(start=0),
