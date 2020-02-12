@@ -195,9 +195,8 @@ def random_sphere_with_no_firstwall_simulation():
                                             blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
                                             )
 
-    results = find_tbr_model_sphere_with_firstwall(
+    results = find_tbr_model_sphere_with_no_firstwall(
                                                    blanket_material = blanket_material,
-                                                   firstwall_thickness = firstwall_thickness,
                                                    number_of_batches = number_of_batches,
                                                    particles_per_batch = particles_per_batch
                                                    )
