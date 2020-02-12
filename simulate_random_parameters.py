@@ -133,15 +133,89 @@ def random_sphere_with_firstwall_simulation():
         json.dump(results, f, indent=4)
     return results
 
+def random_sphere_with_no_firstwall_simulation():
+
+    blanket_structural_material = random.choice(blanket_structural_material_options)
+
+    blanket_breeder_material = random.choice(blanket_breeder_material_options)
+
+    blanket_multiplier_material = random.choice(blanket_multiplier_material_options)
+
+    blanket_coolant_material = random.choice(blanket_coolant_material_options)
+
+    blanket_breeder_li6_enrichment_fraction = uniform(0., 1.)
+
+    blanket_breeder_packing_fraction = uniform(0.5, 1.)
+
+    blanket_multiplier_packing_fraction = uniform(0.5, 1.)
+
+    selected_blanket_fractions = random.choice(blanket_fractions)
+
+    blanket_multiplier_fraction = selected_blanket_fractions[0]
+
+    blanket_breeder_fraction = selected_blanket_fractions[1]
+
+    blanket_structural_fraction = selected_blanket_fractions[2]
+
+    blanket_coolant_fraction = selected_blanket_fractions[3]
+
+    selected_firstwall_fractions = random.choice(firstwall_fractions)
+
+    number_of_batches = 10
+
+    particles_per_batch = 5000
+
+    inputs = {
+                'blanket_structural_material':blanket_structural_material,
+                'blanket_structural_fraction':blanket_structural_fraction,
+                'blanket_coolant_material':blanket_coolant_material,
+                'blanket_coolant_fraction':blanket_coolant_fraction,
+                'blanket_multiplier_fraction':blanket_multiplier_fraction,
+                'blanket_multiplier_material':blanket_multiplier_material,
+                'blanket_breeder_fraction':blanket_breeder_fraction,
+                'blanket_breeder_material':blanket_breeder_material,
+                'blanket_breeder_li6_enrichment_fraction':blanket_breeder_li6_enrichment_fraction,
+                'blanket_breeder_packing_fraction':blanket_breeder_packing_fraction,
+                'blanket_multiplier_packing_fraction':blanket_multiplier_packing_fraction,
+                'number_of_batches': number_of_batches,
+                'particles_per_batch': particles_per_batch
+            }
+
+    blanket_material = make_blanket_material(
+                                            blanket_structural_material=blanket_structural_material,
+                                            blanket_structural_fraction=blanket_structural_fraction,
+                                            blanket_coolant_material=blanket_coolant_material,
+                                            blanket_coolant_fraction=blanket_coolant_fraction,
+                                            blanket_multiplier_fraction=blanket_multiplier_fraction,
+                                            blanket_multiplier_material=blanket_multiplier_material,
+                                            blanket_breeder_fraction=blanket_breeder_fraction,
+                                            blanket_breeder_material=blanket_breeder_material,
+                                            blanket_breeder_li6_enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                            blanket_breeder_packing_fraction=blanket_breeder_packing_fraction,
+                                            blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
+                                            )
+
+    results = find_tbr_model_sphere_with_firstwall(
+                                                   blanket_material = blanket_material,
+                                                   firstwall_thickness = firstwall_thickness,
+                                                   number_of_batches = number_of_batches,
+                                                   particles_per_batch = particles_per_batch
+                                                   )
+    results.update(inputs)
+
+    results.update({'model':'sphere_with_no_firstwall'})
+
+    Path('outputs/').mkdir(parents=True, exist_ok=True)
+    filename = 'outputs/'+str(uuid.uuid4())+'.json'
+    with open(filename, mode='w', encoding='utf-8') as f:
+        json.dump(results, f, indent=4)
+    return results
 
 results = []
-for x in tqdm(range(100000)):
-    result = random_sphere_with_firstwall_simulation()
+# for x in tqdm(range(100000)):
+#     result = random_sphere_with_firstwall_simulation()
 
 
-# TODO random_sphere_with_no_firstwall_simulation
-# for x in range(5):
-#     result = random_sphere_with_no_firstwall_simulation()
-#     results.append(result)
-#     with open('results_grid4.json', 'w') as fp:
-#         json.dump(results, fp, indent = 4)    
+for x in range(5):
+    result = random_sphere_with_no_firstwall_simulation()
+  

@@ -391,7 +391,7 @@ def make_blanket_material(  blanket_structural_material,
                             blanket_multiplier_packing_fraction
                             ):
 
-    blanket_material =  openmc.Material.mix_materials(name = 'blanket_material'
+    blanket_material =  openmc.Material.mix_materials(name = 'blanket_material',
                         materials = [
                                      Material(material_name = blanket_structural_material).neutronics_material,
                                      Material(material_name = blanket_coolant_material).neutronics_material,
