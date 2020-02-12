@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from pandas.io.json import json_normalize
 import openmc
-from neutronics_material_maker import Material, MultiMaterial
+from neutronics_material_maker import Material
 
 try:
     from skopt import load
@@ -374,7 +374,6 @@ def find_tbr_from_graded_blanket(number_of_layers,
 
     return df['mean'].sum()
 
-
 def make_blanket_material(  blanket_structural_material, 
                             blanket_structural_fraction,
 
@@ -392,19 +391,20 @@ def make_blanket_material(  blanket_structural_material,
                             blanket_multiplier_packing_fraction
                             ):
 
-    blanket_material = MultiMaterial('blanket_material',
-                                        materials = [
-                                                    Material(material_name = blanket_structural_material),
-                                                    Material(material_name = blanket_coolant_material),
-                                                    Material(material_name = blanket_multiplier_material,
-                                                                packing_fraction = blanket_multiplier_packing_fraction),
-                                                    Material(material_name = blanket_breeder_material, 
-                                                                enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                                                temperature_in_C = 500,
-                                                                packing_fraction = blanket_breeder_packing_fraction),
-                                                    ],
-                                        volume_fractions = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction]
-                                        ).neutronics_material
+    blanket_material =  openmc.Material.mix_materials(name = 'blanket_material'
+                        materials = [
+                                     Material(material_name = blanket_structural_material).neutronics_material,
+                                     Material(material_name = blanket_coolant_material).neutronics_material,
+                                     Material(material_name = blanket_multiplier_material,
+                                              packing_fraction = blanket_multiplier_packing_fraction).neutronics_material,
+                                     Material(material_name = blanket_breeder_material, 
+                                              enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                              temperature_in_C = 500,
+                                              packing_fraction = blanket_breeder_packing_fraction).neutronics_material,
+                                    ],
+                        fracs = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction],
+                        percent_type='vf'
+                        )
 
     return blanket_material
 
@@ -426,7 +426,10 @@ def make_firstwall_material(
                                                 Material(material_name = firstwall_coolant_material),
                                                 Material(material_name = firstwall_structural_material)
                                             ],
-                                            volume_fractions = [firstwall_armour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]
+                                            volume_fractions = [firstwall_armour_fraction, 
+                                                                firstwall_coolant_fraction, 
+                                                                firstwall_structural_fraction
+                                                                ]
                                             ).neutronics_material
 
         return firstwall_material
