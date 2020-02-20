@@ -34,6 +34,8 @@ def random_sphere_with_firstwall_simulation():
     firstwall_structural_material = random.choice(firstwall_structural_material_options)
 
     firstwall_coolant_material = random.choice(firstwall_coolant_material_options)
+    
+    blanket_thickness = uniform(1, 500)
 
     blanket_structural_material = random.choice(blanket_structural_material_options)
 
@@ -79,6 +81,7 @@ def random_sphere_with_firstwall_simulation():
                 'firstwall_structural_fraction':firstwall_structural_fraction,
                 'firstwall_coolant_material':firstwall_coolant_material,
                 'firstwall_coolant_fraction':firstwall_coolant_fraction,
+                'blanket_thickness':blanket_thickness,
                 'blanket_structural_material':blanket_structural_material,
                 'blanket_structural_fraction':blanket_structural_fraction,
                 'blanket_coolant_material':blanket_coolant_material,
@@ -117,7 +120,9 @@ def random_sphere_with_firstwall_simulation():
                                             blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
                                             )
 
-    results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
+    results = find_tbr_model_sphere_with_firstwall(
+                                                   blanket_thickness = blanket_thickness,
+                                                   firstwall_material = firstwall_material, 
                                                    blanket_material = blanket_material,
                                                    firstwall_thickness = firstwall_thickness,
                                                    number_of_batches = number_of_batches,
@@ -134,6 +139,8 @@ def random_sphere_with_firstwall_simulation():
     return results
 
 def random_sphere_with_no_firstwall_simulation():
+
+    blanket_thickness = uniform(1, 500)
 
     blanket_structural_material = random.choice(blanket_structural_material_options)
 
@@ -159,13 +166,12 @@ def random_sphere_with_no_firstwall_simulation():
 
     blanket_coolant_fraction = selected_blanket_fractions[3]
 
-    selected_firstwall_fractions = random.choice(firstwall_fractions)
-
     number_of_batches = 10
 
     particles_per_batch = 5000
 
     inputs = {
+                'blanket_thickness':blanket_thickness,
                 'blanket_structural_material':blanket_structural_material,
                 'blanket_structural_fraction':blanket_structural_fraction,
                 'blanket_coolant_material':blanket_coolant_material,
@@ -196,10 +202,11 @@ def random_sphere_with_no_firstwall_simulation():
                                             )
 
     results = find_tbr_model_sphere_with_no_firstwall(
-                                                   blanket_material = blanket_material,
-                                                   number_of_batches = number_of_batches,
-                                                   particles_per_batch = particles_per_batch
-                                                   )
+                                                     blanket_thickness = blanket_thickness,
+                                                     blanket_material = blanket_material,
+                                                     number_of_batches = number_of_batches,
+                                                     particles_per_batch = particles_per_batch
+                                                     )
     results.update(inputs)
 
     results.update({'model':'sphere_with_no_firstwall'})
@@ -217,4 +224,5 @@ results = []
 
 for x in range(5):
     result = random_sphere_with_no_firstwall_simulation()
+    result = random_sphere_with_firstwall_simulation()
   
