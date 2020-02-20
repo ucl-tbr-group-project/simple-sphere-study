@@ -232,14 +232,14 @@ def find_tbr_from_graded_blanket(number_of_layers,
                                     )):
             print(i, layer_thickness, layer_enrichment, layer_breeder_fraction)
             
-            layer_material = MultiMaterial('layer_'+str(i)+'_material',
+            layer_material = MultiMaterial(material_name = 'layer_'+str(i)+'_material',
                                                 materials = [
                                                             Material(blanket_breeder_material, 
                                                                         enrichment_fraction=layer_enrichment),
                                                             Material(blanket_multiplier_material),
                                                             Material(blanket_structural_material)
                                                             ],
-                                                volume_fractions = [layer_breeder_fraction, layer_multiplier_fraction, blanket_structural_fraction]
+                                                fracs = [layer_breeder_fraction, layer_multiplier_fraction, blanket_structural_fraction]
                                                 ).neutronics_material
             all_layers_materials.append(layer_material)
 
@@ -263,13 +263,13 @@ def find_tbr_from_graded_blanket(number_of_layers,
     else:
         #firstwall is present
 
-        firstwall_material = MultiMaterial('firstwall_material',
+        firstwall_material = MultiMaterial(material_name = 'firstwall_material',
                                 materials = [
                                             Material('tungsten'),
                                             Material(firstwall_coolant),
                                             Material(blanket_structural_material)
                                             ],
-                                volume_fractions = [0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
+                                fracs = [0.055262, 0.253962, 0.690776] #based on HCPB paper with 2mm W firstwall
                                 ).neutronics_material
 
 
@@ -374,7 +374,6 @@ def find_tbr_from_graded_blanket(number_of_layers,
 
     return df['mean'].sum()
 
-
 def make_blanket_material(  blanket_structural_material, 
                             blanket_structural_fraction,
 
@@ -392,19 +391,30 @@ def make_blanket_material(  blanket_structural_material,
                             blanket_multiplier_packing_fraction
                             ):
 
-    blanket_material = MultiMaterial('blanket_material',
-                                        materials = [
-                                                    Material(material_name = blanket_structural_material),
-                                                    Material(material_name = blanket_coolant_material),
-                                                    Material(material_name = blanket_multiplier_material,
-                                                                packing_fraction = blanket_multiplier_packing_fraction),
-                                                    Material(material_name = blanket_breeder_material, 
-                                                                enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
-                                                                temperature_in_C = 500,
-                                                                packing_fraction = blanket_breeder_packing_fraction),
-                                                    ],
-                                        volume_fractions = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction]
-                                        ).neutronics_material
+    if blanket_coolant_material == 'He':
+        temperature_in_C=400
+        pressure_in_Pa=8e6
+    elif blanket_coolant_material in ['H2O','D2O']:
+        temperature_in_C=305
+        pressure_in_Pa=15.5e6
+
+
+    blanket_material =  MultiMaterial(material_name = 'blanket_material',
+                        materials = [
+                                     Material(material_name = blanket_structural_material),
+                                     Material(material_name = blanket_coolant_material,
+                                              temperature_in_C = temperature_in_C,
+                                              pressure_in_Pa = pressure_in_Pa),
+                                     Material(material_name = blanket_multiplier_material,
+                                              packing_fraction = blanket_multiplier_packing_fraction),
+                                     Material(material_name = blanket_breeder_material, 
+                                              enrichment_fraction=blanket_breeder_li6_enrichment_fraction,
+                                              temperature_in_C = 500,
+                                              packing_fraction = blanket_breeder_packing_fraction),
+                                    ],
+                        fracs = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction],
+                        percent_type='vo'
+                        ).neutronics_material
 
     return blanket_material
 
@@ -419,23 +429,33 @@ def make_firstwall_material(
              firstwall_structural_fraction
              ):
 
+    if firstwall_coolant_material == 'He':
+        temperature_in_C=400
+        pressure_in_Pa=8e6
+    elif firstwall_coolant_material in ['H2O','D2O']:
+        temperature_in_C=305
+        pressure_in_Pa=15.5e6
 
-        firstwall_material = MultiMaterial('firstwall_material',
-                                            materials = [
-                                                Material(material_name = firstwall_armour_material),
-                                                Material(material_name = firstwall_coolant_material),
-                                                Material(material_name = firstwall_structural_material)
-                                            ],
-                                            volume_fractions = [firstwall_armour_fraction, firstwall_coolant_fraction, firstwall_structural_fraction]
-                                            ).neutronics_material
+    firstwall_material = MultiMaterial(material_name = 'firstwall_material',
+                                        materials = [
+                                            Material(material_name = firstwall_armour_material),
+                                            Material(material_name = firstwall_coolant_material,
+                                                        temperature_in_C = temperature_in_C,
+                                                        pressure_in_Pa = pressure_in_Pa),
+                                            Material(material_name = firstwall_structural_material)
+                                        ],
+                                        fracs = [firstwall_armour_fraction, 
+                                                            firstwall_coolant_fraction, 
+                                                            firstwall_structural_fraction
+                                                            ]
+                                        ).neutronics_material
 
-        return firstwall_material
+    return firstwall_material
 
-
-def find_tbr_model_sphere_with_no_firstwall(blanket_material, number_of_batches, particles_per_batch):
+def find_tbr_model_sphere_with_no_firstwall(blanket_thickness, blanket_material, number_of_batches, particles_per_batch):
 
             inner_radius = 1000  #10m
-            thickness = 200
+            thickness = blanket_thickness
             # batches = number_of_batches
 
             mats = openmc.Materials([blanket_material])
@@ -452,8 +472,8 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material, number_of_batches,
             breeder_blanket_cell.name = 'breeder_blanket'
 
             universe = openmc.Universe(cells=[inner_void_cell, 
-                                                breeder_blanket_cell
-                                                ])
+                                              breeder_blanket_cell
+                                             ])
 
             geom = openmc.Geometry(universe)
 
@@ -508,10 +528,10 @@ def find_tbr_model_sphere_with_no_firstwall(blanket_material, number_of_batches,
 
             return results
 
-def find_tbr_model_sphere_with_firstwall(blanket_material, firstwall_material, firstwall_thickness, number_of_batches, particles_per_batch):
+def find_tbr_model_sphere_with_firstwall(blanket_thickness, blanket_material, firstwall_material, firstwall_thickness, number_of_batches, particles_per_batch):
 
             inner_radius = 1000  #10m
-            thickness = 200
+            thickness = blanket_thickness
             # batches = number_of_batches
 
             mats = openmc.Materials([blanket_material, firstwall_material]) 
