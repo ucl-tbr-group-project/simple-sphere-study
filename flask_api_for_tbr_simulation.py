@@ -11,6 +11,7 @@ firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
 firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
+blanket_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
@@ -133,6 +134,11 @@ def call_find_tbr_model_sphere_with_firstwall():
                                   default=random.choice(firstwall_coolant_material_options)
                                   )
 
+    blanket_thickness = request.args.get('blanket_thickness', 
+                                  type=float,
+                                  default=random.choice(blanket_thicknesses)
+                                  )
+
     blanket_structural_material = request.args.get('blanket_structural_material', 
                                   type=str,
                                   default=random.choice(blanket_structural_material_options)
@@ -225,6 +231,7 @@ def call_find_tbr_model_sphere_with_firstwall():
                 'firstwall_structural_fraction':firstwall_structural_fraction,
                 'firstwall_coolant_material':firstwall_coolant_material,
                 'firstwall_coolant_fraction':firstwall_coolant_fraction,
+                'blanket_thickness':blanket_thickness,
                 'blanket_structural_material':blanket_structural_material,
                 'blanket_structural_fraction':blanket_structural_fraction,
                 'blanket_coolant_material':blanket_coolant_material,
@@ -264,6 +271,7 @@ def call_find_tbr_model_sphere_with_firstwall():
                                             )
 
     results = find_tbr_model_sphere_with_firstwall(firstwall_material = firstwall_material, 
+                                                   blanket_thickness = blanket_thickness,
                                                    blanket_material = blanket_material,
                                                    firstwall_thickness = firstwall_thickness,
                                                    number_of_batches = number_of_batches,
@@ -288,6 +296,11 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                            type=float,
                                            default=10000
                                           )
+
+    blanket_thickness = request.args.get('blanket_thickness', 
+                                  type=float,
+                                  default=random.choice(blanket_thicknesses)
+                                  )
 
     blanket_structural_material = request.args.get('blanket_structural_material', 
                                   type=str,
@@ -347,6 +360,7 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                   )  
 
     inputs = {
+                'blanket_thickness':blanket_thickness,
                 'blanket_structural_material':blanket_structural_material, 
                 'blanket_structural_fraction':blanket_structural_fraction,
                 'blanket_coolant_material':blanket_coolant_material, 
@@ -362,7 +376,7 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                 'particles_per_batch':particles_per_batch
             }
 
-    firstwall_material = make_blanket_material(blanket_structural_material=blanket_structural_material,
+    blanket_material = make_blanket_material(blanket_structural_material=blanket_structural_material,
                                                 blanket_structural_fraction=blanket_structural_fraction,
                                                 blanket_coolant_material=blanket_coolant_material,
                                                 blanket_coolant_fraction=blanket_coolant_fraction,
@@ -375,10 +389,13 @@ def call_find_tbr_model_sphere_with_no_firstwall():
                                                 blanket_multiplier_packing_fraction=blanket_multiplier_packing_fraction
                                                 )
 
-    results = find_tbr_model_sphere_with_no_firstwall(firstwall_material = firstwall_material,
-                                                      number_of_batches = number_of_batches,
-                                                      particles_per_batch = particles_per_batch,
-                                                     )
+    results = find_tbr_model_sphere_with_no_firstwall(
+                                                   blanket_thickness = blanket_thickness,
+                                                   blanket_material = blanket_material,
+                                                   number_of_batches = number_of_batches,
+                                                   particles_per_batch = particles_per_batch
+    )
+                                                   
 
     results.update(inputs)
 
