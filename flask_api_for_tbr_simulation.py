@@ -11,7 +11,7 @@ firstwall_armour_material_options = ['tungsten']
 firstwall_structural_material_options = ['SiC','eurofer']
 firstwall_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
 firstwall_coolant_material_options = ['H2O', 'He', 'D2O']
-blanket_thicknesses = np.linspace(start=0.5, stop=5., num=10, endpoint=True).tolist()
+blanket_thicknesses = np.linspace(start=0.5, stop=500., num=10, endpoint=True).tolist()
 blanket_coolant_material_options = ['H2O', 'He', 'D2O']
 blanket_multiplier_material_options = ['Be', 'Be12Ti']
 blanket_breeder_material_options = ['Li4SiO4','Li2TiO3']
@@ -38,6 +38,7 @@ help_hints = 'try a different url endpoint <br> \
             firstwall_armour_material <br> \
             firstwall_structural_material <br> \
             firstwall_coolant_material <br> \
+            blanket_thickness <br> \
             blanket_structural_material <br> \
             blanket_breeder_material <br> \
             blanket_multiplier_material <br> \
@@ -53,6 +54,7 @@ help_hints = 'try a different url endpoint <br> \
             /find_tbr_model_sphere_with_no_firstwall <br> \
             number_of_batches <br> \
             particles_per_batch <br> \
+            blanket_thickness <br> \
             blanket_structural_material <br> \
             blanket_breeder_material <br> \
             blanket_multiplier_material <br> \
@@ -74,6 +76,7 @@ help_hints = 'try a different url endpoint <br> \
             number_of_batches default is 10<br> \
             particles_per_batch default is 10000<br> \
             firstwall_thickness 0 to 20 <br> \
+            blanket_thickness 0 to 500 <br> \
             firstwall_armour_material '+str(firstwall_armour_material_options)+'<br> \
             firstwall_structural_material '+str(firstwall_structural_material_options)+'<br> \
             firstwall_coolant_material '+str(firstwall_coolant_material_options)+'<br> \
