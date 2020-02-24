@@ -34,7 +34,7 @@ def random_sphere_with_firstwall_simulation():
     firstwall_structural_material = random.choice(firstwall_structural_material_options)
 
     firstwall_coolant_material = random.choice(firstwall_coolant_material_options)
-    
+
     blanket_thickness = uniform(1, 500)
 
     blanket_structural_material = random.choice(blanket_structural_material_options)
@@ -222,7 +222,7 @@ results = []
 #     result = random_sphere_with_firstwall_simulation()
 
 
-for x in range(5):
+for x in range(500):
     result = random_sphere_with_no_firstwall_simulation()
     result = random_sphere_with_firstwall_simulation()
   
