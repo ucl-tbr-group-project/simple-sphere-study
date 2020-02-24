@@ -21,31 +21,44 @@ def load_data():
                         print(filename)
 
         results_df = pd.DataFrame(resultdict)
+
+        results_df = results_df.drop(['tbr_error', 'number_of_batches', 'particles_per_batch'], axis=1)
         print(results_df)
         return results_df
 
 
-@st.cache
-def find_type_of_entries_in_each_field():
-        catorgorical_key_names = []
-        continious_key_names = []
+def find_type_of_entries_in_each_field(data, models):
 
-        for entry in data.keys(): 
-                if entry not in ['tbr_error', 'number_of_batches', 'particles_per_batch']:
-                        if type(data[entry][0]) == str:
-                                catorgorical_key_names.append(entry)
-                        else:
-                                continious_key_names.append(entry)
-        return catorgorical_key_names, continious_key_names
+        all_catorgorical_key_names = {}
+        all_continious_key_names = {}
 
-def plot_graphs():
+        for model_name in models:
+                catorgorical_key_names = []
+                continious_key_names = []
+
+                model_data = data[(data['model'] == model_name)]
+                # print(model_data.keys())
+                model_data = model_data.dropna(axis=1, how='all')
+                # print(model_data.keys())
+
+                catorgorical_key_names = model_data.select_dtypes(include=['object']).keys()
+                continious_key_names = model_data.select_dtypes(include=['float64','int']).keys()
+
+
+                all_catorgorical_key_names[model_name] = catorgorical_key_names
+                all_continious_key_names[model_name] = continious_key_names
+
+        return all_catorgorical_key_names, all_continious_key_names
+
+def plot_graphs(data, selected_y_axis, selected_x_axis, color_by):
 
             max_vals = []
             fig = go.Figure()
 
             for material in data[color_by].unique():
 
-                    print(color_by, material)
+                    print('adding color_by',color_by, material)
+
 
                     y_data = data[(data[color_by] == material)][selected_y_axis]
                     x_data = data[(data[color_by] == material)][selected_x_axis]
@@ -53,7 +66,7 @@ def plot_graphs():
                     fig.add_trace(go.Scatter(x=x_data,
                                              y=y_data,
                                             name= material,
-                                            mode='markers',
+                                            mode='markers'
                                             )
                                     )
 
@@ -70,37 +83,37 @@ def plot_graphs():
             fig.update_traces(opacity=0.4)
 
             st.write(fig)
-
+        #     return 1.
             return max_vals
 
 
-def write_select_boxes():
 
 
-        selected_x_axis = st.selectbox(
-                                                                label = 'x axis', 
-                                                                options=continious_key_names
-                                                                )
-        # selected_y_axis = st.selectbox(
-        #                                                         label = 'y axis', 
-        #                                                         options=continious_key_names,
-        #                                                         )
-        return selected_x_axis, 'tbr'
 
 
 
 data = load_data()
 
+models = data['model'].unique()
+
+catorgorical_key_names, continious_key_names = find_type_of_entries_in_each_field(data, models)
+
 st.title('TBR correlation explorer')
 st.text('Filter a dataset of '+str(len(data))+ ' simulations')
 
-catorgorical_key_names, continious_key_names = find_type_of_entries_in_each_field()
+selected_model = st.selectbox(label = 'model', options=models )
 
-selected_x_axis, selected_y_axis = write_select_boxes()
+print('selected_model',selected_model)
 
-color_by = st.selectbox(label='colour by ', options=catorgorical_key_names)
+filtered_data = data[(data['model'] == selected_model)]
 
-max_vals = plot_graphs()
+selected_x_axis = st.selectbox(label = 'x axis', options=continious_key_names[selected_model])
+
+selected_y_axis='tbr'
+
+color_by = st.selectbox(label='colour by ', options=catorgorical_key_names[selected_model])
+
+max_vals = plot_graphs(filtered_data, selected_y_axis, selected_x_axis, color_by)
 
 for val in max_vals:
     st.write(' Maximum TBR for ' ,val[0], ' = ',val[1] )

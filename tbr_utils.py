@@ -412,7 +412,10 @@ def make_blanket_material(  blanket_structural_material,
                                               temperature_in_C = 500,
                                               packing_fraction = blanket_breeder_packing_fraction),
                                     ],
-                        fracs = [blanket_structural_fraction, blanket_coolant_fraction, blanket_multiplier_fraction, blanket_breeder_fraction],
+                        fracs = [blanket_structural_fraction,
+                                 blanket_coolant_fraction,
+                                 blanket_multiplier_fraction,
+                                 blanket_breeder_fraction],
                         percent_type='vo'
                         ).neutronics_material
 
@@ -445,8 +448,8 @@ def make_firstwall_material(
                                             Material(material_name = firstwall_structural_material)
                                         ],
                                         fracs = [firstwall_armour_fraction, 
-                                                            firstwall_coolant_fraction, 
-                                                            firstwall_structural_fraction
+                                                 firstwall_coolant_fraction, 
+                                                 firstwall_structural_fraction
                                                             ]
                                         ).neutronics_material
 

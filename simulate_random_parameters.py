@@ -47,9 +47,9 @@ def random_sphere_with_firstwall_simulation():
 
     blanket_breeder_li6_enrichment_fraction = uniform(0., 1.)
 
-    blanket_breeder_packing_fraction = uniform(0.5, 1.)
+    blanket_breeder_packing_fraction = uniform(0., 1.)
 
-    blanket_multiplier_packing_fraction = uniform(0.5, 1.)
+    blanket_multiplier_packing_fraction = uniform(0., 1.)
 
     selected_blanket_fractions = random.choice(blanket_fractions)
 
@@ -152,9 +152,9 @@ def random_sphere_with_no_firstwall_simulation():
 
     blanket_breeder_li6_enrichment_fraction = uniform(0., 1.)
 
-    blanket_breeder_packing_fraction = uniform(0.5, 1.)
+    blanket_breeder_packing_fraction = uniform(0., 1.)
 
-    blanket_multiplier_packing_fraction = uniform(0.5, 1.)
+    blanket_multiplier_packing_fraction = uniform(0., 1.)
 
     selected_blanket_fractions = random.choice(blanket_fractions)
 
